@@ -4,12 +4,14 @@
 \alias{quantile.ordered}
 \title{Quantile for Ordered Factors}
 \usage{
-\method{quantile}{ordered}(x, probs = seq(0, 1, 0.25))
+\method{quantile}{ordered}(x, probs = seq(0, 1, 0.25), ...)
 }
 \arguments{
 \item{x}{an ordered factor}
 
 \item{probs}{the desired quatiles}
+
+\item{...}{arugments passed on}
 }
 \value{
 ordered factor levels at the desired quantiles

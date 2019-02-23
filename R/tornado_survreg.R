@@ -9,6 +9,7 @@
 #' @param alt.order an alternate order for the plot
 #' @param dict a dictionary to translate variables for the plot
 #' @param xlabel a label for the x-axis
+#' @param ... further arguments
 #'
 #' @return the plot invisibly
 #' @export
@@ -18,11 +19,15 @@
 #' @import survival
 #'
 #' @examples
-#' gtest <- survreg(Surv(futime, fustat) ~ ecog.ps + rx, ovarian, dist='weibull', scale=1)
+#' require(survival)
+#' gtest <- survreg(Surv(futime, fustat) ~ ecog.ps + rx, ovarian,
+#'                            dist='weibull', scale=1)
 #' tornado(gtest, ovarian, type = "PercentChange", alpha = 0.10, xlabel = "futime")
 tornado.survreg <- function(model, modeldata, type="PercentChange", alpha=0.10,
-                        alt.order=NA, dict=NA, xlabel="Response Rate")
+                        alt.order=NA, dict=NA, xlabel="Response Rate",
+                        ...)
 {
+  extraArguments <- list(...)
   ret <- .create_plot_data(model = model, modeldata = modeldata,
                            type = type, alpha = alpha,
                            alt.order = alt.order, dict = dict)
@@ -31,7 +36,7 @@ tornado.survreg <- function(model, modeldata, type="PercentChange", alpha=0.10,
 
   pretty_break <- pretty(plotdat$value, n = 5)
 
-  ggp <- ggplot(plotdat, aes(x = variable, y = value, fill = Level)) +
+  ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
     geom_bar(position = "identity", stat = "identity") +
     coord_flip() +
     ylab(xlabel) +

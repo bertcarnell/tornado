@@ -2,12 +2,12 @@
 
 #' Generic tornado method
 #'
-#' @param x a model object
-#' @param ... other arguments passed to methods for specific classes
+#' @param model a model object
+#' @param ... further arguments to tornado
 #'
 #' @return a plot object
 #' @export
-tornado <- function(x, ...)
+tornado <- function(model, ...)
 {
-  UseMethod("tornado", x)
+  UseMethod("tornado", model)
 }

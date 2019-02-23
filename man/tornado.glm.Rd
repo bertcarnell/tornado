@@ -5,7 +5,7 @@
 \title{GLM Tornado Diagram}
 \usage{
 \method{tornado}{glm}(model, type = "PercentChange", alpha = 0.1,
-  alt.order = NA, dict = NA, xlabel = "Response Rate")
+  alt.order = NA, dict = NA, xlabel = "Response Rate", ...)
 }
 \arguments{
 \item{model}{a glm object}
@@ -19,6 +19,8 @@
 \item{dict}{a dictionary to translate variables for the plot}
 
 \item{xlabel}{a label for the x-axis}
+
+\item{...}{further arguments}
 }
 \value{
 the plot invisibly

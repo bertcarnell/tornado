@@ -4,12 +4,12 @@
 \alias{tornado}
 \title{Generic tornado method}
 \usage{
-tornado(x, ...)
+tornado(model, ...)
 }
 \arguments{
-\item{x}{a model object}
+\item{model}{a model object}
 
-\item{...}{other arguments passed to methods for specific classes}
+\item{...}{further arguments to tornado}
 }
 \value{
 a plot object

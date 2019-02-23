@@ -8,19 +8,23 @@
 #' @param alt.order an alternate order for the plot
 #' @param dict a dictionary to translate variables for the plot
 #' @param xlabel a label for the x-axis
+#' @param ... further arguments
 #'
 #' @return the plot invisibly
 #' @export
 #' @method tornado glm
 #' @importFrom scales percent
+#' @importFrom stats family
 #' @import ggplot2
 #'
 #' @examples
 #' gtest <- glm(mpg ~ cyl*wt*hp, data = mtcars, family = gaussian)
 #' tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
 tornado.glm <- function(model, type="PercentChange", alpha=0.10,
-                        alt.order=NA, dict=NA, xlabel="Response Rate")
+                        alt.order=NA, dict=NA, xlabel="Response Rate",
+                        ...)
 {
+  extraArguments <- list(...)
   ret <- .create_plot_data(model = model, modeldata = model$data,
                            type = type, alpha = alpha,
                            alt.order = alt.order, dict = dict)
@@ -29,7 +33,7 @@ tornado.glm <- function(model, type="PercentChange", alpha=0.10,
 
   pretty_break <- pretty(plotdat$value, n = 5)
 
-  ggp <- ggplot(plotdat, aes(x = variable, y = value, fill = Level)) +
+  ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
     geom_bar(position = "identity", stat = "identity") +
     coord_flip() +
     ylab(xlabel) +

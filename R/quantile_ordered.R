@@ -4,15 +4,18 @@
 #'
 #' @param x an ordered factor
 #' @param probs the desired quatiles
+#' @param ... arugments passed on
 #'
 #' @return ordered factor levels at the desired quantiles
 #' @export
+#' @method quantile ordered
 #' @importFrom assertthat assert_that
+#' @importFrom stats quantile
 #'
 #' @examples
 #' quantile(ordered(rep(c("C","B","A"), each=30), levels=c("C","B","A")),
 #'          probs <- seq(0, 1, 0.25))
-quantile.ordered <- function(x, probs = seq(0, 1, 0.25))
+quantile.ordered <- function(x, probs = seq(0, 1, 0.25), ...)
 {
   assertthat::assert_that(is.ordered(x), msg = "This method is meant to be called on ordered factors")
   tt <- table(x)

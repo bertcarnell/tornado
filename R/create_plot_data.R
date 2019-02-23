@@ -13,6 +13,7 @@
 #' @return the data to create the tornado plot
 #'
 #' @importFrom assertthat assert_that
+#' @importFrom stats terms predict predict.lm predict.glm
 #' @noRd
 .create_plot_data <- function(model, modeldata, type="PercentChange", alpha=0.10,
                               alt.order=NA, dict=NA)
@@ -22,7 +23,7 @@
   assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
                           msg = "type must be PercentChagne, percentiles, or ranges")
 
-  used_variables <- rownames(attr(terms(model), "factors"))[-1]
+  used_variables <- rownames(attr(stats::terms(model), "factors"))[-1]
 
   if (length(dict) == 1 && is.na(dict))
   {
@@ -35,7 +36,7 @@
   } else
   {
     assertthat::assert_that(all(names(dict) == c("Orig.Node.Name", "Description.for.Presentation")))
-    assertthat::assert_that(all(var_final %in% dict$Orig.Node.Name))
+    assertthat::assert_that(all(used_variables %in% dict$Orig.Node.Name))
   }
 
   training_data <- subset(modeldata, select = used_variables)
@@ -106,6 +107,8 @@
 #' @param type the type of tornado plot
 #' @param alpha the percentile or alpha level
 #'
+#' @importFrom stats quantile
+#'
 #' @return a list of the endpoints and levels
 #' @noRd
 .create_endpoints <- function(training_data, means, type, alpha)
@@ -129,7 +132,7 @@
   {
     if (length(which_factor) > 0)
     {
-      endpoints <- apply(training_data[-which_factor], 2, quantile, probs = c(alpha, 1 - alpha))
+      endpoints <- apply(training_data[-which_factor], 2, stats::quantile, probs = c(alpha, 1 - alpha))
       names(endpoints) <- names(means[-which_factor])
       endpoints2 <- rbind(means[,which_factor], means[,which_factor])
       endpoints <- cbind(endpoints, endpoints2)

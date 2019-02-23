@@ -5,7 +5,8 @@
 \title{Survreg Tornado Diagram}
 \usage{
 \method{tornado}{survreg}(model, modeldata, type = "PercentChange",
-  alpha = 0.1, alt.order = NA, dict = NA, xlabel = "Response Rate")
+  alpha = 0.1, alt.order = NA, dict = NA, xlabel = "Response Rate",
+  ...)
 }
 \arguments{
 \item{model}{a survreg object}
@@ -21,6 +22,8 @@
 \item{dict}{a dictionary to translate variables for the plot}
 
 \item{xlabel}{a label for the x-axis}
+
+\item{...}{further arguments}
 }
 \value{
 the plot invisibly
@@ -29,6 +32,8 @@ the plot invisibly
 Survreg Tornado Diagram
 }
 \examples{
-gtest <- survreg(Surv(futime, fustat) ~ ecog.ps + rx, ovarian, dist='weibull', scale=1)
+require(survival)
+gtest <- survreg(Surv(futime, fustat) ~ ecog.ps + rx, ovarian,
+                           dist='weibull', scale=1)
 tornado(gtest, ovarian, type = "PercentChange", alpha = 0.10, xlabel = "futime")
 }

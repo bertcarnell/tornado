@@ -6,7 +6,7 @@
 \usage{
 \method{tornado}{cv.glmnet}(model, modeldata, form, s = "lambda.1se",
   type = "PercentChange", alpha = 0.1, alt.order = NA, dict = NA,
-  xlabel = "Response Rate")
+  xlabel = "Response Rate", ...)
 }
 \arguments{
 \item{model}{a \code{cv.glmnet} object}
@@ -26,6 +26,8 @@
 \item{dict}{a dictionary to translate variables for the plot}
 
 \item{xlabel}{a label for the x-axis}
+
+\item{...}{further arugments}
 }
 \value{
 the plot
@@ -36,6 +38,7 @@ GLMNET Tornado Diagram
 \examples{
 mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
 mm <- model.matrix(mf, mf)
-gtest <- cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se", type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
+tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se",
+        type = "PercentChange", alpha = 0.10, xlabel = "MPG")
 }

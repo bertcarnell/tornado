@@ -16,4 +16,6 @@ RoxygenNote: 6.1.1
 Imports: 
     survival,
     glmnet,
-    assertthat
+    assertthat,
+    ggplot2,
+    scales

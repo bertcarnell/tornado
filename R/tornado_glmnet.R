@@ -11,6 +11,7 @@
 #' @param alt.order an alternate order for the plot
 #' @param dict a dictionary to translate variables for the plot
 #' @param xlabel a label for the x-axis
+#' @param ... further arugments
 #'
 #' @return the plot
 #' @export
@@ -18,15 +19,18 @@
 #' @importFrom scales percent
 #' @import ggplot2
 #' @importFrom glmnet glmnet cv.glmnet predict.cv.glmnet
+#' @importFrom stats model.frame terms model.matrix predict
 #'
 #' @examples
 #' mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
 #' mm <- model.matrix(mf, mf)
-#' gtest <- cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-#' tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se", type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+#' gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
+#' tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se",
+#'         type = "PercentChange", alpha = 0.10, xlabel = "MPG")
 tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
                            type="PercentChange", alpha=0.10,
-                           alt.order=NA, dict=NA, xlabel="Response Rate")
+                           alt.order=NA, dict=NA, xlabel="Response Rate",
+                           ...)
 {
   # form <- formula(mpg ~ cyl*wt*hp)
   # modeldata <- mtcars
@@ -38,6 +42,7 @@ tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
   # alpha <- 0.10
   # dict <- NA
 
+  extraArguments <- list(...)
   assertthat::assert_that(is.data.frame(modeldata),
                           msg = "The data must be contained in a data.frame")
   assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
@@ -57,7 +62,7 @@ tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
   } else
   {
     assertthat::assert_that(all(names(dict) == c("Orig.Node.Name", "Description.for.Presentation")))
-    assertthat::assert_that(all(var_final %in% dict$Orig.Node.Name))
+    assertthat::assert_that(all(used_variables %in% dict$Orig.Node.Name))
   }
 
   training_data <- subset(modeldata, select = used_variables)
@@ -99,7 +104,7 @@ tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
 
   pretty_break <- pretty(plotdat$value, n = 5)
 
-  ggp <- ggplot(plotdat, aes(x = variable, y = value, fill = Level)) +
+  ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
     geom_bar(position = "identity", stat = "identity") +
     coord_flip() +
     ylab(xlabel) +
