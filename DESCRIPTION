@@ -1,0 +1,19 @@
+Package: tornado
+Title: Draw Tornado Diagrams for Mdoel Sensitivity
+Version: 0.1
+Authors@R: 
+    person(given = "Rob",
+           family = "Carnell",
+           role = c("aut", "cre"),
+           email = "bertcarnell@gmail.com")
+Description: This package draws tornado diagrams for model sensitivity.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat
+RoxygenNote: 6.1.1
+Imports: 
+    survival,
+    glmnet,
+    assertthat
