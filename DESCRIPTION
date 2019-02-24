@@ -18,4 +18,6 @@ Imports:
     glmnet,
     assertthat,
     ggplot2,
-    scales
+    scales,
+    grid,
+    gridExtra
