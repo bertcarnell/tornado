@@ -1,0 +1,16 @@
+language: r
+
+matrix:
+  include:
+    - dist: xenial
+      r: release
+    - dist: trusty
+      r: devel
+    - os: osx
+      r: release
+
+sudo: false
+
+cache: packages
+warnings_are_errors: true
+r_check_args: "--as-cran"
