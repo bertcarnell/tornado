@@ -1,3 +1,4 @@
+^codecov\.yml$
 ^LICENSE$
 ^tornado\.Rproj$
 ^\.Rproj\.user$

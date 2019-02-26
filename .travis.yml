@@ -4,6 +4,7 @@ matrix:
   include:
     - dist: xenial
       r: release
+      after_success: Rscript -e 'covr::codecov()'
     - dist: trusty
       r: devel
     - os: osx
