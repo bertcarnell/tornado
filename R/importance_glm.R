@@ -4,7 +4,7 @@
 #'
 #' @param model_final a glm object
 #' @param model_null a glm object for the null model
-#' @param dict a dictionary to translate the model variables to plotting vriables
+#' @param dict a dictionary to translate the model variables to plotting variables
 #' @param ... additional arguments
 #'
 #' @return a ggplot2 object
