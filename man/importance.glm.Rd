@@ -11,7 +11,7 @@
 
 \item{model_null}{a glm object for the null model}
 
-\item{dict}{a dictionary to translate the model variables to plotting vriables}
+\item{dict}{a dictionary to translate the model variables to plotting variables}
 
 \item{...}{additional arguments}
 }

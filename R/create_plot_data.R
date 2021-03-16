@@ -1,6 +1,6 @@
 # Copyright 2019 Robert Carnell
 
-#' Internal Method to create Plot Data
+#' Internal Method to create Plot Data in tornado plots
 #'
 #' @param model a glm object
 #' @param modeldata the data that the model was fit with
@@ -18,6 +18,41 @@
 .create_plot_data <- function(model, modeldata, type="PercentChange", alpha=0.10,
                               alt.order=NA, dict=NA)
 {
+  if (FALSE)
+  {
+    # no factors
+    model <- lm(mpg ~ cyl*wt*hp, data = mtcars)
+    modeldata <- mtcars
+    type <- "PercentChange"
+    alpha <- 0.10
+    alt.order <- NA
+    dict <- NA
+    # some factors
+    modeldata <- mtcars
+    modeldata$cyl <- as.factor(mtcars$cyl)
+    modeldata$vs <- as.factor(mtcars$vs)
+    model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
+    type <- "PercentChange"
+    alpha <- 0.10
+    alt.order <- NA
+    dict <- NA
+    # one factors
+    modeldata <- mtcars
+    modeldata$cyl <- as.factor(mtcars$cyl)
+    model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
+    type <- "PercentChange"
+    alpha <- 0.10
+    alt.order <- NA
+    dict <- NA
+    # one factors
+    modeldata <- mtcars
+    modeldata$cyl <- as.factor(mtcars$cyl)
+    model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
+    type <- "ranges"
+    alpha <- 0.10
+    alt.order <- NA
+    dict <- NA
+  }
   assertthat::assert_that(is.data.frame(modeldata),
                           msg = "The data must be contained in a data.frame")
   assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
@@ -73,138 +108,30 @@
                              ordered = FALSE)
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
-  return(list(plotdat = plotdat, pmeans = pmeans))
-}
-
-
-#' Create training data column means
-#'
-#' @param training_data a data.frame
-#'
-#' @return a data.frame of means
-#' @noRd
-.create_means <- function(training_data)
-{
-  means <- data.frame(lapply(training_data, function(x)
+  # if there are factors in the data, add a new plotting element to add points
+  #   where the factor predictions are
+  ind <- which(sapply(training_data, class) == "factor")
+  if (length(ind) > 0)
   {
-    if (is.numeric(x))
+    factor_results <- vector("list", length = length(ind))
+    factor_predictions <- vector("list", length = length(ind))
+    for (i in seq_along(ind))
     {
-      return(mean(x))
-    } else if (is.factor(x))
-    {
-      tt <- table(x)
-      ttmax <- names(tt[which.max(tt)])
-      return(factor(ttmax, levels = levels(x)))
+      nlevs <- nlevels(training_data[,ind[i]])
+      tempmeans <- NULL
+      for (j in 1:nlevs)
+      {
+        tempmeans <- rbind(tempmeans, means)
+      }
+      tempmeans[,ind[i]] <- levels(training_data[,ind[i]])
+      factor_predictions[[i]] <- predict(model, newdata = tempmeans)
+      factor_results[[i]] <- data.frame(variable = rep(names(training_data)[ind[i]], nlevs),
+                                        value = factor_predictions[[i]])
     }
-  }))
-  return(means)
-}
-
-#' Create variable endpoints
-#'
-#' @param training_data the data.frame with training data
-#' @param means the data.frame with variable means
-#' @param type the type of tornado plot
-#' @param alpha the percentile or alpha level
-#'
-#' @importFrom stats quantile
-#'
-#' @return a list of the endpoints and levels
-#' @noRd
-.create_endpoints <- function(training_data, means, type, alpha)
-{
-  which_factor <- which(sapply(training_data, is.factor))
-  lmeans <- length(means)
-
-  if (type == "PercentChange" && length(which_factor) > 0)
-  {
-    warning("The PercentChange method will not show variation for factor variables")
-  } else if (type == "percentiles" && length(which_factor) > 0)
-  {
-    warning("The percentiles method will not show variation for factor variables")
-  }
-
-  if (lmeans == length(which_factor))
-  {
-    stop("all variables are factors")
-  }
-  if (type == "percentiles" && alpha > 0 && alpha < 0.5)
-  {
-    if (length(which_factor) > 0)
-    {
-      endpoints <- apply(training_data[-which_factor], 2, stats::quantile, probs = c(alpha, 1 - alpha))
-      names(endpoints) <- names(means[-which_factor])
-      endpoints2 <- rbind(means[,which_factor], means[,which_factor])
-      endpoints <- cbind(endpoints, endpoints2)
-    } else
-    {
-      endpoints <- apply(training_data, 2, quantile, probs = c(alpha, 1 - alpha))
-      names(endpoints) <- names(means)
-    }
-    Level <- c(paste0(round(alpha*100,0),"th"),
-               paste0(round((1 - alpha)*100,0), "th"))
-  } else if (type == "PercentChange" && alpha > 0)
-  {
-    if (length(means[-which_factor]) == 1)
-    {
-      endpoints <- data.frame(c(1 - alpha, 1 + alpha) * as.numeric(means[-which_factor]))
-      names(endpoints) <- names(means[-which_factor])
-      endpoints2 <- rbind(means[,which_factor], means[,which_factor])
-      endpoints <- cbind(endpoints, endpoints2)
-    } else if (length(which_factor) > 1)
-    {
-      endpoints <- cbind(c(1 - alpha, 1 + alpha)) %*% as.numeric(means[-which_factor])
-      names(endpoints) <- names(means[-which_factor])
-      endpoints2 <- rbind(means[,which_factor], means[,which_factor])
-      endpoints <- cbind(endpoints, endpoints2)
-    } else
-    {
-      endpoints <- cbind(c(1 - alpha, 1 + alpha)) %*% as.numeric(means)
-      names(endpoints) <- names(means)
-    }
-    Level <- scales::percent(c(1 - alpha, 1 + alpha))
-  } else if (type == "ranges")
-  {
-    if (length(which_factor) > 0)
-    {
-      stop("needs more work for factors")
-    } else
-    {
-      endpoints <- apply(training_data, 2, range)
-      names(endpoints) <- names(means)
-    }
-    Level <- c("Lower","Upper")
+    factor_plotdat <- do.call("rbind", factor_results)
   } else
   {
-    stop("command not recognized")
+    factor_plotdat <- NA
   }
-
-  return(list(endpoints = endpoints, Level = Level))
-}
-
-#' create the high and low ends of the variable ranges
-#'
-#' @param means the variable means
-#' @param endpoints the endspoints of the data
-#'
-#' @return a data.frame
-#' @noRd
-.create_data_low_high <- function(means, endpoints)
-{
-  lmeans <- length(means)
-  datlow <- lapply(1:lmeans, function(x) return(means))
-  datlow <- do.call(rbind, datlow)
-  for (i in 1:lmeans)
-  {
-    datlow[i,i] <- endpoints[1,which(names(endpoints) == names(datlow)[i])]
-  }
-  dathigh <- lapply(1:lmeans, function(x) return(means))
-  dathigh <- do.call(rbind, dathigh)
-  for (i in 1:lmeans)
-  {
-    dathigh[i,i] <- endpoints[2,which(names(endpoints) == names(dathigh)[i])]
-  }
-
-  dat <- as.data.frame(rbind(datlow, dathigh))
-  return(dat)
+  return(list(plotdat = plotdat, pmeans = pmeans, factor_plotdat = factor_plotdat))
 }

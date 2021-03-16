@@ -118,8 +118,8 @@
   #69BE28 = light green
   #427730 = dark green
 
-  ggp <- ggplot(dat2, aes_string(x = "variable", y = "value", fill = "posit",
-                                 alpha = "posit")) +
+  ggp <- ggplot(dat2, aes_string(x = "variable", y = "value", fill = "posit")) + #,
+                                 #alpha = "posit")) +
     geom_bar(stat = "identity") +
     coord_flip() +
     theme_bw() +
@@ -129,8 +129,8 @@
                                     "Cum" = "#427730"),
                       guide = "none") +
     # make the middle bar transparent
-    scale_alpha_manual(values = list("Alone" = 1, "Space" = 0, "Cum" = 1),
-                       guide = "none") +
+    #scale_alpha_manual(values = list("Alone" = 1, "Space" = 0, "Cum" = 1),
+    #                   guide = "none") +
     xlab("") +
     scale_y_continuous(labels = scales::percent)
   if (isDeviance)

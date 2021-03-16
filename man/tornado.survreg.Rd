@@ -4,9 +4,16 @@
 \alias{tornado.survreg}
 \title{Survreg Tornado Diagram}
 \usage{
-\method{tornado}{survreg}(model, modeldata, type = "PercentChange",
-  alpha = 0.1, alt.order = NA, dict = NA, xlabel = "Response Rate",
-  ...)
+\method{tornado}{survreg}(
+  model,
+  modeldata,
+  type = "PercentChange",
+  alpha = 0.1,
+  alt.order = NA,
+  dict = NA,
+  xlabel = "Response Rate",
+  ...
+)
 }
 \arguments{
 \item{model}{a survreg object}

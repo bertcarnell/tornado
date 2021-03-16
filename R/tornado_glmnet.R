@@ -18,7 +18,7 @@
 #' @method tornado cv.glmnet
 #' @importFrom scales percent
 #' @import ggplot2
-#' @importFrom glmnet glmnet cv.glmnet predict.cv.glmnet
+#' @importFrom glmnet glmnet cv.glmnet predict.glmnet
 #' @importFrom stats model.frame terms model.matrix predict
 #'
 #' @examples

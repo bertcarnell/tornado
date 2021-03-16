@@ -4,9 +4,18 @@
 \alias{tornado.cv.glmnet}
 \title{GLMNET Tornado Diagram}
 \usage{
-\method{tornado}{cv.glmnet}(model, modeldata, form, s = "lambda.1se",
-  type = "PercentChange", alpha = 0.1, alt.order = NA, dict = NA,
-  xlabel = "Response Rate", ...)
+\method{tornado}{cv.glmnet}(
+  model,
+  modeldata,
+  form,
+  s = "lambda.1se",
+  type = "PercentChange",
+  alpha = 0.1,
+  alt.order = NA,
+  dict = NA,
+  xlabel = "Response Rate",
+  ...
+)
 }
 \arguments{
 \item{model}{a \code{cv.glmnet} object}

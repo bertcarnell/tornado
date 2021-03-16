@@ -4,8 +4,15 @@
 \alias{tornado.glm}
 \title{GLM Tornado Diagram}
 \usage{
-\method{tornado}{glm}(model, type = "PercentChange", alpha = 0.1,
-  alt.order = NA, dict = NA, xlabel = "Response Rate", ...)
+\method{tornado}{glm}(
+  model,
+  type = "PercentChange",
+  alpha = 0.1,
+  alt.order = NA,
+  dict = NA,
+  xlabel = "Response Rate",
+  ...
+)
 }
 \arguments{
 \item{model}{a glm object}

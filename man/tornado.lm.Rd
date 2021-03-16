@@ -4,8 +4,15 @@
 \alias{tornado.lm}
 \title{Linear Model Tornado Diagram}
 \usage{
-\method{tornado}{lm}(model, type = "PercentChange", alpha = 0.1,
-  alt.order = NA, dict = NA, xlabel = "Response Rate", ...)
+\method{tornado}{lm}(
+  model,
+  type = "PercentChange",
+  alpha = 0.1,
+  alt.order = NA,
+  dict = NA,
+  xlabel = "Response Rate",
+  ...
+)
 }
 \arguments{
 \item{model}{a lm object}
