@@ -7,4 +7,6 @@ test_that("tornado glmnet works", {
   g <- tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
                type = "PercentChange", alpha = 0.10, xlabel = "MPG")
   expect_equal(class(g), c("gg","ggplot"))
+  g <- g + ggtitle("Test: glmnet")
+  plot(g)
 })

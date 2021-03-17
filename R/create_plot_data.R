@@ -126,9 +126,9 @@
       tempmeans[,ind[i]] <- levels(training_data[,ind[i]])
       factor_predictions[[i]] <- predict(model, newdata = tempmeans)
       factor_results[[i]] <- data.frame(variable = rep(names(training_data)[ind[i]], nlevs),
-                                        value = factor_predictions[[i]])
+                                        value = factor_predictions[[i]] - c(pmeans))
     }
-    factor_plotdat <- do.call("rbind", factor_results)
+    factor_plotdat <- as.data.frame(do.call("rbind", factor_results))
   } else
   {
     factor_plotdat <- NA
