@@ -3,11 +3,16 @@ name: R-CMD-CHECK
 # run on push, pull_request, and schedule 15 min, 2 hour, 6th day, any month, any day of the week
 on:
   push:
-    branches: [ master ]
+    paths-ignore:
+      - 'docs/**'
+      - 'tornado.Rproj'
+      - 'README.md'
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
-  schedule:
-    - cron: "15 2 6 * *"
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
   R-CMD-check:
@@ -69,14 +74,14 @@ jobs:
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("covr")
         shell: Rscript {0}
-        
+
       - name: Check Standard
         if: ( matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel' ) == false
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
-        
+
       - name: Test Coverage
         if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
         run: covr::codecov()
@@ -104,7 +109,7 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-          
-          
-          
-          
+
+
+
+

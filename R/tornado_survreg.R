@@ -19,10 +19,9 @@
 #' @import survival
 #'
 #' @examples
-#' require(survival)
-#' gtest <- survreg(Surv(futime, fustat) ~ ecog.ps + rx, ovarian,
+#' gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx, survival::ovarian,
 #'                            dist='weibull', scale=1)
-#' tornado(gtest, ovarian, type = "PercentChange", alpha = 0.10, xlabel = "futime")
+#' tornado(gtest, survival::ovarian, type = "PercentChange", alpha = 0.10, xlabel = "futime")
 tornado.survreg <- function(model, modeldata, type="PercentChange", alpha=0.10,
                         alt.order=NA, dict=NA, xlabel="Response Rate",
                         ...)
