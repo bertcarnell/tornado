@@ -6,4 +6,6 @@ test_that("importance.survreg works", {
                                    dist = "weibull")
   g <- importance(model_final, survival::ovarian, 100)
   expect_equal(class(g), c("gg","ggplot"))
+  g <- g + ggtitle("Survreg Importance")
+  plot(g)
 })
