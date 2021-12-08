@@ -5,7 +5,7 @@
 \title{Caret Tornado Diagram}
 \usage{
 \method{tornado}{train}(
-  model_train,
+  model,
   type = "PercentChange",
   alpha = 0.1,
   alt.order = NA,
@@ -15,6 +15,8 @@
 )
 }
 \arguments{
+\item{model}{a \code{caret} object}
+
 \item{type}{PercentChange, percentiles, or ranges}
 
 \item{alpha}{the level of change}
@@ -26,8 +28,6 @@
 \item{xlabel}{a label for the x-axis}
 
 \item{...}{further arugments}
-
-\item{model}{a \code{caret} object}
 }
 \value{
 the plot
@@ -36,6 +36,10 @@ the plot
 Caret Tornado Diagram
 }
 \examples{
-gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
-tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+if (requireNamespace("caret", quietly = TRUE) &
+    requireNamespace("randomForest", quietly = TRUE))
+{
+  gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
+  tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+}
 }

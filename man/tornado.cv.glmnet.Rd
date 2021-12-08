@@ -45,9 +45,12 @@ the plot
 GLMNET Tornado Diagram
 }
 \examples{
-mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
-mm <- model.matrix(mf, mf)
-gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se",
-        type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+if (requireNamespace("glmnet", quietly = TRUE))
+{
+  mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
+  mm <- model.matrix(mf, mf)
+  gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
+  tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se",
+          type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+}
 }

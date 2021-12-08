@@ -1,5 +1,5 @@
 Package: tornado
-Title: Tornado Diagrams for Mdoel Sensitivity
+Title: Tornado Diagrams for Model Sensitivity
 Version: 0.1.1
 Authors@R: 
     person(given = "Rob",
@@ -12,11 +12,13 @@ Encoding: UTF-8
 LazyData: true
 Suggests: 
     testthat,
-    covr
+    covr,
+    caret,
+    glmnet,
+    randomForest
 RoxygenNote: 7.1.2
 Imports: 
     survival,
-    glmnet,
     assertthat,
     ggplot2,
     scales,

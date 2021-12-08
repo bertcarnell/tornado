@@ -26,9 +26,12 @@ a plot of class ggplot2
 Plot Variable Importance for a GLMNET model
 }
 \examples{
-form <- formula(mpg ~ cyl*wt*hp)
-mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
-mm <- model.matrix(mf, mf)
-gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
-importance(gtest, mtcars, form)
+if (requireNamespace("glmnet", quietly = TRUE))
+{
+  form <- formula(mpg ~ cyl*wt*hp)
+  mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
+  mm <- model.matrix(mf, mf)
+  gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
+  importance(gtest, mtcars, form)
+}
 }

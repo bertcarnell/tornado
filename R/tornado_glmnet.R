@@ -18,15 +18,17 @@
 #' @method tornado cv.glmnet
 #' @importFrom scales percent
 #' @import ggplot2
-#' @importFrom glmnet glmnet cv.glmnet predict.glmnet
 #' @importFrom stats model.frame terms model.matrix predict
 #'
 #' @examples
-#' mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
-#' mm <- model.matrix(mf, mf)
-#' gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-#' tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se",
-#'         type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+#' if (requireNamespace("glmnet", quietly = TRUE))
+#' {
+#'   mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
+#'   mm <- model.matrix(mf, mf)
+#'   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
+#'   tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se",
+#'           type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+#' }
 tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
                            type="PercentChange", alpha=0.10,
                            alt.order=NA, dict=NA, xlabel="Response Rate",
@@ -41,6 +43,9 @@ tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
   # type <- "PercentChange"
   # alpha <- 0.10
   # dict <- NA
+
+  assertthat::assert_that(requireNamespace("glmnet", quietly = TRUE),
+                          msg = "The glmnet package is required to use this method")
 
   extraArguments <- list(...)
   assertthat::assert_that(is.data.frame(modeldata),
@@ -77,11 +82,13 @@ tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
 
   # predict the mean response
   newx <- model.matrix(form, model.frame(form, data = means))
+  # glmnet::predict.cv.glmnet is not exported, just call predict
   pmeans <- predict(model, newx = newx, s = s, type = "response")
 
   # predict on the range of possibilities
   dat <- .create_data_low_high(means, endpoints)
   newx <- model.matrix(form, model.frame(form, data = dat))
+  # glmnet::predict.cv.glmnet is not exported, just call predict
   pdat <- predict(model, newx, s = s, type = "response")
 
   if (is.na(alt.order))

@@ -1,4 +1,4 @@
-# Copyright 2019 Robert Carnell
+# Copyright 2021 Robert Carnell
 
 #' Caret Tornado Diagram
 #'
@@ -12,33 +12,51 @@
 #'
 #' @return the plot
 #' @export
-#' @importFrom caret train
+#' @method tornado train
 #' @import ggplot2
 #' @importFrom stats model.frame terms model.matrix predict
+#' @importFrom assertthat assert_that
 #'
 #' @examples
-#' gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
-#' tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
-tornado.train <- function(model_train,
+#' if (requireNamespace("caret", quietly = TRUE) &
+#'     requireNamespace("randomForest", quietly = TRUE))
+#' {
+#'   gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
+#'   tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+#' }
+tornado.train <- function(model,
                            type="PercentChange", alpha=0.10,
                            alt.order=NA, dict=NA, xlabel="Response Rate",
                            ...)
 {
-  # model_train <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
+  # model <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
   # type <- "PercentChange"
   # alpha <- 0.10
   # dict <- NA
   # xlabel <- "MPG"
   # alt.order <- NA
 
+  # mydat <- mtcars
+  # mydat$cyl <- factor(mydat$cyl)
+  # mydat$vs <- factor(mydat$vs)
+  # model <- caret::train(x = subset(mydat, select = -mpg), y = mydat$mpg, method = "rf")
+  # type <- "PercentChange"
+  # alpha <- 0.10
+  # dict <- NA
+  # xlabel <- "MPG"
+  # alt.order <- NA
+
+  assertthat::assert_that(requireNamespace("caret", quietly = TRUE),
+                          msg = "The caret package is required to use this method")
+
   extraArguments <- list(...)
   assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
                           msg = "type must be PercentChagne, percentiles, or ranges")
 
-  assertthat::assert_that(model_train$modelType == "Regression",
+  assertthat::assert_that(model$modelType == "Regression",
                           msg = "Only Regression predictions are currently implemented")
 
-  used_variables <- names(model_train$trainingData)[!grepl("[.]outcome", names(model_train$trainingData))]
+  used_variables <- names(model$trainingData)[!grepl("[.]outcome", names(model$trainingData))]
 
   if (length(dict) == 1 && is.na(dict))
   {
@@ -54,22 +72,23 @@ tornado.train <- function(model_train,
     assertthat::assert_that(all(used_variables %in% dict$Orig.Node.Name))
   }
 
-  training_data <- subset(model_train$trainingData, select = used_variables)
+  training_data <- subset(model$trainingData, select = used_variables)
   means <- .create_means(training_data)
   names_means <- names(means)
   lmeans <- length(means)
 
+  # factors are held at their base value at this step
   ret <- .create_endpoints(training_data, means, type, alpha)
   endpoints <- ret$endpoints
   Level <- ret$Level
   base_Level <- c("A","B")
 
   # predict the mean response
-  pmeans <- predict(model_train, newdata = means, type = "raw")
+  pmeans <- predict(model, newdata = means, type = "raw")
 
   # predict on the range of possibilities
   dat <- .create_data_low_high(means, endpoints)
-  pdat <- predict(model_train, newdata = dat, type = "raw")
+  pdat <- predict(model, newdata = dat, type = "raw")
 
   if (is.na(alt.order))
   {
@@ -89,7 +108,34 @@ tornado.train <- function(model_train,
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
 
-  pretty_break <- pretty(plotdat$value, n = 5)
+  # if there are factors in the data, add a new plotting element to add points
+  #   where the factor predictions are
+  ind <- which(sapply(training_data, class) == "factor")
+  if (length(ind) > 0)
+  {
+    factor_results <- vector("list", length = length(ind))
+    factor_predictions <- vector("list", length = length(ind))
+    for (i in seq_along(ind))
+    {
+      nlevs <- nlevels(training_data[,ind[i]])
+      tempmeans <- NULL
+      for (j in 1:nlevs)
+      {
+        tempmeans <- rbind(tempmeans, means)
+      }
+      character_levels <- levels(training_data[,ind[i]])
+      tempmeans[,ind[i]] <- factor(character_levels, levels = character_levels)
+      factor_predictions[[i]] <- predict(model, newdata = tempmeans)
+      factor_results[[i]] <- data.frame(variable = rep(names(training_data)[ind[i]], nlevs),
+                                        value = factor_predictions[[i]] - c(pmeans))
+    }
+    factor_plotdat <- as.data.frame(do.call("rbind", factor_results))
+    pretty_break <- pretty(c(plotdat$value, factor_plotdat$value), n = 5)
+  } else
+  {
+    factor_plotdat <- NA
+    pretty_break <- pretty(plotdat$value, n = 5)
+  }
 
   ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
     geom_bar(position = "identity", stat = "identity") +
@@ -98,6 +144,11 @@ tornado.train <- function(model_train,
     xlab("") +
     scale_fill_manual(values = c("grey", "#69BE28")) +
     theme_bw()
+
+  if (is.data.frame(factor_plotdat))
+  {
+    ggp <- ggp + geom_point(aes_string(x = "variable", y = "value"), data = factor_plotdat, fill = "black")
+  }
 
   ggp <- ggp + scale_y_continuous(breaks = pretty_break,
                                   labels = format(c(pretty_break) + c(pmeans), digits = 4))

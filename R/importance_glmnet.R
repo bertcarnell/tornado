@@ -13,15 +13,18 @@
 #' @export
 #'
 #' @importFrom stats model.matrix model.frame
-#' @importFrom glmnet glmnet
+#' @importFrom assertthat assert_that
 #' @import ggplot2
 #'
 #' @examples
-#' form <- formula(mpg ~ cyl*wt*hp)
-#' mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
-#' mm <- model.matrix(mf, mf)
-#' gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
-#' importance(gtest, mtcars, form)
+#' if (requireNamespace("glmnet", quietly = TRUE))
+#' {
+#'   form <- formula(mpg ~ cyl*wt*hp)
+#'   mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
+#'   mm <- model.matrix(mf, mf)
+#'   gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
+#'   importance(gtest, mtcars, form)
+#' }
 importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm = 500, ...)
 {
   #form <- formula(mpg ~ cyl*wt*hp)
@@ -37,6 +40,9 @@ importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm
   #model_final <- gtest
   #model_data <- mtcars
   #form <- formula(mpg ~ cyl*wt*hp)
+
+  assertthat::assert_that(requireNamespace("glmnet", quietly = TRUE),
+                          msg = "The glmnet package is required to use this method")
 
   otherVariables <- list(...)
   modelframe <- stats::model.frame(form, data = model_data)

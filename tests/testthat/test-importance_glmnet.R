@@ -1,6 +1,8 @@
 context("test-importance_glmnet")
 
 test_that("importance glmnet works", {
+  testthat::skip_if_not_installed("glmnet")
+
   form <- formula(mpg ~ cyl*wt*hp)
   mf <- model.frame(form, data = mtcars)
   mm <- model.matrix(mf, mf)
