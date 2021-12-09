@@ -32,6 +32,6 @@ if (requireNamespace("glmnet", quietly = TRUE))
   mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
   mm <- model.matrix(mf, mf)
   gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
-  importance(gtest, mtcars, form)
+  importance(gtest, mtcars, form, nperm = 100)
 }
 }

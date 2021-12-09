@@ -1,12 +1,12 @@
 Package: tornado
-Title: Tornado Diagrams for Model Sensitivity
+Title: Tornado Plots for Model Sensitivity
 Version: 0.1.1
 Authors@R: 
     person(given = "Rob",
            family = "Carnell",
            role = c("aut", "cre"),
            email = "bertcarnell@gmail.com")
-Description: This package draws tornado diagrams for model sensitivity.
+Description: Draws tornado plots for model sensitivity to univariate changes 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
