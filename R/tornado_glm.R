@@ -30,8 +30,15 @@ tornado.glm <- function(model, type="PercentChange", alpha=0.10,
                            alt.order = alt.order, dict = dict)
   plotdat <- ret$plotdat
   pmeans <- ret$pmeans
+  factordat <- ret$factor_plotdat
 
-  pretty_break <- pretty(plotdat$value, n = 5)
+  if (is.data.frame(factordat))
+  {
+    pretty_break <- pretty(c(plotdat$value, factordat$value), n = 5)
+  } else
+  {
+    pretty_break <- pretty(plotdat$value, n = 5)
+  }
 
   ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
     geom_bar(position = "identity", stat = "identity") +
@@ -40,6 +47,11 @@ tornado.glm <- function(model, type="PercentChange", alpha=0.10,
     xlab("") +
     scale_fill_manual(values = c("grey", "#69BE28")) +
     theme_bw()
+
+  if (is.data.frame(factordat))
+  {
+    ggp <- ggp + geom_point(aes_string(x = "variable", y = "value"), data = factordat, fill = "black")
+  }
 
   if (family(model)$family %in% c("binomial", "quasibinomial"))
   {

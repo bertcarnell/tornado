@@ -26,14 +26,31 @@ tornado.survreg <- function(model, modeldata, type="PercentChange", alpha=0.10,
                         alt.order=NA, dict=NA, xlabel="Response Rate",
                         ...)
 {
+  # mydat <- survival::ovarian
+  # mydat$resid.ds <- factor(mydat$resid.ds)
+  # model <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx + resid.ds, mydat, dist = 'weibull', scale = 1)
+  # modeldata <- mydat
+  # type <- "PercentChange"
+  # alpha <- 0.10
+  # alt.order <- NA
+  # dict <- NA
+  # xlabel = "Survival Time"
+
   extraArguments <- list(...)
   ret <- .create_plot_data(model = model, modeldata = modeldata,
                            type = type, alpha = alpha,
                            alt.order = alt.order, dict = dict)
   plotdat <- ret$plotdat
   pmeans <- ret$pmeans
+  factordat <- ret$factor_plotdat
 
-  pretty_break <- pretty(plotdat$value, n = 5)
+  if (is.data.frame(factordat))
+  {
+    pretty_break <- pretty(c(plotdat$value, factordat$value), n = 5)
+  } else
+  {
+    pretty_break <- pretty(plotdat$value, n = 5)
+  }
 
   ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
     geom_bar(position = "identity", stat = "identity") +
@@ -42,6 +59,11 @@ tornado.survreg <- function(model, modeldata, type="PercentChange", alpha=0.10,
     xlab("") +
     scale_fill_manual(values = c("grey", "#69BE28")) +
     theme_bw()
+
+  if (is.data.frame(factordat))
+  {
+    ggp <- ggp + geom_point(aes_string(x = "variable", y = "value"), data = factordat, fill = "black")
+  }
 
   ggp <- ggp + scale_y_continuous(breaks = pretty_break,
                                   labels = format(pretty_break + pmeans, digits = 4))

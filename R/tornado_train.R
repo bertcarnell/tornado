@@ -58,19 +58,7 @@ tornado.train <- function(model,
 
   used_variables <- names(model$trainingData)[!grepl("[.]outcome", names(model$trainingData))]
 
-  if (length(dict) == 1 && is.na(dict))
-  {
-    dict <- data.frame(Orig.Node.Name = used_variables,
-                       Description.for.Presentation = used_variables)
-    if (any(grepl("x_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", dict$Orig.Node.Name)))
-    {
-      dict$Description.for.Presentation <- gsub("[xX]_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", "", dict$Description.for.Presentation)
-    }
-  } else
-  {
-    assertthat::assert_that(all(names(dict) == c("Orig.Node.Name", "Description.for.Presentation")))
-    assertthat::assert_that(all(used_variables %in% dict$Orig.Node.Name))
-  }
+  dict <- .create_dict(dict, used_variables)
 
   training_data <- subset(model$trainingData, select = used_variables)
   means <- .create_means(training_data)
@@ -83,12 +71,12 @@ tornado.train <- function(model,
   Level <- ret$Level
   base_Level <- c("A","B")
 
-  # predict the mean response
-  pmeans <- predict(model, newdata = means, type = "raw")
+  # predict the mean response (type = "raw" by default)
+  pmeans <- predict(model, newdata = means)
 
-  # predict on the range of possibilities
+  # predict on the range of possibilities (type = "raw" by default)
   dat <- .create_data_low_high(means, endpoints)
-  pdat <- predict(model, newdata = dat, type = "raw")
+  pdat <- predict(model, newdata = dat)
 
   if (is.na(alt.order))
   {
@@ -108,32 +96,13 @@ tornado.train <- function(model,
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
 
-  # if there are factors in the data, add a new plotting element to add points
-  #   where the factor predictions are
-  ind <- which(sapply(training_data, class) == "factor")
-  if (length(ind) > 0)
+  factor_plotdat <- .create_factor_plot_data(training_data, means, pmeans, model, "raw")
+
+  if (is.data.frame(factor_plotdat))
   {
-    factor_results <- vector("list", length = length(ind))
-    factor_predictions <- vector("list", length = length(ind))
-    for (i in seq_along(ind))
-    {
-      nlevs <- nlevels(training_data[,ind[i]])
-      tempmeans <- NULL
-      for (j in 1:nlevs)
-      {
-        tempmeans <- rbind(tempmeans, means)
-      }
-      character_levels <- levels(training_data[,ind[i]])
-      tempmeans[,ind[i]] <- factor(character_levels, levels = character_levels)
-      factor_predictions[[i]] <- predict(model, newdata = tempmeans)
-      factor_results[[i]] <- data.frame(variable = rep(names(training_data)[ind[i]], nlevs),
-                                        value = factor_predictions[[i]] - c(pmeans))
-    }
-    factor_plotdat <- as.data.frame(do.call("rbind", factor_results))
     pretty_break <- pretty(c(plotdat$value, factor_plotdat$value), n = 5)
   } else
   {
-    factor_plotdat <- NA
     pretty_break <- pretty(plotdat$value, n = 5)
   }
 

@@ -16,6 +16,24 @@ test_that("plotting gaussian glm works", {
   expect_equal(class(g), c("gg","ggplot"))
   g <- g + ggtitle("Test: Gaussian GLM ranges")
   plot(g)
+
+  mydat <- mtcars
+  mydat$cyl <- factor(mydat$cyl)
+  mydat$vs <- factor(mydat$vs)
+  gtest <- glm(mpg ~ cyl*wt*hp + vs, data = mydat, family = gaussian)
+  g <- tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+  g <- g + ggtitle("Test:  Gaussian GLM PercentChange with 2 factors")
+  plot(g)
+
+  g <- tornado(gtest, type = "ranges", alpha = NA, xlabel = "MPG")
+  expect_equal(class(g), c("gg","ggplot"))
+  g <- g + ggtitle("Test:  Gaussian GLM ranges with dictionary")
+  plot(g)
+
+  g <- tornado(gtest, type = "percentiles", alpha = 0.1, xlabel = "MPG")
+  expect_equal(class(g), c("gg","ggplot"))
+  g <- g + ggtitle("Test:  Gaussian GLM percentiles with dictionary")
+  plot(g)
 })
 
 test_that("plotting binomial glm works", {

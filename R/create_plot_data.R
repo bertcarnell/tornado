@@ -8,7 +8,6 @@
 #' @param alpha the level of change
 #' @param alt.order an alternate order for the plot
 #' @param dict a dictionary to translate variables for the plot
-#' @param xlabel a label for the x-axis
 #'
 #' @return the data to create the tornado plot
 #'
@@ -60,19 +59,7 @@
 
   used_variables <- rownames(attr(stats::terms(model), "factors"))[-1]
 
-  if (length(dict) == 1 && is.na(dict))
-  {
-    dict <- data.frame(Orig.Node.Name = used_variables,
-                       Description.for.Presentation = used_variables)
-    if (any(grepl("x_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", dict$Orig.Node.Name)))
-    {
-      dict$Description.for.Presentation <- gsub("[xX]_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", "", dict$Description.for.Presentation)
-    }
-  } else
-  {
-    assertthat::assert_that(all(names(dict) == c("Orig.Node.Name", "Description.for.Presentation")))
-    assertthat::assert_that(all(used_variables %in% dict$Orig.Node.Name))
-  }
+  dict <- .create_dict(dict, used_variables)
 
   training_data <- subset(modeldata, select = used_variables)
   means <- .create_means(training_data)
@@ -108,30 +95,8 @@
                              ordered = FALSE)
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
-  # if there are factors in the data, add a new plotting element to add points
-  #   where the factor predictions are
-  ind <- which(sapply(training_data, class) == "factor")
-  if (length(ind) > 0)
-  {
-    factor_results <- vector("list", length = length(ind))
-    factor_predictions <- vector("list", length = length(ind))
-    for (i in seq_along(ind))
-    {
-      nlevs <- nlevels(training_data[,ind[i]])
-      tempmeans <- NULL
-      for (j in 1:nlevs)
-      {
-        tempmeans <- rbind(tempmeans, means)
-      }
-      tempmeans[,ind[i]] <- levels(training_data[,ind[i]])
-      factor_predictions[[i]] <- predict(model, newdata = tempmeans)
-      factor_results[[i]] <- data.frame(variable = rep(names(training_data)[ind[i]], nlevs),
-                                        value = factor_predictions[[i]] - c(pmeans))
-    }
-    factor_plotdat <- as.data.frame(do.call("rbind", factor_results))
-  } else
-  {
-    factor_plotdat <- NA
-  }
+
+  factor_plotdat <- .create_factor_plot_data(training_data, means, pmeans, model, "response")
+
   return(list(plotdat = plotdat, pmeans = pmeans, factor_plotdat = factor_plotdat))
 }
