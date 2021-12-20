@@ -2,18 +2,56 @@
 % Please edit documentation in R/tornado.R
 \name{tornado}
 \alias{tornado}
-\title{Generic tornado method}
+\title{Generic tornado plotting method}
 \usage{
-tornado(model, ...)
+tornado(
+  model,
+  type,
+  alpha,
+  alt.order,
+  dict,
+  xlabel,
+  sensitivity_colors,
+  geom_bar_control,
+  ...
+)
 }
 \arguments{
 \item{model}{a model object}
 
-\item{...}{further arguments to tornado}
+\item{type}{PercentChange, percentiles, or ranges}
+
+\item{alpha}{the level of change}
+
+\item{alt.order}{an alternate order for the plot}
+
+\item{dict}{a dictionary to translate variables for the plot}
+
+\item{xlabel}{a label for the x-axis}
+
+\item{sensitivity_colors}{a two element character vector of the bar colors for a
+lower value and upper value}
+
+\item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
+
+\item{...}{further arugments, not used}
 }
 \value{
 a plot object
 }
 \description{
-Generic tornado method
+A tornado plot is a visualization of the range of outputs expected
+from a variety of inputs, or alternatively, the sensitivity of the output to the
+range of inputs.  The center of the tornado is plotted at the response
+expected from the mean of each input variable.  For a given variable, the width
+of the tornado is determined by the range of the variable, a multiplicative factor
+of the variable, or a quantile of the variable.  Variables are ordered vertically
+with the widest bar at the top and narrowest at the bottom.  Only one variable
+is moved from its mean value at a time.  Factors or categorical variables have also
+been added to these plots by plotting dots at the resulting output as each
+factor is varied through all of its levels.  The base factor level is chosen
+as the input variable for the center of the tornado.
+}
+\seealso{
+\code{\link{tornado.lm}} \code{\link{tornado.glm}} \code{\link{tornado.glmnet}} \code{\link{tornado.survreg}} \code{\link{tornado.train}}
 }

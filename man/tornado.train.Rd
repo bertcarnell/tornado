@@ -11,11 +11,15 @@
   alt.order = NA,
   dict = NA,
   xlabel = "Response Rate",
+  sensitivity_colors = c("grey", "#69BE28"),
+  class_number = NA,
+  geom_bar_control = list(width = NULL),
+  geom_point_control = list(fill = "black", col = "black"),
   ...
 )
 }
 \arguments{
-\item{model}{a \code{caret} object}
+\item{model}{a model object}
 
 \item{type}{PercentChange, percentiles, or ranges}
 
@@ -27,13 +31,33 @@
 
 \item{xlabel}{a label for the x-axis}
 
-\item{...}{further arugments}
+\item{sensitivity_colors}{a two element character vector of the bar colors for a
+lower value and upper value}
+
+\item{class_number}{for classification models, which number of the class that
+will be plotted}
+
+\item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
+
+\item{geom_point_control}{a list of \code{ggplot2::geom_point}}
+
+\item{...}{further arugments, not used}
 }
 \value{
 the plot
 }
 \description{
-Caret Tornado Diagram
+A tornado plot is a visualization of the range of outputs expected
+from a variety of inputs, or alternatively, the sensitivity of the output to the
+range of inputs.  The center of the tornado is plotted at the response
+expected from the mean of each input variable.  For a given variable, the width
+of the tornado is determined by the range of the variable, a multiplicative factor
+of the variable, or a quantile of the variable.  Variables are ordered vertically
+with the widest bar at the top and narrowest at the bottom.  Only one variable
+is moved from its mean value at a time.  Factors or categorical variables have also
+been added to these plots by plotting dots at the resulting output as each
+factor is varied through all of its levels.  The base factor level is chosen
+as the input variable for the center of the tornado.
 }
 \examples{
 if (requireNamespace("caret", quietly = TRUE) &

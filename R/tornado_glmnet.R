@@ -2,16 +2,12 @@
 
 #' GLMNET Tornado Diagram
 #'
-#' @param model a \code{cv.glmnet} object
+#' @inherit tornado description
+#'
+#' @inheritParams tornado
 #' @param modeldata the raw data used to fit the glmnet model
 #' @param form the model formula
 #' @param s Value(s) of the penalty parameter \code{lambda} at which predictions are required. Default is the value \code{s="lambda.1se"} stored on the CV object. Alternatively \code{s="lambda.min"} can be used. If s is numeric, it is taken as the value(s) of \code{lambda} to be used.
-#' @param type PercentChange, percentiles, or ranges
-#' @param alpha the level of change
-#' @param alt.order an alternate order for the plot
-#' @param dict a dictionary to translate variables for the plot
-#' @param xlabel a label for the x-axis
-#' @param ... further arugments
 #'
 #' @return the plot
 #' @export
@@ -32,6 +28,8 @@
 tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
                            type="PercentChange", alpha=0.10,
                            alt.order=NA, dict=NA, xlabel="Response Rate",
+                           sensitivity_colors=c("grey", "#69BE28"),
+                           geom_bar_control=list(width = NULL),
                            ...)
 {
   # form <- formula(mpg ~ cyl*wt*hp)
@@ -100,11 +98,11 @@ tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
   pretty_break <- pretty(plotdat$value, n = 5)
 
   ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
-    geom_bar(position = "identity", stat = "identity") +
+    do.call(geom_bar, args = c(list(position = "identity", stat = "identity"), geom_bar_control)) +
     coord_flip() +
     ylab(xlabel) +
     xlab("") +
-    scale_fill_manual(values = c("grey", "#69BE28")) +
+    scale_fill_manual(values = sensitivity_colors) +
     theme_bw()
 
   if (model$glmnet.fit$call$family %in% c("binomial", "quasibinomial"))

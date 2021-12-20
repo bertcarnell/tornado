@@ -2,19 +2,16 @@
 
 #' Survreg Tornado Diagram
 #'
+#' @inherit tornado description
+#'
+#' @inheritParams tornado
 #' @param model a survreg object
 #' @param modeldata the data used to fit the model
-#' @param type PercentChange, percentiles, or ranges
-#' @param alpha the level of change
-#' @param alt.order an alternate order for the plot
-#' @param dict a dictionary to translate variables for the plot
-#' @param xlabel a label for the x-axis
-#' @param ... further arguments
+#' @param geom_point_control a list of \code{ggplot2::geom_point}
 #'
 #' @return the plot invisibly
 #' @export
 #' @method tornado survreg
-#' @importFrom scales percent
 #' @import ggplot2
 #' @import survival
 #'
@@ -24,6 +21,9 @@
 #' tornado(gtest, survival::ovarian, type = "PercentChange", alpha = 0.10, xlabel = "futime")
 tornado.survreg <- function(model, modeldata, type="PercentChange", alpha=0.10,
                         alt.order=NA, dict=NA, xlabel="Response Rate",
+                        sensitivity_colors=c("grey", "#69BE28"),
+                        geom_bar_control=list(width = NULL),
+                        geom_point_control=list(fill = "black", col = "black"),
                         ...)
 {
   # mydat <- survival::ovarian
@@ -53,16 +53,18 @@ tornado.survreg <- function(model, modeldata, type="PercentChange", alpha=0.10,
   }
 
   ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
-    geom_bar(position = "identity", stat = "identity") +
+    do.call(geom_bar, args = c(list(position = "identity", stat = "identity"), geom_bar_control)) +
     coord_flip() +
     ylab(xlabel) +
     xlab("") +
-    scale_fill_manual(values = c("grey", "#69BE28")) +
+    scale_fill_manual(values = sensitivity_colors) +
     theme_bw()
 
   if (is.data.frame(factordat))
   {
-    ggp <- ggp + geom_point(aes_string(x = "variable", y = "value"), data = factordat, fill = "black")
+    ggp <- ggp + do.call(geom_point, args = c(list(mapping = aes_string(x = "variable", y = "value"),
+                                                   data = factordat),
+                                              geom_point_control))
   }
 
   ggp <- ggp + scale_y_continuous(breaks = pretty_break,

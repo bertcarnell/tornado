@@ -2,19 +2,20 @@
 
 #' Caret Tornado Diagram
 #'
-#' @param model a \code{caret} object
-#' @param type PercentChange, percentiles, or ranges
-#' @param alpha the level of change
-#' @param alt.order an alternate order for the plot
-#' @param dict a dictionary to translate variables for the plot
-#' @param xlabel a label for the x-axis
-#' @param ... further arugments
+#' @inherit tornado description
+#'
+#' @inheritParams tornado
+#' @param class_number for classification models, which number of the class that
+#' will be plotted
+#' @param geom_point_control a list of \code{ggplot2::geom_point}
 #'
 #' @return the plot
+#'
 #' @export
+#'
 #' @method tornado train
+#'
 #' @import ggplot2
-#' @importFrom stats model.frame terms model.matrix predict
 #' @importFrom assertthat assert_that
 #'
 #' @examples
@@ -25,16 +26,24 @@
 #'   tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
 #' }
 tornado.train <- function(model,
-                           type="PercentChange", alpha=0.10,
-                           alt.order=NA, dict=NA, xlabel="Response Rate",
-                           ...)
+                          type="PercentChange", alpha=0.10,
+                          alt.order=NA, dict=NA, xlabel="Response Rate",
+                          sensitivity_colors=c("grey", "#69BE28"),
+                          class_number=NA,
+                          geom_bar_control=list(width = NULL),
+                          geom_point_control=list(fill = "black", col = "black"),
+                          ...)
 {
+  ### Regression
   # model <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
   # type <- "PercentChange"
   # alpha <- 0.10
   # dict <- NA
   # xlabel <- "MPG"
   # alt.order <- NA
+  # class_number <- NA
+  # geom_bar_control=list(width = NULL)
+  # geom_point_control=list(fill = "black")
 
   # mydat <- mtcars
   # mydat$cyl <- factor(mydat$cyl)
@@ -45,16 +54,46 @@ tornado.train <- function(model,
   # dict <- NA
   # xlabel <- "MPG"
   # alt.order <- NA
+  # class_number <- NA
+  # geom_bar_control=list(width = NULL)
+  # geom_point_control=list(fill = "black")
+
+  ### Classification
+  # mydat <- mtcars
+  # mydat$cyl <- factor(mydat$cyl)
+  # mydat$vs <- factor(mydat$vs)
+  # model <- caret::train(x = subset(mydat, select = -vs), y = mydat$vs, method = "rf")
+  # type <- "PercentChange"
+  # alpha <- 0.10
+  # dict <- NA
+  # xlabel <- "Probability of Class 1"
+  # alt.order <- NA
+  # class_number <- 1
+  # geom_bar_control=list(width = 0.1)
+  # geom_point_control=list(fill = "orange")
 
   assertthat::assert_that(requireNamespace("caret", quietly = TRUE),
                           msg = "The caret package is required to use this method")
 
-  extraArguments <- list(...)
+  extraArguments <- list(...) # not used
+
   assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
                           msg = "type must be PercentChagne, percentiles, or ranges")
+  assertthat::assert_that(is.list(geom_bar_control) & is.list(geom_point_control),
+                          msg = "The geom_bar_control and geom_point_control parameters must be a list")
 
-  assertthat::assert_that(model$modelType == "Regression",
-                          msg = "Only Regression predictions are currently implemented")
+  if (model$modelType == "Regression")
+  {
+    predict_type <- "raw"
+  } else
+  {
+    predict_type <- "prob"
+    if (is.na(class_number))
+      class_number <- 1
+  }
+
+  # assertthat::assert_that(model$modelType == "Regression",
+  #                         msg = "Only Regression predictions are currently implemented")
 
   used_variables <- names(model$trainingData)[!grepl("[.]outcome", names(model$trainingData))]
 
@@ -72,13 +111,20 @@ tornado.train <- function(model,
   base_Level <- c("A","B")
 
   # predict the mean response (type = "raw" by default)
-  pmeans <- predict(model, newdata = means)
+  pmeans <- predict(model, newdata = means, type = predict_type)
 
   # predict on the range of possibilities (type = "raw" by default)
   dat <- .create_data_low_high(means, endpoints)
-  pdat <- predict(model, newdata = dat)
+  pdat <- predict(model, newdata = dat, type = predict_type)
 
-  if (is.na(alt.order))
+  if (model$modelType != "Regression")
+  {
+    # if the model is a classificaiton model, get the base probabilities
+    pmeans <- unlist(pmeans[class_number])
+    pdat <- unlist(pdat[[class_number]])
+  }
+
+  if (all(is.na(alt.order)))
   {
     bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
     alt.order <- order(bar_width, decreasing = FALSE)
@@ -96,7 +142,14 @@ tornado.train <- function(model,
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
 
-  factor_plotdat <- .create_factor_plot_data(training_data, means, pmeans, model, "raw")
+  factor_plotdat <- .create_factor_plot_data(training_data, means, pmeans, model, predict_type)
+
+  if (model$modelType != "Regression")
+  {
+    temp_names <- names(factor_plotdat)
+    temp_names[1 + class_number] <- "value"
+    names(factor_plotdat) <- temp_names
+  }
 
   if (is.data.frame(factor_plotdat))
   {
@@ -107,16 +160,18 @@ tornado.train <- function(model,
   }
 
   ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
-    geom_bar(position = "identity", stat = "identity") +
+    do.call(geom_bar, args = c(list(position = "identity", stat = "identity"), geom_bar_control)) +
     coord_flip() +
     ylab(xlabel) +
     xlab("") +
-    scale_fill_manual(values = c("grey", "#69BE28")) +
+    scale_fill_manual(values = sensitivity_colors) +
     theme_bw()
 
   if (is.data.frame(factor_plotdat))
   {
-    ggp <- ggp + geom_point(aes_string(x = "variable", y = "value"), data = factor_plotdat, fill = "black")
+    ggp <- ggp + do.call(geom_point, args = c(list(mapping = aes_string(x = "variable", y = "value"),
+                                                   data = factor_plotdat),
+                                              geom_point_control))
   }
 
   ggp <- ggp + scale_y_continuous(breaks = pretty_break,

@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+tests/testthat/Rplots.pdf
+tests/testthat/_snaps/*
