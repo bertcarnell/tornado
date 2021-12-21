@@ -6,22 +6,20 @@
 \usage{
 \method{tornado}{survreg}(
   model,
-  modeldata,
   type = "PercentChange",
   alpha = 0.1,
   alt.order = NA,
   dict = NA,
-  xlabel = "Response Rate",
+  xlabel = "Survival Time",
   sensitivity_colors = c("grey", "#69BE28"),
   geom_bar_control = list(width = NULL),
   geom_point_control = list(fill = "black", col = "black"),
+  modeldata,
   ...
 )
 }
 \arguments{
-\item{model}{a survreg object}
-
-\item{modeldata}{the data used to fit the model}
+\item{model}{a model object}
 
 \item{type}{PercentChange, percentiles, or ranges}
 
@@ -40,10 +38,12 @@ lower value and upper value}
 
 \item{geom_point_control}{a list of \code{ggplot2::geom_point}}
 
-\item{...}{further arugments, not used}
+\item{modeldata}{the data used to fit the model}
+
+\item{...}{further arguments, not used}
 }
 \value{
-the plot invisibly
+a \code{ggplot} object
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -59,7 +59,9 @@ factor is varied through all of its levels.  The base factor level is chosen
 as the input variable for the center of the tornado.
 }
 \examples{
-gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx, survival::ovarian,
+gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx,
+                           survival::ovarian,
                            dist='weibull', scale=1)
-tornado(gtest, survival::ovarian, type = "PercentChange", alpha = 0.10, xlabel = "futime")
+tornado(gtest, modeldata = survival::ovarian, type = "PercentChange",
+        alpha = 0.10, xlabel = "futime")
 }

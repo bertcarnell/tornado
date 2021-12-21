@@ -9,7 +9,7 @@
 #' will be plotted
 #' @param geom_point_control a list of \code{ggplot2::geom_point}
 #'
-#' @return the plot
+#' @inherit tornado return
 #'
 #' @export
 #'
@@ -29,9 +29,9 @@ tornado.train <- function(model,
                           type="PercentChange", alpha=0.10,
                           alt.order=NA, dict=NA, xlabel="Response Rate",
                           sensitivity_colors=c("grey", "#69BE28"),
-                          class_number=NA,
                           geom_bar_control=list(width = NULL),
                           geom_point_control=list(fill = "black", col = "black"),
+                          class_number=NA,
                           ...)
 {
   ### Regression

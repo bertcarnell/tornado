@@ -7,7 +7,7 @@
 #' @inheritParams tornado
 #' @param geom_point_control a list of \code{ggplot2::geom_point}
 #'
-#' @return the plot invisibly
+#' @inherit tornado return
 #' @export
 #' @method tornado glm
 #' @importFrom scales percent

@@ -9,7 +9,7 @@
 #' @param form the model formula
 #' @param s Value(s) of the penalty parameter \code{lambda} at which predictions are required. Default is the value \code{s="lambda.1se"} stored on the CV object. Alternatively \code{s="lambda.min"} can be used. If s is numeric, it is taken as the value(s) of \code{lambda} to be used.
 #'
-#' @return the plot
+#' @inherit tornado return
 #' @export
 #' @method tornado cv.glmnet
 #' @importFrom scales percent
@@ -22,15 +22,15 @@
 #'   mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
 #'   mm <- model.matrix(mf, mf)
 #'   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-#'   tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se",
+#'   tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
 #'           type = "PercentChange", alpha = 0.10, xlabel = "MPG")
 #' }
-tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
+tornado.cv.glmnet <- function(model,
                            type="PercentChange", alpha=0.10,
                            alt.order=NA, dict=NA, xlabel="Response Rate",
                            sensitivity_colors=c("grey", "#69BE28"),
                            geom_bar_control=list(width = NULL),
-                           ...)
+                           modeldata, form, s="lambda.1se", ...)
 {
   # form <- formula(mpg ~ cyl*wt*hp)
   # modeldata <- mtcars

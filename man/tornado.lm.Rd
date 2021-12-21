@@ -37,10 +37,10 @@ lower value and upper value}
 
 \item{geom_point_control}{a list of \code{ggplot2::geom_point}}
 
-\item{...}{further arugments, not used}
+\item{...}{further arguments, not used}
 }
 \value{
-the plot invisibly
+a \code{ggplot} object
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected

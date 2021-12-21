@@ -8,14 +8,15 @@
 #' @param alpha the level of change
 #' @param alt.order an alternate order for the plot
 #' @param dict a dictionary to translate variables for the plot
+#' @param predict_type The \code{type} argument passed to \code{predict}
 #'
 #' @return the data to create the tornado plot
 #'
 #' @importFrom assertthat assert_that
-#' @importFrom stats terms predict predict.lm predict.glm
+#' @importFrom stats terms
 #' @noRd
 .create_plot_data <- function(model, modeldata, type="PercentChange", alpha=0.10,
-                              alt.order=NA, dict=NA)
+                              alt.order=NA, dict=NA, predict_type = "response")
 {
   if (FALSE)
   {
@@ -72,11 +73,11 @@
   base_Level <- c("A","B")
 
   # predict the mean response
-  pmeans <- predict(model, newdata = means, type = "response")
+  pmeans <- predict(model, newdata = means, type = predict_type)
 
   # predict on the range of possibilities
   dat <- .create_data_low_high(means, endpoints)
-  pdat <- predict(model, dat, type = "response")
+  pdat <- predict(model, dat, type = predict_type)
 
   if (is.na(alt.order))
   {
@@ -96,7 +97,7 @@
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
 
-  factor_plotdat <- .create_factor_plot_data(training_data, means, pmeans, model, "response")
+  factor_plotdat <- .create_factor_plot_data(training_data, means, pmeans, model, predict_type)
 
   return(list(plotdat = plotdat, pmeans = pmeans, factor_plotdat = factor_plotdat))
 }

@@ -6,7 +6,7 @@ Authors@R:
            family = "Carnell",
            role = c("aut", "cre"),
            email = "bertcarnell@gmail.com")
-Description: Draws tornado plots for model sensitivity to univariate changes 
+Description: Draws tornado plots for model sensitivity to univariate changes.  Implements methods for many modeling methods including linear models, generalized linear models, survival regression models, and arbitrary machine learning models in the caret package.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

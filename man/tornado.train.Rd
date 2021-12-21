@@ -12,9 +12,9 @@
   dict = NA,
   xlabel = "Response Rate",
   sensitivity_colors = c("grey", "#69BE28"),
-  class_number = NA,
   geom_bar_control = list(width = NULL),
   geom_point_control = list(fill = "black", col = "black"),
+  class_number = NA,
   ...
 )
 }
@@ -34,17 +34,17 @@
 \item{sensitivity_colors}{a two element character vector of the bar colors for a
 lower value and upper value}
 
-\item{class_number}{for classification models, which number of the class that
-will be plotted}
-
 \item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
 
 \item{geom_point_control}{a list of \code{ggplot2::geom_point}}
 
-\item{...}{further arugments, not used}
+\item{class_number}{for classification models, which number of the class that
+will be plotted}
+
+\item{...}{further arguments, not used}
 }
 \value{
-the plot
+a \code{ggplot} object
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected

@@ -6,9 +6,6 @@
 \usage{
 \method{tornado}{cv.glmnet}(
   model,
-  modeldata,
-  form,
-  s = "lambda.1se",
   type = "PercentChange",
   alpha = 0.1,
   alt.order = NA,
@@ -16,17 +13,14 @@
   xlabel = "Response Rate",
   sensitivity_colors = c("grey", "#69BE28"),
   geom_bar_control = list(width = NULL),
+  modeldata,
+  form,
+  s = "lambda.1se",
   ...
 )
 }
 \arguments{
 \item{model}{a model object}
-
-\item{modeldata}{the raw data used to fit the glmnet model}
-
-\item{form}{the model formula}
-
-\item{s}{Value(s) of the penalty parameter \code{lambda} at which predictions are required. Default is the value \code{s="lambda.1se"} stored on the CV object. Alternatively \code{s="lambda.min"} can be used. If s is numeric, it is taken as the value(s) of \code{lambda} to be used.}
 
 \item{type}{PercentChange, percentiles, or ranges}
 
@@ -43,10 +37,16 @@ lower value and upper value}
 
 \item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
 
-\item{...}{further arugments, not used}
+\item{modeldata}{the raw data used to fit the glmnet model}
+
+\item{form}{the model formula}
+
+\item{s}{Value(s) of the penalty parameter \code{lambda} at which predictions are required. Default is the value \code{s="lambda.1se"} stored on the CV object. Alternatively \code{s="lambda.min"} can be used. If s is numeric, it is taken as the value(s) of \code{lambda} to be used.}
+
+\item{...}{further arguments, not used}
 }
 \value{
-the plot
+a \code{ggplot} object
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -67,7 +67,7 @@ if (requireNamespace("glmnet", quietly = TRUE))
   mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
   mm <- model.matrix(mf, mf)
   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-  tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s="lambda.1se",
+  tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
           type = "PercentChange", alpha = 0.10, xlabel = "MPG")
 }
 }

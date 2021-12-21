@@ -5,25 +5,27 @@
 #' @inherit tornado description
 #'
 #' @inheritParams tornado
-#' @param model a survreg object
 #' @param modeldata the data used to fit the model
 #' @param geom_point_control a list of \code{ggplot2::geom_point}
 #'
-#' @return the plot invisibly
+#' @inherit tornado return
 #' @export
 #' @method tornado survreg
 #' @import ggplot2
 #' @import survival
 #'
 #' @examples
-#' gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx, survival::ovarian,
+#' gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx,
+#'                            survival::ovarian,
 #'                            dist='weibull', scale=1)
-#' tornado(gtest, survival::ovarian, type = "PercentChange", alpha = 0.10, xlabel = "futime")
-tornado.survreg <- function(model, modeldata, type="PercentChange", alpha=0.10,
-                        alt.order=NA, dict=NA, xlabel="Response Rate",
+#' tornado(gtest, modeldata = survival::ovarian, type = "PercentChange",
+#'         alpha = 0.10, xlabel = "futime")
+tornado.survreg <- function(model, type="PercentChange", alpha=0.10,
+                        alt.order=NA, dict=NA, xlabel="Survival Time",
                         sensitivity_colors=c("grey", "#69BE28"),
                         geom_bar_control=list(width = NULL),
                         geom_point_control=list(fill = "black", col = "black"),
+                        modeldata,
                         ...)
 {
   # mydat <- survival::ovarian

@@ -23,11 +23,11 @@
 #' @param sensitivity_colors a two element character vector of the bar colors for a
 #' lower value and upper value
 #' @param geom_bar_control a list of \code{ggplot2::geom_bar} options
-#' @param ... further arugments, not used
+#' @param ... further arguments, not used
 #'
-#' @return a plot object
+#' @return a \code{ggplot} object
 #'
-#' @seealso \code{\link{tornado.lm}} \code{\link{tornado.glm}} \code{\link{tornado.glmnet}} \code{\link{tornado.survreg}} \code{\link{tornado.train}}
+#' @seealso \code{\link{tornado.lm}} \code{\link{tornado.glm}} \code{\link{tornado.cv.glmnet}} \code{\link{tornado.survreg}} \code{\link{tornado.coxph}} \code{\link{tornado.train}}
 #'
 #' @export
 tornado <- function(model, type, alpha, alt.order, dict, xlabel, sensitivity_colors,
