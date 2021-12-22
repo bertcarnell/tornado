@@ -61,6 +61,6 @@ as the input variable for the center of the tornado.
 \examples{
 gtest <- survival::coxph(survival::Surv(stop, event) ~ rx + size + number,
                            survival::bladder)
-tornado(gtest, modeldata = survival::ovarian, type = "PercentChange",
+tornado(gtest, modeldata = survival::bladder, type = "PercentChange",
         alpha = 0.10, xlabel = "futime")
 }

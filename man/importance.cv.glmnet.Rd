@@ -7,7 +7,7 @@
 \method{importance}{cv.glmnet}(model_final, model_data, form, dict = NA, nperm = 500, ...)
 }
 \arguments{
-\item{model_final}{a model from \code{cv.glmnet}}
+\item{model_final}{a model object}
 
 \item{model_data}{the data used to fit the model}
 
@@ -17,10 +17,10 @@
 
 \item{nperm}{the number of permutations used to calculate the importance}
 
-\item{...}{other variables passed to internal methods}
+\item{...}{arguments passed to other methods}
 }
 \value{
-a plot of class ggplot2
+an object of type \code{importance_plot}
 }
 \description{
 Plot Variable Importance for a GLMNET model

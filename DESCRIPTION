@@ -1,22 +1,21 @@
 Package: tornado
-Title: Tornado Plots for Model Sensitivity
+Title: Plots for Model Sensitivity and Variable Importance
 Version: 0.1.1
 Authors@R: 
     person(given = "Rob",
            family = "Carnell",
            role = c("aut", "cre"),
            email = "bertcarnell@gmail.com")
-Description: Draws tornado plots for model sensitivity to univariate changes.  Implements methods for many modeling methods including linear models, generalized linear models, survival regression models, and arbitrary machine learning models in the caret package.
+Description: Draws tornado plots for model sensitivity to univariate changes.  Implements methods for many modeling methods including linear models, generalized linear models, survival regression models, and arbitrary machine learning models in the caret package.  Also draws variable importance plots.  
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 Suggests: 
     testthat,
     covr,
     caret,
     glmnet,
     randomForest
-RoxygenNote: 7.1.2
+RoxygenNote: 7.1.1
 Imports: 
     survival,
     assertthat,

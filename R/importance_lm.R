@@ -1,13 +1,12 @@
 # Copyright 2019 Roberr Carnell
 
-#' LM variable importance plot
+#' Linear Model variable importance plot
 #'
-#' @param model_final a lm object
-#' @param model_null a lm object for the null model
-#' @param dict a dictionary to translate the model variables to plotting vriables
-#' @param ... additional arguments
+#' @inheritParams importance
+#' @param model_null a \code{lm} object for the null model
+#' @param dict a dictionary to translate the model variables to plotting variables
 #'
-#' @return a ggplot2 object
+#' @inherit importance return
 #' @export
 #'
 #' @examples

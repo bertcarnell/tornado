@@ -12,8 +12,11 @@ importance(model_final, ...)
 \item{...}{arguments passed to other methods}
 }
 \value{
-an object of type importance_plot
+an object of type \code{importance_plot}
 }
 \description{
 Generic Importance Plot
+}
+\seealso{
+\code{\link{importance.glm}} \code{\link{importance.lm}} \code{\link{importance.cv.glmnet}} \code{\link{importance.survreg}}
 }

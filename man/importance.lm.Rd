@@ -2,24 +2,24 @@
 % Please edit documentation in R/importance_lm.R
 \name{importance.lm}
 \alias{importance.lm}
-\title{LM variable importance plot}
+\title{Linear Model variable importance plot}
 \usage{
 \method{importance}{lm}(model_final, model_null, dict = NA, ...)
 }
 \arguments{
-\item{model_final}{a lm object}
+\item{model_final}{a model object}
 
-\item{model_null}{a lm object for the null model}
+\item{model_null}{a \code{lm} object for the null model}
 
-\item{dict}{a dictionary to translate the model variables to plotting vriables}
+\item{dict}{a dictionary to translate the model variables to plotting variables}
 
-\item{...}{additional arguments}
+\item{...}{arguments passed to other methods}
 }
 \value{
-a ggplot2 object
+an object of type \code{importance_plot}
 }
 \description{
-LM variable importance plot
+Linear Model variable importance plot
 }
 \examples{
 gtest <- lm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars)

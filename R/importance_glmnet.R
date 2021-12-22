@@ -2,14 +2,13 @@
 
 #' Plot Variable Importance for a GLMNET model
 #'
-#' @param model_final a model from \code{cv.glmnet}
+#' @inheritParams importance
 #' @param model_data the data used to fit the model
 #' @param form the model formula
 #' @param dict a variable dictionary for plotting
 #' @param nperm the number of permutations used to calculate the importance
-#' @param ... other variables passed to internal methods
 #'
-#' @return a plot of class ggplot2
+#' @inherit importance return
 #' @export
 #'
 #' @importFrom stats model.matrix model.frame

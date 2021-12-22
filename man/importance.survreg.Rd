@@ -7,7 +7,7 @@
 \method{importance}{survreg}(model_final, model_data, dict = NA, nperm = 500, ...)
 }
 \arguments{
-\item{model_final}{a model of class survreg}
+\item{model_final}{a model object}
 
 \item{model_data}{the data used to fit the model}
 
@@ -15,10 +15,10 @@
 
 \item{nperm}{the number of permutations used to calculate the importance}
 
-\item{...}{other variables passed to internal methods}
+\item{...}{arguments passed to other methods}
 }
 \value{
-a plot of class ggplot2
+an object of type \code{importance_plot}
 }
 \description{
 Create a variable importance plot for a survreg model

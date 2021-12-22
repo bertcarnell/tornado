@@ -2,13 +2,12 @@
 
 #' Create a variable importance plot for a survreg model
 #'
-#' @param model_final a model of class survreg
+#' @inheritParams importance
 #' @param model_data the data used to fit the model
 #' @param dict a plotting dictionary for models terms
 #' @param nperm the number of permutations used to calculate the importance
-#' @param ... other variables passed to internal methods
 #'
-#' @return a plot of class ggplot2
+#' @inherit importance return
 #' @export
 #'
 #' @importFrom survival survreg

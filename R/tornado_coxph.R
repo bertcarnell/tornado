@@ -19,7 +19,7 @@
 #' @examples
 #' gtest <- survival::coxph(survival::Surv(stop, event) ~ rx + size + number,
 #'                            survival::bladder)
-#' tornado(gtest, modeldata = survival::ovarian, type = "PercentChange",
+#' tornado(gtest, modeldata = survival::bladder, type = "PercentChange",
 #'         alpha = 0.10, xlabel = "futime")
 tornado.coxph <- function(model, type="PercentChange", alpha=0.10,
                         alt.order=NA, dict=NA, xlabel="Risk",

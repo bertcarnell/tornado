@@ -5,8 +5,10 @@
 #' @param model_final a model object
 #' @param ... arguments passed to other methods
 #'
-#' @return an object of type importance_plot
+#' @return an object of type \code{importance_plot}
 #' @export
+#'
+#' @seealso \code{\link{importance.glm}} \code{\link{importance.lm}} \code{\link{importance.cv.glmnet}} \code{\link{importance.survreg}}
 importance <- function(model_final, ...)
 {
   UseMethod("importance", model_final)
