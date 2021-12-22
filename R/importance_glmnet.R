@@ -7,6 +7,7 @@
 #' @param form the model formula
 #' @param dict a variable dictionary for plotting
 #' @param nperm the number of permutations used to calculate the importance
+#' @param geom_bar_control list of arguments to control the plotting of \code{ggplot2::geom_bar}
 #'
 #' @inherit importance return
 #' @export
@@ -24,7 +25,8 @@
 #'   gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
 #'   importance(gtest, mtcars, form, nperm = 100)
 #' }
-importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm = 500, ...)
+importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm = 500,
+                                 geom_bar_control = list(fill = "#69BE28"), ...)
 {
   #form <- formula(mpg ~ cyl*wt*hp)
   #mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
@@ -76,11 +78,9 @@ importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm
 
   dat2 <- data.frame(variable = vars,
                      value = importances_final)
-  #69BE28 = light green
-  #427730 = dark green
 
   ggp <- ggplot(dat2, aes_string(x = "variable", y = "value")) +
-    geom_bar(stat = "identity", fill = "#69BE28") +
+    do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
     coord_flip() +
     theme_bw() +
     xlab("") +

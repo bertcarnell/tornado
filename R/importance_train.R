@@ -3,6 +3,7 @@
 #' Importance Plot for the caret::train objects
 #'
 #' @inheritParams importance
+#' @param geom_bar_control list of arguments for \code{ggplot2::geom_bar}
 #'
 #' @import ggplot2
 #'
@@ -10,14 +11,15 @@
 #' @export
 #'
 #' @examples
-#' if (requireNamespace("glmnet", quietly = TRUE))
+#' if (requireNamespace("caret", quietly = TRUE) &
+#'     requireNamespace("randomForest", quietly = TRUE))
 #' {
 #'   model_final <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
 #'   imp <- importance(model_final)
 #'   print(imp)
 #'   plot(imp)
 #' }
-importance.train <- function(model_final, ...)
+importance.train <- function(model_final, geom_bar_control = list(fill = "#69BE28"), ...)
 {
   # model_final <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
 
@@ -27,7 +29,7 @@ importance.train <- function(model_final, ...)
   vimp$importance$names <- factor(rownames(vimp$importance), levels = temp_names)
 
   g <- ggplot(vimp$importance, aes_string(x = "Overall", y = "names")) +
-    geom_bar(stat = "identity") +
+    do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
     labs(x = "Importance", y = "") +
     theme_bw()
 

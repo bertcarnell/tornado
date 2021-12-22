@@ -25,7 +25,7 @@
 #' @param geom_bar_control a list of \code{ggplot2::geom_bar} options
 #' @param ... further arguments, not used
 #'
-#' @return a \code{ggplot} object
+#' @return a \code{tornado_plot} object
 #'
 #' @seealso \code{\link{tornado.lm}} \code{\link{tornado.glm}} \code{\link{tornado.cv.glmnet}} \code{\link{tornado.survreg}} \code{\link{tornado.coxph}} \code{\link{tornado.train}}
 #'

@@ -18,8 +18,8 @@
 #' gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx,
 #'                            survival::ovarian,
 #'                            dist='weibull', scale=1)
-#' tornado(gtest, modeldata = survival::ovarian, type = "PercentChange",
-#'         alpha = 0.10, xlabel = "futime")
+#' plot(tornado(gtest, modeldata = survival::ovarian, type = "PercentChange",
+#'              alpha = 0.10, xlabel = "futime"))
 tornado.survreg <- function(model, type="PercentChange", alpha=0.10,
                         alt.order=NA, dict=NA, xlabel="Survival Time",
                         sensitivity_colors=c("grey", "#69BE28"),
@@ -71,5 +71,6 @@ tornado.survreg <- function(model, type="PercentChange", alpha=0.10,
 
   ggp <- ggp + scale_y_continuous(breaks = pretty_break,
                                   labels = format(pretty_break + pmeans, digits = 4))
-  return(ggp)
+
+  return(structure(list(plot = ggp, data = plotdat), class = "tornado_plot"))
 }

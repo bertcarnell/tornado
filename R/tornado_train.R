@@ -23,7 +23,7 @@
 #'     requireNamespace("randomForest", quietly = TRUE))
 #' {
 #'   gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
-#'   tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+#'   plot(tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
 #' }
 tornado.train <- function(model,
                           type="PercentChange", alpha=0.10,
@@ -176,5 +176,6 @@ tornado.train <- function(model,
 
   ggp <- ggp + scale_y_continuous(breaks = pretty_break,
                                   labels = format(c(pretty_break) + c(pmeans), digits = 4))
-  return(ggp)
+
+  return(structure(list(plot = ggp, data = plotdat), class = "tornado_plot"))
 }

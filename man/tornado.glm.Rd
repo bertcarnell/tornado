@@ -40,7 +40,7 @@ lower value and upper value}
 \item{...}{further arguments, not used}
 }
 \value{
-a \code{ggplot} object
+a \code{tornado_plot} object
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -57,5 +57,5 @@ as the input variable for the center of the tornado.
 }
 \examples{
 gtest <- glm(mpg ~ cyl*wt*hp, data = mtcars, family = gaussian)
-tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+plot(tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
 }

@@ -5,6 +5,9 @@
 #' @inheritParams importance
 #' @param model_null a \code{lm} object for the null model
 #' @param dict a dictionary to translate the model variables to plotting variables
+#' @param col_imp_alone the color used for the variance explained by each variable
+#' alone
+#' @param col_imp_cumulative the color used for the cumulative variance explained
 #'
 #' @inherit importance return
 #' @export
@@ -17,7 +20,10 @@
 #' gtest <- lm(mpg ~ cyl + wt + hp + gear + carb, data=mtcars)
 #' gtestreduced <- lm(mpg ~ 1, data=mtcars)
 #' g <- importance(gtest, gtestreduced)
-importance.lm <- function(model_final, model_null, dict=NA, ...)
+importance.lm <- function(model_final, model_null, dict=NA,
+                          col_imp_alone = "#69BE28",
+                          col_imp_cumulative = "#427730",
+                          ...)
 {
   # model_final <- lm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars)
   # model_null <- lm(mpg ~ 1, data=mtcars)
@@ -29,7 +35,9 @@ importance.lm <- function(model_final, model_null, dict=NA, ...)
                                      dict = dict,
                                      isDeviance = FALSE)
 
-  combined <- .create_common_importance_plot(tab_summary, isDeviance = FALSE)
+  combined <- .create_common_importance_plot(tab_summary, isDeviance = FALSE,
+                                             col_imp_alone = col_imp_alone,
+                                             col_imp_cumulative = col_imp_cumulative)
 
   return(structure(list(plot = combined,
                         data = tab_summary), class = "importance_plot"))

@@ -4,7 +4,15 @@
 \alias{importance.cv.glmnet}
 \title{Plot Variable Importance for a GLMNET model}
 \usage{
-\method{importance}{cv.glmnet}(model_final, model_data, form, dict = NA, nperm = 500, ...)
+\method{importance}{cv.glmnet}(
+  model_final,
+  model_data,
+  form,
+  dict = NA,
+  nperm = 500,
+  geom_bar_control = list(fill = "#69BE28"),
+  ...
+)
 }
 \arguments{
 \item{model_final}{a model object}
@@ -16,6 +24,8 @@
 \item{dict}{a variable dictionary for plotting}
 
 \item{nperm}{the number of permutations used to calculate the importance}
+
+\item{geom_bar_control}{list of arguments to control the plotting of \code{ggplot2::geom_bar}}
 
 \item{...}{arguments passed to other methods}
 }

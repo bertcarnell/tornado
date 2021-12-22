@@ -19,8 +19,8 @@
 #' @examples
 #' gtest <- survival::coxph(survival::Surv(stop, event) ~ rx + size + number,
 #'                            survival::bladder)
-#' tornado(gtest, modeldata = survival::bladder, type = "PercentChange",
-#'         alpha = 0.10, xlabel = "futime")
+#' plot(tornado(gtest, modeldata = survival::bladder, type = "PercentChange",
+#'              alpha = 0.10, xlabel = "futime"))
 tornado.coxph <- function(model, type="PercentChange", alpha=0.10,
                         alt.order=NA, dict=NA, xlabel="Risk",
                         sensitivity_colors=c("grey", "#69BE28"),
@@ -74,5 +74,6 @@ tornado.coxph <- function(model, type="PercentChange", alpha=0.10,
 
   ggp <- ggp + scale_y_continuous(breaks = pretty_break,
                                   labels = format(pretty_break + pmeans, digits = 4))
-  return(ggp)
+
+  return(structure(list(plot = ggp, data = plotdat), class = "tornado_plot"))
 }

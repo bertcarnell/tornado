@@ -43,7 +43,7 @@ lower value and upper value}
 \item{...}{further arguments, not used}
 }
 \value{
-a \code{ggplot} object
+a \code{tornado_plot} object
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -61,6 +61,6 @@ as the input variable for the center of the tornado.
 \examples{
 gtest <- survival::coxph(survival::Surv(stop, event) ~ rx + size + number,
                            survival::bladder)
-tornado(gtest, modeldata = survival::bladder, type = "PercentChange",
-        alpha = 0.10, xlabel = "futime")
+plot(tornado(gtest, modeldata = survival::bladder, type = "PercentChange",
+             alpha = 0.10, xlabel = "futime"))
 }

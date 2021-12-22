@@ -4,10 +4,12 @@
 \alias{importance.train}
 \title{Importance Plot for the caret::train objects}
 \usage{
-\method{importance}{train}(model_final, ...)
+\method{importance}{train}(model_final, geom_bar_control = list(fill = "#69BE28"), ...)
 }
 \arguments{
 \item{model_final}{a model object}
+
+\item{geom_bar_control}{list of arguments for \code{ggplot2::geom_bar}}
 
 \item{...}{arguments passed to other methods}
 }
@@ -18,7 +20,8 @@ an object of type \code{importance_plot}
 Importance Plot for the caret::train objects
 }
 \examples{
-if (requireNamespace("glmnet", quietly = TRUE))
+if (requireNamespace("caret", quietly = TRUE) &
+    requireNamespace("randomForest", quietly = TRUE))
 {
   model_final <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
   imp <- importance(model_final)

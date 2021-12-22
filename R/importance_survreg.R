@@ -6,20 +6,21 @@
 #' @param model_data the data used to fit the model
 #' @param dict a plotting dictionary for models terms
 #' @param nperm the number of permutations used to calculate the importance
+#' @param geom_bar_control list of arguments to control the plotting of \code{ggplot2::geom_bar}
 #'
 #' @inherit importance return
 #' @export
 #'
-#' @importFrom survival survreg
+#' @import survival
 #' @import ggplot2
 #'
 #' @examples
-#' require(survival)
-#' model_final <- survreg(Surv(futime, fustat) ~ ecog.ps*rx + age,
-#'                        data = ovarian,
+#' model_final <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
+#'                        data = survival::ovarian,
 #'                        dist = "weibull")
-#' importance(model_final, ovarian, 500)
-importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500, ...)
+#' importance(model_final, model_data = survival::ovarian, nperm = 500)
+importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500,
+                               geom_bar_control = list(fill = "#69BE28"), ...)
 {
   #model_final <- survreg(Surv(futime, fustat) ~ ecog.ps*rx + age, ovarian, dist="weibull")
   #model_data <- ovarian
@@ -61,5 +62,5 @@ importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500, ..
     scale_y_continuous(labels = scales::percent) +
     ylab("Change in Likelihood Ratio when Variable is permuted (Importance)")
 
-  return(ggp)
+  return(structure(list(plot = ggp, data = dat2), class = "importance_plot"))
 }

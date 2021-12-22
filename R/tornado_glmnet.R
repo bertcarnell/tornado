@@ -22,8 +22,8 @@
 #'   mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
 #'   mm <- model.matrix(mf, mf)
 #'   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-#'   tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
-#'           type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+#'   plot(tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
+#'                type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
 #' }
 tornado.cv.glmnet <- function(model,
                            type="PercentChange", alpha=0.10,
@@ -116,5 +116,5 @@ tornado.cv.glmnet <- function(model,
     ggp <- ggp + scale_y_continuous(breaks = pretty_break,
                                     labels = format(c(pretty_break) + c(pmeans), digits = 4))
   }
-  return(ggp)
+  return(structure(list(plot = ggp, data = plotdat), class = "tornado_plot"))
 }

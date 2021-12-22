@@ -1,5 +1,7 @@
 # Copyright 2021 Robert Carnell
 
+context("test-create_endpoints")
+
 setup_percent_change <- function()
 {
   assign("type", "PercentChange", envir = parent.frame())

@@ -7,19 +7,19 @@
 \method{plot}{importance_plot}(x, ...)
 }
 \arguments{
-\item{x}{an importance_plot object}
+\item{x}{a \code{importance_plot} object}
 
 \item{...}{future arguments}
 }
 \value{
-an importance plot
+the plot
 }
 \description{
 Plot an Importance Plot object
 }
 \examples{
-gtest <- glm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars, family=gaussian)
-gtestreduced <- glm(mpg ~ 1, data=mtcars, family=gaussian)
-g <- importance(gtest, gtestreduced)
-plot(g)
+gtest <- lm(mpg ~ cyl + wt + hp + gear + carb, data = mtcars)
+gtestreduced <- lm(mpg ~ 1, data = mtcars)
+imp <- importance(gtest, gtestreduced)
+plot(imp)
 }

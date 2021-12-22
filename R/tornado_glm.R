@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' gtest <- glm(mpg ~ cyl*wt*hp, data = mtcars, family = gaussian)
-#' tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+#' plot(tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
 tornado.glm <- function(model, type="PercentChange", alpha=0.10,
                         alt.order=NA, dict=NA, xlabel="Response Rate",
                         sensitivity_colors=c("grey", "#69BE28"),
@@ -66,5 +66,5 @@ tornado.glm <- function(model, type="PercentChange", alpha=0.10,
     ggp <- ggp + scale_y_continuous(breaks = pretty_break,
                                     labels = format(pretty_break + pmeans, digits = 4))
   }
-  return(ggp)
+  return(structure(list(plot = ggp, data = plotdat), class = "tornado_plot"))
 }

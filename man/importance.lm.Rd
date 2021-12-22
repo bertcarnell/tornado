@@ -4,7 +4,14 @@
 \alias{importance.lm}
 \title{Linear Model variable importance plot}
 \usage{
-\method{importance}{lm}(model_final, model_null, dict = NA, ...)
+\method{importance}{lm}(
+  model_final,
+  model_null,
+  dict = NA,
+  col_imp_alone = "#69BE28",
+  col_imp_cumulative = "#427730",
+  ...
+)
 }
 \arguments{
 \item{model_final}{a model object}
@@ -12,6 +19,11 @@
 \item{model_null}{a \code{lm} object for the null model}
 
 \item{dict}{a dictionary to translate the model variables to plotting variables}
+
+\item{col_imp_alone}{the color used for the variance explained by each variable
+alone}
+
+\item{col_imp_cumulative}{the color used for the cumulative variance explained}
 
 \item{...}{arguments passed to other methods}
 }

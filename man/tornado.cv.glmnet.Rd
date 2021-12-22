@@ -46,7 +46,7 @@ lower value and upper value}
 \item{...}{further arguments, not used}
 }
 \value{
-a \code{ggplot} object
+a \code{tornado_plot} object
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -67,7 +67,7 @@ if (requireNamespace("glmnet", quietly = TRUE))
   mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
   mm <- model.matrix(mf, mf)
   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-  tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
-          type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+  plot(tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
+               type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
 }
 }

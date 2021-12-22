@@ -44,7 +44,7 @@ will be plotted}
 \item{...}{further arguments, not used}
 }
 \value{
-a \code{ggplot} object
+a \code{tornado_plot} object
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -64,6 +64,6 @@ if (requireNamespace("caret", quietly = TRUE) &
     requireNamespace("randomForest", quietly = TRUE))
 {
   gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
-  tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+  plot(tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
 }
 }
