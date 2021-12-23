@@ -7,40 +7,36 @@
 #' @param form the model formula
 #' @param dict a variable dictionary for plotting
 #' @param nperm the number of permutations used to calculate the importance
-#' @param geom_bar_control list of arguments to control the plotting of \code{ggplot2::geom_bar}
 #'
 #' @inherit importance return
 #' @export
 #'
+#' @seealso \code{\link{importance}}
+#'
 #' @importFrom stats model.matrix model.frame
 #' @importFrom assertthat assert_that
-#' @import ggplot2
 #'
 #' @examples
 #' if (requireNamespace("glmnet", quietly = TRUE))
 #' {
 #'   form <- formula(mpg ~ cyl*wt*hp)
-#'   mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
+#'   mf <- model.frame(form, data = mtcars)
 #'   mm <- model.matrix(mf, mf)
 #'   gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
-#'   importance(gtest, mtcars, form, nperm = 100)
+#'   imp <- importance(gtest, mtcars, form, nperm = 100)
+#'   plot(imp)
 #' }
 importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm = 500,
-                                 geom_bar_control = list(fill = "#69BE28"), ...)
+                                 ...)
 {
-  #form <- formula(mpg ~ cyl*wt*hp)
-  #mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
-  #mm <- model.matrix(mf, mf)
-  #gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
-  # tornado(gtest, mtcars, formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
-  #         type = "PercentChange", alpha = 0.10, xlabel = "MPG")
-  # tornado.cv.glmnet <- function(model, modeldata, form, s="lambda.1se",
-  #                               type="PercentChange", alpha=0.10,
-  #                               alt.order=NA, dict=NA, xlabel="Response Rate",
-  #                               ...)
-  #model_final <- gtest
-  #model_data <- mtcars
-  #form <- formula(mpg ~ cyl*wt*hp)
+  # form <- formula(mpg ~ cyl*wt*hp)
+  # mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
+  # mm <- model.matrix(mf, mf)
+  # model_final <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
+  # model_data <- mtcars
+  # dict <- NA
+  # nperm <- 100
+  # geom_bar_control <- list(fill = "green")
 
   assertthat::assert_that(requireNamespace("glmnet", quietly = TRUE),
                           msg = "The glmnet package is required to use this method")
@@ -79,13 +75,10 @@ importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm
   dat2 <- data.frame(variable = vars,
                      value = importances_final)
 
-  ggp <- ggplot(dat2, aes_string(x = "variable", y = "value")) +
-    do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
-    coord_flip() +
-    theme_bw() +
-    xlab("") +
-    scale_y_continuous(labels = scales::percent) +
-    ylab("Percent Increase in MSE when Variable is permuted (Importance)")
+  dat2 <- dat2[order(dat2$value, decreasing = TRUE),]
+  dat2$variable <- factor(dat2$variable, levels = rev(dat2$variable))
 
-  return(ggp)
+  return(structure(list(data = dat2,
+                        type = "cv.glmnet"),
+                   class = "importance_plot"))
 }

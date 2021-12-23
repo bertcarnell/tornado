@@ -6,10 +6,11 @@
 #' @param model_data the data used to fit the model
 #' @param dict a plotting dictionary for models terms
 #' @param nperm the number of permutations used to calculate the importance
-#' @param geom_bar_control list of arguments to control the plotting of \code{ggplot2::geom_bar}
 #'
 #' @inherit importance return
 #' @export
+#'
+#' @seealso \code{\link{importance}}
 #'
 #' @import survival
 #' @import ggplot2
@@ -18,13 +19,14 @@
 #' model_final <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
 #'                        data = survival::ovarian,
 #'                        dist = "weibull")
-#' importance(model_final, model_data = survival::ovarian, nperm = 500)
-importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500,
-                               geom_bar_control = list(fill = "#69BE28"), ...)
+#' imp <- importance(model_final, survival::ovarian, nperm = 500)
+#' plot(imp)
+importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500, ...)
 {
-  #model_final <- survreg(Surv(futime, fustat) ~ ecog.ps*rx + age, ovarian, dist="weibull")
-  #model_data <- ovarian
-  #nperm <- 500
+  # model_final <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age, survival::ovarian, dist="weibull")
+  # model_data <- survival::ovarian
+  # nperm <- 100
+  # dict = NA
 
   otherVariables <- list(...)
   vars <- rownames(attr(formula(model_final), "factors"))[-1]
@@ -51,16 +53,10 @@ importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500,
 
   dat2 <- data.frame(variable = vars,
                      value = importances_final)
-  #69BE28 = light green
-  #427730 = dark green
+  dat2 <- dat2[order(dat2$value, decreasing = TRUE),]
+  dat2$variable <- factor(dat2$variable, levels = rev(dat2$variable))
 
-  ggp <- ggplot(dat2, aes_string(x = "variable", y = "value")) +
-    geom_bar(stat = "identity", fill = "#69BE28") +
-    coord_flip() +
-    theme_bw() +
-    xlab("") +
-    scale_y_continuous(labels = scales::percent) +
-    ylab("Change in Likelihood Ratio when Variable is permuted (Importance)")
-
-  return(structure(list(plot = ggp, data = dat2), class = "importance_plot"))
+  return(structure(list(data = dat2,
+                        type = "survreg"),
+                   class = "importance_plot"))
 }

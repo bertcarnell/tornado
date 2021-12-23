@@ -7,7 +7,6 @@
 #' @inheritParams tornado
 #' @param class_number for classification models, which number of the class that
 #' will be plotted
-#' @param geom_point_control a list of \code{ggplot2::geom_point}
 #'
 #' @inherit tornado return
 #'
@@ -15,7 +14,6 @@
 #'
 #' @method tornado train
 #'
-#' @import ggplot2
 #' @importFrom assertthat assert_that
 #'
 #' @examples
@@ -23,16 +21,12 @@
 #'     requireNamespace("randomForest", quietly = TRUE))
 #' {
 #'   gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
-#'   plot(tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
+#'   torn <- tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+#'   plot(torn, xlabel = "MPG")
 #' }
 tornado.train <- function(model,
                           type="PercentChange", alpha=0.10,
-                          alt.order=NA, dict=NA, xlabel="Response Rate",
-                          sensitivity_colors=c("grey", "#69BE28"),
-                          geom_bar_control=list(width = NULL),
-                          geom_point_control=list(fill = "black", col = "black"),
-                          class_number=NA,
-                          ...)
+                          dict=NA, class_number=NA, ...)
 {
   ### Regression
   # model <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
@@ -79,8 +73,6 @@ tornado.train <- function(model,
 
   assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
                           msg = "type must be PercentChagne, percentiles, or ranges")
-  assertthat::assert_that(is.list(geom_bar_control) & is.list(geom_point_control),
-                          msg = "The geom_bar_control and geom_point_control parameters must be a list")
 
   if (model$modelType == "Regression")
   {
@@ -124,6 +116,7 @@ tornado.train <- function(model,
     pdat <- unlist(pdat[[class_number]])
   }
 
+  alt.order <- NA
   if (all(is.na(alt.order)))
   {
     bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
@@ -151,31 +144,10 @@ tornado.train <- function(model,
     names(factor_plotdat) <- temp_names
   }
 
-  if (is.data.frame(factor_plotdat))
-  {
-    pretty_break <- pretty(c(plotdat$value, factor_plotdat$value), n = 5)
-  } else
-  {
-    pretty_break <- pretty(plotdat$value, n = 5)
-  }
-
-  ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
-    do.call(geom_bar, args = c(list(position = "identity", stat = "identity"), geom_bar_control)) +
-    coord_flip() +
-    ylab(xlabel) +
-    xlab("") +
-    scale_fill_manual(values = sensitivity_colors) +
-    theme_bw()
-
-  if (is.data.frame(factor_plotdat))
-  {
-    ggp <- ggp + do.call(geom_point, args = c(list(mapping = aes_string(x = "variable", y = "value"),
-                                                   data = factor_plotdat),
-                                              geom_point_control))
-  }
-
-  ggp <- ggp + scale_y_continuous(breaks = pretty_break,
-                                  labels = format(c(pretty_break) + c(pmeans), digits = 4))
-
-  return(structure(list(plot = ggp, data = plotdat), class = "tornado_plot"))
+  return(structure(list(data = list(plotdat = plotdat,
+                                    pmeans = pmeans,
+                                    factordat = factor_plotdat),
+                        type = "train",
+                        family = NA),
+                   class = "tornado_plot"))
 }

@@ -85,22 +85,10 @@
 #' Common Code for importance plots
 #'
 #' @param tab_summary the plotting data.frame
-#' @param isDeviance is the model deviance residual based
-#' @param col_imp_alone the color used for the variance explained by each variable
-#' alone
-#' @param col_imp_cumulative the color used for the cumulative variance explained
 #'
-#' @import ggplot2
-#' @importFrom grid rectGrob grid.newpage grid.draw gpar unit.c unit
-#' @importFrom gridExtra arrangeGrob
-#' @importFrom scales percent
-#' @importFrom grDevices dev.cur dev.off
-#'
-#' @return a plotting object
+#' @return the data for plotting
 #' @noRd
-.create_common_importance_plot <- function(tab_summary, isDeviance=FALSE,
-                                           col_imp_alone = "#69BE28",
-                                           col_imp_cumulative = "#427730")
+.create_common_importance_data <- function(tab_summary)
 {
   lvar <- nrow(tab_summary)
 
@@ -121,71 +109,6 @@
                                cum_importance_length))
   dat2$posit <- factor(dat2$posit, levels = c("Cum", "Space", "Alone"))
   dat2$variable <- factor(dat2$variable, levels = rev(tab_summary$desc))
-  #69BE28 = light green
-  #427730 = dark green
 
-  ggp <- ggplot(dat2, aes_string(x = "variable", y = "value", fill = "posit")) + #,
-                                 #alpha = "posit")) +
-    geom_bar(stat = "identity") +
-    coord_flip() +
-    theme_bw() +
-    # create legend and turn it off
-    scale_fill_manual(values = list("Alone" = col_imp_alone,
-                                    "Space" = "white",
-                                    "Cum" = col_imp_cumulative),
-                      guide = "none") +
-    # make the middle bar transparent
-    #scale_alpha_manual(values = list("Alone" = 1, "Space" = 0, "Cum" = 1),
-    #                   guide = "none") +
-    xlab("") +
-    scale_y_continuous(labels = scales::percent)
-  if (isDeviance)
-  {
-    ggp <- ggp + ylab("Percent of Model Deviance Explained (Importance)")
-    dat3 <- data.frame(
-      cats = factor(c("Marginal Deviance Explained", "Cumulative Deviance Explained")),
-      heights = c(1, 2),
-      cols = factor(c("A", "B")),
-      stringsAsFactors = FALSE)
-  } else
-  {
-    ggp <- ggp + ylab("Percent of Model Variance Explained (Importance)")
-    dat3 <- data.frame(
-      cats = factor(c("Marginal Variance Explained", "Cumulative Variance Explained")),
-      heights = c(1, 2),
-      cols = factor(c("A", "B")),
-      stringsAsFactors = FALSE)
-  }
-
-  # create a dummy legend
-  ggp2 <- ggplot2::ggplot(dat3,
-                          aes_string(x = "cats", y = "heights", fill = "cats")) +
-    geom_bar(stat = "identity") +
-    scale_fill_manual(values = c(col_imp_cumulative, col_imp_alone)) +
-    theme(legend.title = element_blank(), legend.position = "bottom")
-
-  # ggplotGrob has a side effect of opening a device if one is not open
-  close_after <- (grDevices::dev.cur() == 1 & names(grDevices::dev.cur()) == "null device")
-  gt <- ggplot2::ggplotGrob(ggp)
-  ggp2_grob <- ggplot2::ggplotGrob(ggp2)
-  if (close_after)
-    grDevices::dev.off()
-
-  # extract the legend
-  legend_grob <- ggp2_grob$grobs[[which(ggp2_grob$layout$name == "guide-box")]]
-  # blank grob
-  r <- grid::rectGrob(gp = grid::gpar(fill = NA, col = NA))
-  # height of legend
-  legend_height <- sum(legend_grob$height)
-  # width of xlabs moved to ylabs
-  vert_axis_label <- gt$grobs[[which(ggp2_grob$layout$name == "ylab-l")]]
-  vert_axis_label_width <- sum(vert_axis_label$width)
-  # add the plot and legend together
-  combined <- gridExtra::arrangeGrob(
-    gt, r, legend_grob, layout_matrix = matrix(c(1,1,2,3), nrow = 2, byrow = TRUE),
-    heights = grid::unit.c(grid::unit(1, "npc") - legend_height,
-                           legend_height),
-    widths = grid::unit.c(vert_axis_label_width,
-                          grid::unit(1, "npc") - vert_axis_label_width))
-  return(combined)
+  return(dat2)
 }

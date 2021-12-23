@@ -8,9 +8,7 @@ test_that("create importance data works", {
   expect_equal("data.frame", class(tab_summary))
   expect_equal(1, tab_summary$cum_contr[nrow(tab_summary)])
 
-  imp <- .create_common_importance_plot(tab_summary, isDeviance=FALSE,
-                                               col_imp_alone = "#69BE28",
-                                               col_imp_cumulative = "#427730")
-  expect_true(all(c("gtable", "gTree", "grob", "gDesc") %in% class(imp)))
+  dat2 <- .create_common_importance_data(tab_summary)
+  expect_equal(class(dat2), "data.frame")
 })
 

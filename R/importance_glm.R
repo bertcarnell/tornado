@@ -5,28 +5,28 @@
 #' @inheritParams importance
 #' @param model_null a glm object for the null model
 #' @param dict a dictionary to translate the model variables to plotting variables
-#' @param col_imp_alone the color used for the deviance explained by each variable
-#' alone
-#' @param col_imp_cumulative the color used for the cumulative deviance explained
 #'
 #' @inherit importance return
 #' @export
 #'
+#' @seealso \code{\link{importance}}
+#'
 #' @examples
 #' gtest <- glm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars, family=gaussian)
 #' gtestreduced <- glm(mpg ~ 1, data=mtcars, family=gaussian)
-#' g <- importance(gtest, gtestreduced)
+#' imp <- importance(gtest, gtestreduced)
+#' plot(imp)
 #'
 #' gtest <- glm(mpg ~ cyl + wt + hp + gear + carb, data=mtcars, family=gaussian)
 #' gtestreduced <- glm(mpg ~ 1, data=mtcars, family=gaussian)
-#' g <- importance(gtest, gtestreduced)
+#' imp <- importance(gtest, gtestreduced)
+#' plot(imp)
 #'
 #' gtest <- glm(vs ~ wt + disp + gear, data=mtcars, family=binomial(link="logit"))
 #' gtestreduced <- glm(vs ~ 1, data=mtcars, family=binomial(link="logit"))
-#' g <- importance(gtest, gtestreduced)
-importance.glm <- function(model_final, model_null, dict=NA,
-                           col_imp_alone = "#69BE28",
-                           col_imp_cumulative = "#427730", ...)
+#' imp <- importance(gtest, gtestreduced)
+#' plot(imp)
+importance.glm <- function(model_final, model_null, dict=NA, ...)
 {
   # model_final <- glm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars, family=gaussian)
   # model_null <- glm(mpg ~ 1, data=mtcars, family=gaussian)
@@ -38,10 +38,9 @@ importance.glm <- function(model_final, model_null, dict=NA,
                                      dict = dict,
                                      isDeviance = TRUE)
 
-  combined <- .create_common_importance_plot(tab_summary, isDeviance = TRUE,
-                                             col_imp_alone = col_imp_alone,
-                                             col_imp_cumulative = col_imp_cumulative)
+  dat2 <- .create_common_importance_data(tab_summary)
 
-  return(structure(list(plot = combined,
-                        data = tab_summary), class = "importance_plot"))
+  return(structure(list(data = dat2,
+                        type = "glm"),
+                   class = "importance_plot"))
 }

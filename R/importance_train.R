@@ -3,12 +3,13 @@
 #' Importance Plot for the caret::train objects
 #'
 #' @inheritParams importance
-#' @param geom_bar_control list of arguments for \code{ggplot2::geom_bar}
 #'
 #' @import ggplot2
 #'
 #' @inherit importance return
 #' @export
+#'
+#' @seealso \code{\link{importance}}
 #'
 #' @examples
 #' if (requireNamespace("caret", quietly = TRUE) &
@@ -16,23 +17,20 @@
 #' {
 #'   model_final <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
 #'   imp <- importance(model_final)
-#'   print(imp)
 #'   plot(imp)
 #' }
-importance.train <- function(model_final, geom_bar_control = list(fill = "#69BE28"), ...)
+importance.train <- function(model_final, ...)
 {
   # model_final <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
 
   vimp <- caret::varImp(model_final, ...)
-  # vimp <- caret::varImp(model_final)
-  temp_names <- rownames(vimp$importance)[order(vimp$importance$Overall)]
-  vimp$importance$names <- factor(rownames(vimp$importance), levels = temp_names)
+  dat2 <- vimp$importance
+  dat2$names <- rownames(dat2)
 
-  g <- ggplot(vimp$importance, aes_string(x = "Overall", y = "names")) +
-    do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
-    labs(x = "Importance", y = "") +
-    theme_bw()
+  dat2 <- dat2[order(dat2$Overall, decreasing = TRUE),]
+  dat2$names <- factor(dat2$names, levels = rev(dat2$names))
 
-  return(structure(list(plot = g,
-                        data = vimp$importance), class = "importance_plot"))
+  return(structure(list(data = dat2,
+                        type = "train"),
+                   class = "importance_plot"))
 }

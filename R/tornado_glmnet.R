@@ -12,8 +12,6 @@
 #' @inherit tornado return
 #' @export
 #' @method tornado cv.glmnet
-#' @importFrom scales percent
-#' @import ggplot2
 #' @importFrom stats model.frame terms model.matrix predict
 #'
 #' @examples
@@ -22,15 +20,13 @@
 #'   mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
 #'   mm <- model.matrix(mf, mf)
 #'   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-#'   plot(tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
-#'                type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
+#'   torn <- tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
+#'                   type = "PercentChange", alpha = 0.10)
+#'   plot(torn, xlabel = "MPG")
 #' }
 tornado.cv.glmnet <- function(model,
                            type="PercentChange", alpha=0.10,
-                           alt.order=NA, dict=NA, xlabel="Response Rate",
-                           sensitivity_colors=c("grey", "#69BE28"),
-                           geom_bar_control=list(width = NULL),
-                           modeldata, form, s="lambda.1se", ...)
+                           dict=NA, modeldata, form, s="lambda.1se", ...)
 {
   # form <- formula(mpg ~ cyl*wt*hp)
   # modeldata <- mtcars
@@ -42,6 +38,7 @@ tornado.cv.glmnet <- function(model,
   # alpha <- 0.10
   # dict <- NA
 
+  alt.order <- NA
   assertthat::assert_that(requireNamespace("glmnet", quietly = TRUE),
                           msg = "The glmnet package is required to use this method")
 
@@ -95,26 +92,10 @@ tornado.cv.glmnet <- function(model,
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
 
-  pretty_break <- pretty(plotdat$value, n = 5)
-
-  ggp <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
-    do.call(geom_bar, args = c(list(position = "identity", stat = "identity"), geom_bar_control)) +
-    coord_flip() +
-    ylab(xlabel) +
-    xlab("") +
-    scale_fill_manual(values = sensitivity_colors) +
-    theme_bw()
-
-  if (model$glmnet.fit$call$family %in% c("binomial", "quasibinomial"))
-  {
-    ggp <- ggp +
-      scale_y_continuous(breaks = pretty_break,
-                         labels = scales::percent(c(pretty_break) + c(pmeans)),
-                         limits = c(max(min(pretty_break),-pmeans), min(max(pretty_break), 1 - pmeans)))
-  } else
-  {
-    ggp <- ggp + scale_y_continuous(breaks = pretty_break,
-                                    labels = format(c(pretty_break) + c(pmeans), digits = 4))
-  }
-  return(structure(list(plot = ggp, data = plotdat), class = "tornado_plot"))
+  return(structure(list(data = list(plotdat = plotdat,
+                                    pmeans = pmeans,
+                                    factordat = NA),
+                        type = "cv.glmnet",
+                        family = model$glmnet.fit$call$family),
+                   class = "tornado_plot"))
 }

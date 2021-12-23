@@ -15,23 +15,20 @@
 #' as the input variable for the center of the tornado.
 #'
 #' @param model a model object
-#' @param type PercentChange, percentiles, or ranges
+#' @param type \code{PercentChange}, \code{percentiles}, or \code{ranges}
 #' @param alpha the level of change
-#' @param alt.order an alternate order for the plot
 #' @param dict a dictionary to translate variables for the plot
-#' @param xlabel a label for the x-axis
-#' @param sensitivity_colors a two element character vector of the bar colors for a
-#' lower value and upper value
-#' @param geom_bar_control a list of \code{ggplot2::geom_bar} options
 #' @param ... further arguments, not used
 #'
 #' @return a \code{tornado_plot} object
+#' \item{type}{the type of tornado plot}
+#' \item{data}{the data required for the plot}
+#' \item{family}{the model family if available}
 #'
 #' @seealso \code{\link{tornado.lm}} \code{\link{tornado.glm}} \code{\link{tornado.cv.glmnet}} \code{\link{tornado.survreg}} \code{\link{tornado.coxph}} \code{\link{tornado.train}}
 #'
 #' @export
-tornado <- function(model, type, alpha, alt.order, dict, xlabel, sensitivity_colors,
-                    geom_bar_control, ...)
+tornado <- function(model, type, alpha, dict, ...)
 {
   UseMethod("tornado", model)
 }
