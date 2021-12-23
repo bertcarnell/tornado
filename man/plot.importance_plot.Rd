@@ -4,10 +4,29 @@
 \alias{plot.importance_plot}
 \title{Plot an Importance Plot object}
 \usage{
-\method{plot}{importance_plot}(x, ...)
+\method{plot}{importance_plot}(
+  x,
+  plot = TRUE,
+  nvar = NA,
+  col_imp_alone = "#69BE28",
+  col_imp_cumulative = "#427730",
+  geom_bar_control = list(fill = "#69BE28"),
+  ...
+)
 }
 \arguments{
 \item{x}{a \code{importance_plot} object}
+
+\item{plot}{boolean to determine if the plot is displayed, or just returned}
+
+\item{nvar}{the number of variables to plot in order of importance}
+
+\item{col_imp_alone}{the color used for the variance explained by each variable
+alone}
+
+\item{col_imp_cumulative}{the color used for the cumulative variance explained}
+
+\item{geom_bar_control}{list of arguments to control the plotting of \code{ggplot2::geom_bar}}
 
 \item{...}{future arguments}
 }
@@ -21,5 +40,16 @@ Plot an Importance Plot object
 gtest <- lm(mpg ~ cyl + wt + hp + gear + carb, data = mtcars)
 gtestreduced <- lm(mpg ~ 1, data = mtcars)
 imp <- importance(gtest, gtestreduced)
+plot(imp)
+
+gtest <- glm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars, family=gaussian)
+gtestreduced <- glm(mpg ~ 1, data=mtcars, family=gaussian)
+imp <- importance(gtest, gtestreduced)
+plot(imp)
+
+gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
+                           data = survival::ovarian,
+                           dist = "weibull")
+imp <- importance(gtest, survival::ovarian, nperm = 500)
 plot(imp)
 }

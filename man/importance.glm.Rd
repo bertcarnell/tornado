@@ -4,14 +4,7 @@
 \alias{importance.glm}
 \title{GLM variable importance plot}
 \usage{
-\method{importance}{glm}(
-  model_final,
-  model_null,
-  dict = NA,
-  col_imp_alone = "#69BE28",
-  col_imp_cumulative = "#427730",
-  ...
-)
+\method{importance}{glm}(model_final, model_null, dict = NA, ...)
 }
 \arguments{
 \item{model_final}{a model object}
@@ -20,15 +13,12 @@
 
 \item{dict}{a dictionary to translate the model variables to plotting variables}
 
-\item{col_imp_alone}{the color used for the deviance explained by each variable
-alone}
-
-\item{col_imp_cumulative}{the color used for the cumulative deviance explained}
-
 \item{...}{arguments passed to other methods}
 }
 \value{
 an object of type \code{importance_plot}
+\item{type}{the type of importance plot}
+\item{data}{the importance data required for the plot}
 }
 \description{
 GLM variable importance plot
@@ -36,13 +26,19 @@ GLM variable importance plot
 \examples{
 gtest <- glm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars, family=gaussian)
 gtestreduced <- glm(mpg ~ 1, data=mtcars, family=gaussian)
-g <- importance(gtest, gtestreduced)
+imp <- importance(gtest, gtestreduced)
+plot(imp)
 
 gtest <- glm(mpg ~ cyl + wt + hp + gear + carb, data=mtcars, family=gaussian)
 gtestreduced <- glm(mpg ~ 1, data=mtcars, family=gaussian)
-g <- importance(gtest, gtestreduced)
+imp <- importance(gtest, gtestreduced)
+plot(imp)
 
 gtest <- glm(vs ~ wt + disp + gear, data=mtcars, family=binomial(link="logit"))
 gtestreduced <- glm(vs ~ 1, data=mtcars, family=binomial(link="logit"))
-g <- importance(gtest, gtestreduced)
+imp <- importance(gtest, gtestreduced)
+plot(imp)
+}
+\seealso{
+\code{\link{importance}}
 }

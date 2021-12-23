@@ -4,39 +4,16 @@
 \alias{tornado.coxph}
 \title{Cox Proportional Hazards Tornado Diagram}
 \usage{
-\method{tornado}{coxph}(
-  model,
-  type = "PercentChange",
-  alpha = 0.1,
-  alt.order = NA,
-  dict = NA,
-  xlabel = "Risk",
-  sensitivity_colors = c("grey", "#69BE28"),
-  geom_bar_control = list(width = NULL),
-  geom_point_control = list(fill = "black", col = "black"),
-  modeldata,
-  ...
-)
+\method{tornado}{coxph}(model, type = "PercentChange", alpha = 0.1, dict = NA, modeldata, ...)
 }
 \arguments{
 \item{model}{a model object}
 
-\item{type}{PercentChange, percentiles, or ranges}
+\item{type}{\code{PercentChange}, \code{percentiles}, or \code{ranges}}
 
 \item{alpha}{the level of change}
 
-\item{alt.order}{an alternate order for the plot}
-
 \item{dict}{a dictionary to translate variables for the plot}
-
-\item{xlabel}{a label for the x-axis}
-
-\item{sensitivity_colors}{a two element character vector of the bar colors for a
-lower value and upper value}
-
-\item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
-
-\item{geom_point_control}{a list of \code{ggplot2::geom_point}}
 
 \item{modeldata}{the data used to fit the model}
 
@@ -44,6 +21,9 @@ lower value and upper value}
 }
 \value{
 a \code{tornado_plot} object
+\item{type}{the type of tornado plot}
+\item{data}{the data required for the plot}
+\item{family}{the model family if available}
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -61,6 +41,7 @@ as the input variable for the center of the tornado.
 \examples{
 gtest <- survival::coxph(survival::Surv(stop, event) ~ rx + size + number,
                            survival::bladder)
-plot(tornado(gtest, modeldata = survival::bladder, type = "PercentChange",
-             alpha = 0.10, xlabel = "futime"))
+torn <- tornado(gtest, modeldata = survival::bladder, type = "PercentChange",
+             alpha = 0.10)
+plot(torn, xlabel = "Risk")
 }

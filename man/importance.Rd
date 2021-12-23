@@ -13,6 +13,8 @@ importance(model_final, ...)
 }
 \value{
 an object of type \code{importance_plot}
+\item{type}{the type of importance plot}
+\item{data}{the importance data required for the plot}
 }
 \description{
 Generic Importance Plot

@@ -12,6 +12,8 @@
 #' @method tornado survreg
 #' @import survival
 #'
+#' @seealso \code{\link{tornado}}
+#'
 #' @examples
 #' gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx,
 #'                            survival::ovarian,

@@ -4,14 +4,7 @@
 \alias{importance.survreg}
 \title{Create a variable importance plot for a survreg model}
 \usage{
-\method{importance}{survreg}(
-  model_final,
-  model_data,
-  dict = NA,
-  nperm = 500,
-  geom_bar_control = list(fill = "#69BE28"),
-  ...
-)
+\method{importance}{survreg}(model_final, model_data, dict = NA, nperm = 500, ...)
 }
 \arguments{
 \item{model_final}{a model object}
@@ -22,12 +15,12 @@
 
 \item{nperm}{the number of permutations used to calculate the importance}
 
-\item{geom_bar_control}{list of arguments to control the plotting of \code{ggplot2::geom_bar}}
-
 \item{...}{arguments passed to other methods}
 }
 \value{
 an object of type \code{importance_plot}
+\item{type}{the type of importance plot}
+\item{data}{the importance data required for the plot}
 }
 \description{
 Create a variable importance plot for a survreg model
@@ -36,5 +29,9 @@ Create a variable importance plot for a survreg model
 model_final <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
                        data = survival::ovarian,
                        dist = "weibull")
-importance(model_final, model_data = survival::ovarian, nperm = 500)
+imp <- importance(model_final, survival::ovarian, nperm = 500)
+plot(imp)
+}
+\seealso{
+\code{\link{importance}}
 }

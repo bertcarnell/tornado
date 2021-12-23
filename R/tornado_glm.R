@@ -5,12 +5,13 @@
 #' @inherit tornado description
 #'
 #' @inheritParams tornado
-#' @param geom_point_control a list of \code{ggplot2::geom_point}
 #'
 #' @inherit tornado return
 #' @export
 #' @method tornado glm
 #' @importFrom stats family
+#'
+#' @seealso \code{\link{tornado}}
 #'
 #' @examples
 #' gtest <- glm(mpg ~ cyl*wt*hp, data = mtcars, family = gaussian)

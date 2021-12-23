@@ -8,12 +8,7 @@
   model,
   type = "PercentChange",
   alpha = 0.1,
-  alt.order = NA,
   dict = NA,
-  xlabel = "Response Rate",
-  sensitivity_colors = c("grey", "#69BE28"),
-  geom_bar_control = list(width = NULL),
-  geom_point_control = list(fill = "black", col = "black"),
   class_number = NA,
   ...
 )
@@ -21,22 +16,11 @@
 \arguments{
 \item{model}{a model object}
 
-\item{type}{PercentChange, percentiles, or ranges}
+\item{type}{\code{PercentChange}, \code{percentiles}, or \code{ranges}}
 
 \item{alpha}{the level of change}
 
-\item{alt.order}{an alternate order for the plot}
-
 \item{dict}{a dictionary to translate variables for the plot}
-
-\item{xlabel}{a label for the x-axis}
-
-\item{sensitivity_colors}{a two element character vector of the bar colors for a
-lower value and upper value}
-
-\item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
-
-\item{geom_point_control}{a list of \code{ggplot2::geom_point}}
 
 \item{class_number}{for classification models, which number of the class that
 will be plotted}
@@ -45,6 +29,9 @@ will be plotted}
 }
 \value{
 a \code{tornado_plot} object
+\item{type}{the type of tornado plot}
+\item{data}{the data required for the plot}
+\item{family}{the model family if available}
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -64,6 +51,10 @@ if (requireNamespace("caret", quietly = TRUE) &
     requireNamespace("randomForest", quietly = TRUE))
 {
   gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
-  plot(tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
+  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+  plot(torn, xlabel = "MPG")
 }
+}
+\seealso{
+\code{\link{tornado}}
 }

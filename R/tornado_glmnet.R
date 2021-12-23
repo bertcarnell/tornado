@@ -14,6 +14,8 @@
 #' @method tornado cv.glmnet
 #' @importFrom stats model.frame terms model.matrix predict
 #'
+#' @seealso \code{\link{tornado}}
+#'
 #' @examples
 #' if (requireNamespace("glmnet", quietly = TRUE))
 #' {

@@ -16,6 +16,8 @@
 #'
 #' @importFrom assertthat assert_that
 #'
+#' @seealso \code{\link{tornado}}
+#'
 #' @examples
 #' if (requireNamespace("caret", quietly = TRUE) &
 #'     requireNamespace("randomForest", quietly = TRUE))

@@ -11,6 +11,8 @@
 #' @method tornado lm
 #' @importFrom stats family
 #'
+#' @seealso \code{\link{tornado}}
+#'
 #' @examples
 #' gtest <- lm(mpg ~ cyl*wt*hp, data = mtcars)
 #' torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)

@@ -4,15 +4,7 @@
 \alias{importance.cv.glmnet}
 \title{Plot Variable Importance for a GLMNET model}
 \usage{
-\method{importance}{cv.glmnet}(
-  model_final,
-  model_data,
-  form,
-  dict = NA,
-  nperm = 500,
-  geom_bar_control = list(fill = "#69BE28"),
-  ...
-)
+\method{importance}{cv.glmnet}(model_final, model_data, form, dict = NA, nperm = 500, ...)
 }
 \arguments{
 \item{model_final}{a model object}
@@ -25,12 +17,12 @@
 
 \item{nperm}{the number of permutations used to calculate the importance}
 
-\item{geom_bar_control}{list of arguments to control the plotting of \code{ggplot2::geom_bar}}
-
 \item{...}{arguments passed to other methods}
 }
 \value{
 an object of type \code{importance_plot}
+\item{type}{the type of importance plot}
+\item{data}{the importance data required for the plot}
 }
 \description{
 Plot Variable Importance for a GLMNET model
@@ -39,9 +31,13 @@ Plot Variable Importance for a GLMNET model
 if (requireNamespace("glmnet", quietly = TRUE))
 {
   form <- formula(mpg ~ cyl*wt*hp)
-  mf <- model.frame(mpg ~ cyl*wt*hp, data = mtcars)
+  mf <- model.frame(form, data = mtcars)
   mm <- model.matrix(mf, mf)
   gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
-  importance(gtest, mtcars, form, nperm = 100)
+  imp <- importance(gtest, mtcars, form, nperm = 100)
+  plot(imp)
 }
+}
+\seealso{
+\code{\link{importance}}
 }

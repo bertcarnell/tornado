@@ -8,11 +8,7 @@
   model,
   type = "PercentChange",
   alpha = 0.1,
-  alt.order = NA,
   dict = NA,
-  xlabel = "Response Rate",
-  sensitivity_colors = c("grey", "#69BE28"),
-  geom_bar_control = list(width = NULL),
   modeldata,
   form,
   s = "lambda.1se",
@@ -22,20 +18,11 @@
 \arguments{
 \item{model}{a model object}
 
-\item{type}{PercentChange, percentiles, or ranges}
+\item{type}{\code{PercentChange}, \code{percentiles}, or \code{ranges}}
 
 \item{alpha}{the level of change}
 
-\item{alt.order}{an alternate order for the plot}
-
 \item{dict}{a dictionary to translate variables for the plot}
-
-\item{xlabel}{a label for the x-axis}
-
-\item{sensitivity_colors}{a two element character vector of the bar colors for a
-lower value and upper value}
-
-\item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
 
 \item{modeldata}{the raw data used to fit the glmnet model}
 
@@ -47,6 +34,9 @@ lower value and upper value}
 }
 \value{
 a \code{tornado_plot} object
+\item{type}{the type of tornado plot}
+\item{data}{the data required for the plot}
+\item{family}{the model family if available}
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected
@@ -67,7 +57,11 @@ if (requireNamespace("glmnet", quietly = TRUE))
   mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
   mm <- model.matrix(mf, mf)
   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
-  plot(tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
-               type = "PercentChange", alpha = 0.10, xlabel = "MPG"))
+  torn <- tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
+                  type = "PercentChange", alpha = 0.10)
+  plot(torn, xlabel = "MPG")
 }
+}
+\seealso{
+\code{\link{tornado}}
 }

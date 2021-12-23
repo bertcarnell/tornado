@@ -4,40 +4,24 @@
 \alias{tornado}
 \title{Generic tornado plotting method}
 \usage{
-tornado(
-  model,
-  type,
-  alpha,
-  alt.order,
-  dict,
-  xlabel,
-  sensitivity_colors,
-  geom_bar_control,
-  ...
-)
+tornado(model, type, alpha, dict, ...)
 }
 \arguments{
 \item{model}{a model object}
 
-\item{type}{PercentChange, percentiles, or ranges}
+\item{type}{\code{PercentChange}, \code{percentiles}, or \code{ranges}}
 
 \item{alpha}{the level of change}
 
-\item{alt.order}{an alternate order for the plot}
-
 \item{dict}{a dictionary to translate variables for the plot}
-
-\item{xlabel}{a label for the x-axis}
-
-\item{sensitivity_colors}{a two element character vector of the bar colors for a
-lower value and upper value}
-
-\item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
 
 \item{...}{further arguments, not used}
 }
 \value{
 a \code{tornado_plot} object
+\item{type}{the type of tornado plot}
+\item{data}{the data required for the plot}
+\item{family}{the model family if available}
 }
 \description{
 A tornado plot is a visualization of the range of outputs expected

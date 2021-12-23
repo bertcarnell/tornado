@@ -4,14 +4,7 @@
 \alias{importance.lm}
 \title{Linear Model variable importance plot}
 \usage{
-\method{importance}{lm}(
-  model_final,
-  model_null,
-  dict = NA,
-  col_imp_alone = "#69BE28",
-  col_imp_cumulative = "#427730",
-  ...
-)
+\method{importance}{lm}(model_final, model_null, dict = NA, ...)
 }
 \arguments{
 \item{model_final}{a model object}
@@ -20,15 +13,12 @@
 
 \item{dict}{a dictionary to translate the model variables to plotting variables}
 
-\item{col_imp_alone}{the color used for the variance explained by each variable
-alone}
-
-\item{col_imp_cumulative}{the color used for the cumulative variance explained}
-
 \item{...}{arguments passed to other methods}
 }
 \value{
 an object of type \code{importance_plot}
+\item{type}{the type of importance plot}
+\item{data}{the importance data required for the plot}
 }
 \description{
 Linear Model variable importance plot
@@ -36,9 +26,14 @@ Linear Model variable importance plot
 \examples{
 gtest <- lm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars)
 gtestreduced <- lm(mpg ~ 1, data=mtcars)
-g <- importance(gtest, gtestreduced)
+imp <- importance(gtest, gtestreduced)
+plot(imp)
 
 gtest <- lm(mpg ~ cyl + wt + hp + gear + carb, data=mtcars)
 gtestreduced <- lm(mpg ~ 1, data=mtcars)
-g <- importance(gtest, gtestreduced)
+imp <- importance(gtest, gtestreduced)
+plot(imp)
+}
+\seealso{
+\code{\link{importance}}
 }

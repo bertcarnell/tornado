@@ -4,10 +4,32 @@
 \alias{plot.tornado_plot}
 \title{Plot a Tornado Plot object}
 \usage{
-\method{plot}{tornado_plot}(x, ...)
+\method{plot}{tornado_plot}(
+  x,
+  plot = TRUE,
+  nvar = NA,
+  xlabel = "Model Response",
+  sensitivity_colors = c("grey", "#69BE28"),
+  geom_bar_control = list(width = NULL),
+  geom_point_control = list(fill = "black", col = "black"),
+  ...
+)
 }
 \arguments{
 \item{x}{a \code{tornado_plot} object}
+
+\item{plot}{boolean to determine if the plot is displayed, or just returned}
+
+\item{nvar}{the number of variables to plot}
+
+\item{xlabel}{a label for the x-axis}
+
+\item{sensitivity_colors}{a two element character vector of the bar colors for a
+lower value and upper value}
+
+\item{geom_bar_control}{a list of \code{ggplot2::geom_bar} options}
+
+\item{geom_point_control}{a list of \code{ggplot2::geom_point}}
 
 \item{...}{future arguments}
 }
