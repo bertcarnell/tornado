@@ -5,3 +5,7 @@
 ^tornado\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
+^etc$
+^pkgdown$
+^logo\.png$
+^README.Rmd$

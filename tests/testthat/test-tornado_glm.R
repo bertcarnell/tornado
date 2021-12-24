@@ -47,7 +47,7 @@ test_that("plotting binomial glm works", {
   gtest <- glm(vs ~ wt + disp + cyl, data = mtcars, family = binomial(link = "logit"))
   torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
   expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
+  g <- plot(torn, plot = FALSE, xlabel = "VS")
   g <- g + ggtitle("Test: Binomial GLM PercentChange")
   plot(g)
 
