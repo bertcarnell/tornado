@@ -31,11 +31,11 @@ cat(paste0("|<sub>",
              c("Actions", "Code Coverage", "Website"), 
              collapse="</sub>|<sub>"), 
            "</sub>|\n"))
-cat(paste0("|", paste0(rep(":---:", 7), collapse="|"), "|\n"))
+cat(paste0("|", paste0(rep(":---:", 3), collapse="|"), "|\n"))
 cat(paste0("|", 
            paste0(c("[![R-CMD-CHECK](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml)",
                     "[![Coverage status](https://codecov.io/gh/bertcarnell/tornado/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/tornado?branch=master)",
-                    "NA"),
+                    "[![](https://img.shields.io/badge/pkgdown-tornado-blue.svg)](https://bertcarnell.github.io/tornado/)"),
                   collapse="|"), 
            "|"))
 ```
