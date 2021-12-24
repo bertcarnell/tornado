@@ -1,5 +1,4 @@
 <div>
-
 <table>
 <tr>
 <td>
@@ -7,20 +6,21 @@
 </td>
 </tr>
 </table>
-
 </div>
 
 |                                                                               <sub>Actions</sub>                                                                               |                                                                  <sub>Code Coverage</sub>                                                                  | <sub>Website</sub> |     |     |     |     |
 |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------:|:---:|:---:|:---:|:---:|
 | [![R-CMD-CHECK](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml) | [![Coverage status](https://codecov.io/gh/bertcarnell/tornado/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/tornado?branch=master) |         NA         |     |     |     |     |
 
-# tornado
+tornado
+=======
 
 `tornado` plots for model sensitivity analysis.
 
 `tornado` [website](https://bertcarnell.github.io/tornado/)
 
-## Installation
+Installation
+------------
 
 You can also install the development version of `lhs` from github with:
 
@@ -29,7 +29,8 @@ if (!require(devtools)) install.packages("devtools")
 devtools::install_github("bertcarnell/tornado")
 ```
 
-## Quick Start - Torndao Plots
+Quick Start - Torndao Plots
+---------------------------
 
 ### Linear Models
 
