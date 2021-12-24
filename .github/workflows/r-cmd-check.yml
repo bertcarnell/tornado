@@ -7,6 +7,8 @@ on:
       - 'docs/**'
       - 'tornado.Rproj'
       - 'README.md'
+      - 'etc/**'
+      - 'pkgdown/**'
     branches:
       - master
   pull_request:
@@ -76,7 +78,6 @@ jobs:
         shell: Rscript {0}
 
       - name: Check Standard
-        if: ( matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel' ) == false
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
@@ -85,22 +86,6 @@ jobs:
       - name: Test Coverage
         if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
         run: covr::codecov()
-        shell: Rscript {0}
-
-      - name: Install Valgrind (Linux-rdevel only)
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel'
-        run: sudo apt-get install valgrind
-
-      - name: Check Valgrind (Linux-rdevel only)
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel'
-        env:
-          _R_CHECK_CRAN_INCOMING_REMOTE_: false
-          # https://www.valgrind.org/docs/manual/manual-core.html
-          VALGRIND_OPTS: "--leak-check=full --track-origins=yes"
-          # https://www.stats.ox.ac.uk/pub/bdr/memtests/README.txt
-          RJAVA_JVM_STACK_WORKAROUND: 0
-          R_DONT_USE_TK: true
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--use-valgrind"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
       - name: Upload check results

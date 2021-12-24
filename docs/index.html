@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plots for Model Sensitivity and Variable Importance • tornado</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,6 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Plots for Model Sensitivity and Variable Importance">
 <meta property="og:description" content="Draws tornado plots for model sensitivity to univariate changes.  Implements methods for many modeling methods including linear models, generalized linear models, survival regression models, and arbitrary machine learning models in the caret package.  Also draws variable importance plots.  ">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -59,13 +66,112 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
+<div>
+<table class="table"><tr>
+<td>
+<img align="left" width="200" height="200" src="logo.png">
+</td>
+</tr></table>
+</div>
+<table class="table">
+<thead><tr class="header">
+<th align="center"><sub>Actions</sub></th>
+<th align="center"><sub>Code Coverage</sub></th>
+<th align="center"><sub>Website</sub></th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="center"><a href="https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml"><img src="https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml/badge.svg" alt="R-CMD-CHECK"></a></td>
+<td align="center"><a href="https://codecov.io/github/bertcarnell/tornado?branch=master"><img src="https://codecov.io/gh/bertcarnell/tornado/branch/master/graph/badge.svg" alt="Coverage status"></a></td>
+<td align="center"><a href="https://bertcarnell.github.io/tornado/"><img src="https://img.shields.io/badge/pkgdown-tornado-blue.svg"></a></td>
+</tr></tbody>
+</table>
 <div id="tornado" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#tornado" class="anchor"></a>tornado</h1></div>
-<p>tornado plots for model sensitivity analysis</p>
-<p><a href="https://codecov.io/github/bertcarnell/tornado?branch=master"><img src="https://codecov.io/gh/bertcarnell/tornado/branch/master/graph/badge.svg" alt="Coverage status"></a> <a href="https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml"><img src="https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml/badge.svg" alt="R-CMD-CHECK"></a></p>
-<p><a href="https://bertcarnell.github.io/tornado/">Documentation</a></p>
+<p><code>tornado</code> plots for model sensitivity analysis.</p>
+<p><code>tornado</code> <a href="https://bertcarnell.github.io/tornado/">website</a></p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You can also install the development version of <code>lhs</code> from github with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"bertcarnell/tornado"</span><span class="op">)</span></code></pre></div>
 </div>
+<div id="quick-start---torndao-plots" class="section level2">
+<h2 class="hasAnchor">
+<a href="#quick-start---torndao-plots" class="anchor"></a>Quick Start - Torndao Plots</h2>
+<div id="linear-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#linear-models" class="anchor"></a>Linear Models</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">*</span><span class="va">wt</span><span class="op">*</span><span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
+<span class="va">torn1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">lm1</span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>, alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">torn1</span>, xlabel <span class="op">=</span> <span class="st">"MPG"</span><span class="op">)</span></code></pre></div>
+<p><img src="etc/images/random-1.png"></p>
+</div>
+<div id="generalized-linear-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#generalized-linear-models" class="anchor"></a>Generalized Linear Models</h3>
+<p>Plots can also be created for the range of the input data</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">glm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">disp</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">torn2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">glm2</span>, type <span class="op">=</span> <span class="st">"ranges"</span>, alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">torn2</span>, xlabel <span class="op">=</span> <span class="st">"V or Straight Engine"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="etc/images/glm_section-1.png"></p>
+<p>Plots can include factors and percentiles of the data as well.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="va">mtcars</span>
+<span class="va">mydata</span><span class="op">$</span><span class="va">am</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span><span class="op">)</span>
+<span class="va">mydata</span><span class="op">$</span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">vs</span><span class="op">)</span>
+<span class="va">glm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">am</span> <span class="op">+</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mydata</span>, family <span class="op">=</span> <span class="va">gaussian</span><span class="op">)</span>
+<span class="va">torn2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">glm2</span>, type <span class="op">=</span> <span class="st">"percentiles"</span>, alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">torn2</span>, xlabel <span class="op">=</span> <span class="st">"MPG"</span>, 
+     geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,
+     sensitivity_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#E41A1C"</span>, <span class="st">"#377EB8"</span><span class="op">)</span>,
+     geom_point_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"red"</span>, col <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="etc/images/glm_factor_section-1.png"></p>
+</div>
+<div id="censored-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#censored-data" class="anchor"></a>Censored Data</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">survreg3</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survreg.html">survreg</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">resid.ds</span>, 
+                              <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/ovarian.html">ovarian</a></span>, dist <span class="op">=</span> <span class="st">'weibull'</span>, scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">torn3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">survreg3</span>, modeldata <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/ovarian.html">ovarian</a></span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>, alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">torn3</span>, xlabel <span class="op">=</span> <span class="st">"Survival Time"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="etc/images/censored_section-1.png"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coxph4</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">stop</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="va">rx</span> <span class="op">+</span> <span class="va">size</span> <span class="op">+</span> <span class="va">number</span>,
+                          <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html">bladder</a></span><span class="op">)</span>
+<span class="va">torn4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">coxph4</span>, modeldata <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html">bladder</a></span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>,
+                 alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">torn4</span>, xlabel <span class="op">=</span> <span class="st">"Risk"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="etc/images/censored_section-2.png"></p>
+</div>
+<div id="machine-learning-models-from-carettrain" class="section level3">
+<h3 class="hasAnchor">
+<a href="#machine-learning-models-from-carettrain" class="anchor"></a>Machine Learning Models from caret::train</h3>
+<p>The <code>plot</code> method can also return a ggplot object</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R">  <span class="va">mydat</span> <span class="op">&lt;-</span> <span class="va">mtcars</span>
+  <span class="va">mydat</span><span class="op">$</span><span class="va">am</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">am</span><span class="op">)</span>
+  <span class="va">mydat</span><span class="op">$</span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">vs</span><span class="op">)</span>
+  <span class="va">mydat</span><span class="op">$</span><span class="va">cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
+  <span class="va">mydat</span><span class="op">$</span><span class="va">gear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">gear</span><span class="op">)</span>
+  <span class="va">mydat</span><span class="op">$</span><span class="va">carb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">carb</span><span class="op">)</span>
+
+  <span class="va">gtest</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">mydat</span>, select <span class="op">=</span> <span class="op">-</span><span class="va">vs</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">mydat</span><span class="op">$</span><span class="va">vs</span>, method <span class="op">=</span> <span class="st">"rf"</span><span class="op">)</span>
+  <span class="va">torn</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">gtest</span>, type <span class="op">=</span> <span class="st">"percentiles"</span>, alpha <span class="op">=</span> <span class="fl">0.10</span>, class_number <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">torn</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, xlabel <span class="op">=</span> <span class="st">"Probability of Class V-shaped Engine"</span><span class="op">)</span>
+  <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Classifier caret::train randomforest, 90-110% of the mean in each variable"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
+<p><img src="etc/images/train_section-1.png"></p>
+</div>
+</div>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

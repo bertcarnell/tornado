@@ -8,6 +8,13 @@
 
 <title>Generic tornado plotting method — tornado • tornado</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -51,6 +58,7 @@ is moved from its mean value at a time.  Factors or categorical variables have a
 been added to these plots by plotting dots at the resulting output as each
 factor is varied through all of its levels.  The base factor level is chosen
 as the input variable for the center of the tornado." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -132,17 +140,7 @@ factor is varied through all of its levels.  The base factor level is chosen
 as the input variable for the center of the tornado.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tornado</span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  <span class='va'>type</span>,
-  <span class='va'>alpha</span>,
-  <span class='va'>alt.order</span>,
-  <span class='va'>dict</span>,
-  <span class='va'>xlabel</span>,
-  <span class='va'>sensitivity_colors</span>,
-  <span class='va'>geom_bar_control</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tornado</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>type</span>, <span class='va'>alpha</span>, <span class='va'>dict</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,32 +151,15 @@ as the input variable for the center of the tornado.</p>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>PercentChange, percentiles, or ranges</p></td>
+      <td><p><code>PercentChange</code>, <code>percentiles</code>, or <code>ranges</code></p></td>
     </tr>
     <tr>
       <th>alpha</th>
       <td><p>the level of change</p></td>
     </tr>
     <tr>
-      <th>alt.order</th>
-      <td><p>an alternate order for the plot</p></td>
-    </tr>
-    <tr>
       <th>dict</th>
       <td><p>a dictionary to translate variables for the plot</p></td>
-    </tr>
-    <tr>
-      <th>xlabel</th>
-      <td><p>a label for the x-axis</p></td>
-    </tr>
-    <tr>
-      <th>sensitivity_colors</th>
-      <td><p>a two element character vector of the bar colors for a
-lower value and upper value</p></td>
-    </tr>
-    <tr>
-      <th>geom_bar_control</th>
-      <td><p>a list of <code><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>ggplot2::geom_bar</a></code> options</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -189,6 +170,10 @@ lower value and upper value</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>tornado_plot</code> object</p>
+<dt>type</dt><dd><p>the type of tornado plot</p></dd>
+<dt>data</dt><dd><p>the data required for the plot</p></dd>
+<dt>family</dt><dd><p>the model family if available</p></dd>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='tornado.lm.html'>tornado.lm</a></code> <code><a href='tornado.glm.html'>tornado.glm</a></code> <code><a href='tornado.cv.glmnet.html'>tornado.cv.glmnet</a></code> <code><a href='tornado.survreg.html'>tornado.survreg</a></code> <code><a href='tornado.coxph.html'>tornado.coxph</a></code> <code><a href='tornado.train.html'>tornado.train</a></code></p></div>

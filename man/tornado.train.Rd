@@ -51,7 +51,7 @@ if (requireNamespace("caret", quietly = TRUE) &
     requireNamespace("randomForest", quietly = TRUE))
 {
   gtest <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10, xlabel = "MPG")
+  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
   plot(torn, xlabel = "MPG")
 }
 }

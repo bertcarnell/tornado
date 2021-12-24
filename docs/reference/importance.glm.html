@@ -8,6 +8,13 @@
 
 <title>GLM variable importance plot — importance.glm • tornado</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,6 +48,7 @@
 
 <meta property="og:title" content="GLM variable importance plot — importance.glm" />
 <meta property="og:description" content="GLM variable importance plot" />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -113,14 +121,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for glm</span>
-<span class='fu'><a href='importance.html'>importance</a></span><span class='op'>(</span>
-  <span class='va'>model_final</span>,
-  <span class='va'>model_null</span>,
-  dict <span class='op'>=</span> <span class='cn'>NA</span>,
-  col_imp_alone <span class='op'>=</span> <span class='st'>"#69BE28"</span>,
-  col_imp_cumulative <span class='op'>=</span> <span class='st'>"#427730"</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='fu'><a href='importance.html'>importance</a></span><span class='op'>(</span><span class='va'>model_final</span>, <span class='va'>model_null</span>, dict <span class='op'>=</span> <span class='cn'>NA</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,15 +139,6 @@
       <td><p>a dictionary to translate the model variables to plotting variables</p></td>
     </tr>
     <tr>
-      <th>col_imp_alone</th>
-      <td><p>the color used for the deviance explained by each variable
-alone</p></td>
-    </tr>
-    <tr>
-      <th>col_imp_cumulative</th>
-      <td><p>the color used for the cumulative deviance explained</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>arguments passed to other methods</p></td>
     </tr>
@@ -155,20 +147,29 @@ alone</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an object of type <code>importance_plot</code></p>
+<dt>type</dt><dd><p>the type of importance plot</p></dd>
+<dt>data</dt><dd><p>the importance data required for the plot</p></dd>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='importance.html'>importance</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>gtest</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span><span class='op'>*</span><span class='va'>wt</span><span class='op'>*</span><span class='va'>hp</span> <span class='op'>+</span> <span class='va'>gear</span> <span class='op'>+</span> <span class='va'>carb</span>, data<span class='op'>=</span><span class='va'>mtcars</span>, family<span class='op'>=</span><span class='va'>gaussian</span><span class='op'>)</span>
 <span class='va'>gtestreduced</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='fl'>1</span>, data<span class='op'>=</span><span class='va'>mtcars</span>, family<span class='op'>=</span><span class='va'>gaussian</span><span class='op'>)</span>
-<span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='importance.html'>importance</a></span><span class='op'>(</span><span class='va'>gtest</span>, <span class='va'>gtestreduced</span><span class='op'>)</span>
-
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='importance.html'>importance</a></span><span class='op'>(</span><span class='va'>gtest</span>, <span class='va'>gtestreduced</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+</div><div class='img'><img src='importance.glm-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>gtest</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>hp</span> <span class='op'>+</span> <span class='va'>gear</span> <span class='op'>+</span> <span class='va'>carb</span>, data<span class='op'>=</span><span class='va'>mtcars</span>, family<span class='op'>=</span><span class='va'>gaussian</span><span class='op'>)</span>
 <span class='va'>gtestreduced</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='fl'>1</span>, data<span class='op'>=</span><span class='va'>mtcars</span>, family<span class='op'>=</span><span class='va'>gaussian</span><span class='op'>)</span>
-<span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='importance.html'>importance</a></span><span class='op'>(</span><span class='va'>gtest</span>, <span class='va'>gtestreduced</span><span class='op'>)</span>
-
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='importance.html'>importance</a></span><span class='op'>(</span><span class='va'>gtest</span>, <span class='va'>gtestreduced</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+</div><div class='img'><img src='importance.glm-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='va'>gtest</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>disp</span> <span class='op'>+</span> <span class='va'>gear</span>, data<span class='op'>=</span><span class='va'>mtcars</span>, family<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span>link<span class='op'>=</span><span class='st'>"logit"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>gtestreduced</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>~</span> <span class='fl'>1</span>, data<span class='op'>=</span><span class='va'>mtcars</span>, family<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span>link<span class='op'>=</span><span class='st'>"logit"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='importance.html'>importance</a></span><span class='op'>(</span><span class='va'>gtest</span>, <span class='va'>gtestreduced</span><span class='op'>)</span>
-</div></pre>
+<span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='importance.html'>importance</a></span><span class='op'>(</span><span class='va'>gtest</span>, <span class='va'>gtestreduced</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>imp</span><span class='op'>)</span>
+</div><div class='img'><img src='importance.glm-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

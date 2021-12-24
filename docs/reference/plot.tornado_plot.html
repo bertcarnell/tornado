@@ -8,6 +8,13 @@
 
 <title>Plot a Tornado Plot object — plot.tornado_plot • tornado</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,6 +48,7 @@
 
 <meta property="og:title" content="Plot a Tornado Plot object — plot.tornado_plot" />
 <meta property="og:description" content="Plot a Tornado Plot object" />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -113,7 +121,16 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for tornado_plot</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  nvar <span class='op'>=</span> <span class='cn'>NA</span>,
+  xlabel <span class='op'>=</span> <span class='st'>"Model Response"</span>,
+  sensitivity_colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey"</span>, <span class='st'>"#69BE28"</span><span class='op'>)</span>,
+  geom_bar_control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>,
+  geom_point_control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"black"</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -121,6 +138,31 @@
     <tr>
       <th>x</th>
       <td><p>a <code>tornado_plot</code> object</p></td>
+    </tr>
+    <tr>
+      <th>plot</th>
+      <td><p>boolean to determine if the plot is displayed, or just returned</p></td>
+    </tr>
+    <tr>
+      <th>nvar</th>
+      <td><p>the number of variables to plot</p></td>
+    </tr>
+    <tr>
+      <th>xlabel</th>
+      <td><p>a label for the x-axis</p></td>
+    </tr>
+    <tr>
+      <th>sensitivity_colors</th>
+      <td><p>a two element character vector of the bar colors for a
+lower value and upper value</p></td>
+    </tr>
+    <tr>
+      <th>geom_bar_control</th>
+      <td><p>a list of <code><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>ggplot2::geom_bar</a></code> options</p></td>
+    </tr>
+    <tr>
+      <th>geom_point_control</th>
+      <td><p>a list of <code><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>ggplot2::geom_point</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>

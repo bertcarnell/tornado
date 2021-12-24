@@ -8,6 +8,13 @@
 
 <title>print data in a tornado_plot — print.tornado_plot • tornado</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,6 +48,7 @@
 
 <meta property="og:title" content="print data in a tornado_plot — print.tornado_plot" />
 <meta property="og:description" content="print data in a tornado_plot" />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -133,7 +141,22 @@
     <pre class="examples"><div class='input'><span class='va'>gtest</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span><span class='op'>*</span><span class='va'>wt</span><span class='op'>*</span><span class='va'>hp</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
 <span class='va'>tp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tornado.html'>tornado</a></span><span class='op'>(</span><span class='va'>gtest</span>, type <span class='op'>=</span> <span class='st'>"PercentChange"</span>, alpha <span class='op'>=</span> <span class='fl'>0.10</span>, xlabel <span class='op'>=</span> <span class='st'>"MPG"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>tp</span><span class='op'>)</span>
-</div><div class='img'><img src='print.tornado_plot-1.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; $plotdat
+#&gt;   variable      value Level
+#&gt; 1      cyl -0.2142005   90%
+#&gt; 2       wt  1.4023713   90%
+#&gt; 3       hp  0.7165715   90%
+#&gt; 4      cyl  0.2142005  110%
+#&gt; 5       wt -1.4023713  110%
+#&gt; 6       hp -0.7165715  110%
+#&gt; 
+#&gt; $pmeans
+#&gt;        1 
+#&gt; 17.75713 
+#&gt; 
+#&gt; $factordat
+#&gt; [1] NA
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

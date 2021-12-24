@@ -8,6 +8,13 @@
 
 <title>Survreg Tornado Diagram — tornado.survreg • tornado</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -51,6 +58,7 @@ is moved from its mean value at a time.  Factors or categorical variables have a
 been added to these plots by plotting dots at the resulting output as each
 factor is varied through all of its levels.  The base factor level is chosen
 as the input variable for the center of the tornado." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -133,19 +141,7 @@ as the input variable for the center of the tornado.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for survreg</span>
-<span class='fu'><a href='tornado.html'>tornado</a></span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  type <span class='op'>=</span> <span class='st'>"PercentChange"</span>,
-  alpha <span class='op'>=</span> <span class='fl'>0.1</span>,
-  alt.order <span class='op'>=</span> <span class='cn'>NA</span>,
-  dict <span class='op'>=</span> <span class='cn'>NA</span>,
-  xlabel <span class='op'>=</span> <span class='st'>"Survival Time"</span>,
-  sensitivity_colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey"</span>, <span class='st'>"#69BE28"</span><span class='op'>)</span>,
-  geom_bar_control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>,
-  geom_point_control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"black"</span>, col <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span>,
-  <span class='va'>modeldata</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='fu'><a href='tornado.html'>tornado</a></span><span class='op'>(</span><span class='va'>model</span>, type <span class='op'>=</span> <span class='st'>"PercentChange"</span>, alpha <span class='op'>=</span> <span class='fl'>0.1</span>, dict <span class='op'>=</span> <span class='cn'>NA</span>, <span class='va'>modeldata</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,36 +152,15 @@ as the input variable for the center of the tornado.</p>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>PercentChange, percentiles, or ranges</p></td>
+      <td><p><code>PercentChange</code>, <code>percentiles</code>, or <code>ranges</code></p></td>
     </tr>
     <tr>
       <th>alpha</th>
       <td><p>the level of change</p></td>
     </tr>
     <tr>
-      <th>alt.order</th>
-      <td><p>an alternate order for the plot</p></td>
-    </tr>
-    <tr>
       <th>dict</th>
       <td><p>a dictionary to translate variables for the plot</p></td>
-    </tr>
-    <tr>
-      <th>xlabel</th>
-      <td><p>a label for the x-axis</p></td>
-    </tr>
-    <tr>
-      <th>sensitivity_colors</th>
-      <td><p>a two element character vector of the bar colors for a
-lower value and upper value</p></td>
-    </tr>
-    <tr>
-      <th>geom_bar_control</th>
-      <td><p>a list of <code><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>ggplot2::geom_bar</a></code> options</p></td>
-    </tr>
-    <tr>
-      <th>geom_point_control</th>
-      <td><p>a list of <code><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>ggplot2::geom_point</a></code></p></td>
     </tr>
     <tr>
       <th>modeldata</th>
@@ -200,13 +175,21 @@ lower value and upper value</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>tornado_plot</code> object</p>
+<dt>type</dt><dd><p>the type of tornado plot</p></dd>
+<dt>data</dt><dd><p>the data required for the plot</p></dd>
+<dt>family</dt><dd><p>the model family if available</p></dd>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='tornado.html'>tornado</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>gtest</span> <span class='op'>&lt;-</span> <span class='fu'>survival</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/survreg.html'>survreg</a></span><span class='op'>(</span><span class='fu'>survival</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/survival/man/Surv.html'>Surv</a></span><span class='op'>(</span><span class='va'>futime</span>, <span class='va'>fustat</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>ecog.ps</span> <span class='op'>+</span> <span class='va'>rx</span>,
                            <span class='fu'>survival</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/survival/man/ovarian.html'>ovarian</a></span>,
                            dist<span class='op'>=</span><span class='st'>'weibull'</span>, scale<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='tornado.html'>tornado</a></span><span class='op'>(</span><span class='va'>gtest</span>, modeldata <span class='op'>=</span> <span class='fu'>survival</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/survival/man/ovarian.html'>ovarian</a></span>, type <span class='op'>=</span> <span class='st'>"PercentChange"</span>,
-             alpha <span class='op'>=</span> <span class='fl'>0.10</span>, xlabel <span class='op'>=</span> <span class='st'>"futime"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>torn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tornado.html'>tornado</a></span><span class='op'>(</span><span class='va'>gtest</span>, modeldata <span class='op'>=</span> <span class='fu'>survival</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/survival/man/ovarian.html'>ovarian</a></span>, type <span class='op'>=</span> <span class='st'>"PercentChange"</span>,
+             alpha <span class='op'>=</span> <span class='fl'>0.10</span>, xlabel <span class='op'>=</span> <span class='st'>"futime"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>torn</span>, xlabel <span class='op'>=</span> <span class='st'>"Survival Time"</span><span class='op'>)</span>
 </div><div class='img'><img src='tornado.survreg-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
