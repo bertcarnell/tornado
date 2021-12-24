@@ -41,6 +41,16 @@ test_that("plotting gaussian glm works", {
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
   g <- g + ggtitle("Test:  Gaussian GLM percentiles with dictionary")
   plot(g)
+
+  # regression test.  This used to fail without "fill" in the geom_point_control
+  torn <- tornado(gtest, type = "percentiles", alpha = 0.10)
+  expect_equal(class(torn), "tornado_plot")
+  expect_warning({
+    plot(torn, xlabel = "MPG",
+       geom_bar_control = list(width = 0.5),
+       sensitivity_colors = c("#E41A1C", "#377EB8"),
+       geom_point_control = list(col = "red"))
+  })
 })
 
 test_that("plotting binomial glm works", {

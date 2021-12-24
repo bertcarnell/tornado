@@ -33,6 +33,23 @@ plot.tornado_plot <- function(x, plot=TRUE, nvar=NA, xlabel="Model Response",
   assertthat::assert_that(is.list(geom_bar_control) & is.list(geom_point_control),
                           msg = "The geom_bar_control and geom_point_control parameters must be a list")
 
+  # if geom_bar_control contains fill, then delete it and warn
+  ind <- which(names(geom_bar_control) == "fill")
+  if (length(ind) >= 1)
+  {
+    geom_bar_control <- geom_bar_control[-ind]
+    warning("geom_bar_control fill argument is set by the sensitivity_colors argument")
+  }
+
+  # if geom_point_control does not include fill, then add it.  Fill has to be there to work with
+  #   the bar plot
+  if (!("fill" %in% names(geom_point_control)))
+  {
+    geom_point_control$fill <- "black"
+    warning("geom_bar_control fill argument was added")
+  }
+
+
   if (is.data.frame(x$data$factordat))
   {
     pretty_break <- pretty(c(x$data$plotdat$value, x$data$factordat$value), n = 5)
