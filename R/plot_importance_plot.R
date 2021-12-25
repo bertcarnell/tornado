@@ -28,15 +28,10 @@
 #' imp <- importance(gtest, gtestreduced)
 #' plot(imp)
 #'
-#' gtest <- glm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars, family=gaussian)
-#' gtestreduced <- glm(mpg ~ 1, data=mtcars, family=gaussian)
-#' imp <- importance(gtest, gtestreduced)
-#' plot(imp)
-#'
 #' gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
 #'                            data = survival::ovarian,
 #'                            dist = "weibull")
-#' imp <- importance(gtest, survival::ovarian, nperm = 500)
+#' imp <- importance(gtest, survival::ovarian, nperm = 50)
 #' plot(imp)
 plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
                                  col_imp_alone = "#69BE28",
