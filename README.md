@@ -1,4 +1,5 @@
 <div>
+
 <table>
 <tr>
 <td>
@@ -6,21 +7,20 @@
 </td>
 </tr>
 </table>
+
 </div>
 
 |                                                                               <sub>Actions</sub>                                                                               |                                                                  <sub>Code Coverage</sub>                                                                  |                                          <sub>Website</sub>                                          |
 |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
 | [![R-CMD-CHECK](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml) | [![Coverage status](https://codecov.io/gh/bertcarnell/tornado/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/tornado?branch=master) | [![](https://img.shields.io/badge/pkgdown-tornado-blue.svg)](https://bertcarnell.github.io/tornado/) |
 
-tornado
-=======
+# tornado
 
 `tornado` plots for model sensitivity analysis.
 
 `tornado` [website](https://bertcarnell.github.io/tornado/)
 
-Installation
-------------
+## Installation
 
 You can also install the development version of `lhs` from github with:
 
@@ -29,8 +29,7 @@ if (!require(devtools)) install.packages("devtools")
 devtools::install_github("bertcarnell/tornado")
 ```
 
-Quick Start - Torndao Plots
----------------------------
+## Quick Start - Torndao Plots
 
 ### Linear Models
 
@@ -40,7 +39,7 @@ torn1 <- tornado(lm1, type = "PercentChange", alpha = 0.10)
 plot(torn1, xlabel = "MPG")
 ```
 
-![](etc/images/random-1.png)
+![](man/figures/random-1.png)
 
 ### Generalized Linear Models
 
@@ -52,7 +51,7 @@ torn2 <- tornado(glm2, type = "ranges", alpha = 0.10)
 plot(torn2, xlabel = "V or Straight Engine", geom_bar_control = list(width = 0.5))
 ```
 
-![](etc/images/glm_section-1.png)
+![](man/figures/glm_section-1.png)
 
 Plots can include factors and percentiles of the data as well.
 
@@ -68,7 +67,7 @@ plot(torn2, xlabel = "MPG",
      geom_point_control = list(fill = "red", col = "red", size = 3))
 ```
 
-![](etc/images/glm_factor_section-1.png)
+![](man/figures/glm_factor_section-1.png)
 
 ### Censored Data
 
@@ -79,7 +78,7 @@ torn3 <- tornado(survreg3, modeldata = survival::ovarian, type = "PercentChange"
 plot(torn3, xlabel = "Survival Time", geom_bar_control = list(width = 0.5))
 ```
 
-![](etc/images/censored_section-1.png)
+![](man/figures/censored_section-1.png)
 
 ``` r
 coxph4 <- survival::coxph(survival::Surv(stop, event) ~ rx + size + number,
@@ -89,7 +88,7 @@ torn4 <- tornado(coxph4, modeldata = survival::bladder, type = "PercentChange",
 plot(torn4, xlabel = "Risk", geom_bar_control = list(width = 0.5))
 ```
 
-![](etc/images/censored_section-2.png)
+![](man/figures/censored_section-2.png)
 
 ### Machine Learning Models from caret::train
 
@@ -110,4 +109,4 @@ The `plot` method can also return a ggplot object
   plot(g)
 ```
 
-![](etc/images/train_section-1.png)
+![](man/figures/train_section-1.png)

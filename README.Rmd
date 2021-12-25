@@ -22,7 +22,7 @@ require(survival)
 require(caret)
 require(randomForest)
 require(tornado)
-knitr::opts_chunk$set(fig.path = "etc/images/")
+knitr::opts_chunk$set(fig.path = "man/figures/")
 ```
 
 ```{r badges, echo=FALSE, results="asis"}
