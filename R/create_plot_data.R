@@ -18,41 +18,41 @@
 .create_plot_data <- function(model, modeldata, type="PercentChange", alpha=0.10,
                               alt.order=NA, dict=NA, predict_type = "response")
 {
-  if (FALSE)
-  {
-    # no factors
-    model <- lm(mpg ~ cyl*wt*hp, data = mtcars)
-    modeldata <- mtcars
-    type <- "PercentChange"
-    alpha <- 0.10
-    alt.order <- NA
-    dict <- NA
-    # some factors
-    modeldata <- mtcars
-    modeldata$cyl <- as.factor(mtcars$cyl)
-    modeldata$vs <- as.factor(mtcars$vs)
-    model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
-    type <- "PercentChange"
-    alpha <- 0.10
-    alt.order <- NA
-    dict <- NA
-    # one factors
-    modeldata <- mtcars
-    modeldata$cyl <- as.factor(mtcars$cyl)
-    model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
-    type <- "PercentChange"
-    alpha <- 0.10
-    alt.order <- NA
-    dict <- NA
-    # one factors
-    modeldata <- mtcars
-    modeldata$cyl <- as.factor(mtcars$cyl)
-    model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
-    type <- "ranges"
-    alpha <- 0.10
-    alt.order <- NA
-    dict <- NA
-  }
+  # if (FALSE)
+  # {
+  #   # no factors
+  #   model <- lm(mpg ~ cyl*wt*hp, data = mtcars)
+  #   modeldata <- mtcars
+  #   type <- "PercentChange"
+  #   alpha <- 0.10
+  #   alt.order <- NA
+  #   dict <- NA
+  #   # some factors
+  #   modeldata <- mtcars
+  #   modeldata$cyl <- as.factor(mtcars$cyl)
+  #   modeldata$vs <- as.factor(mtcars$vs)
+  #   model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
+  #   type <- "PercentChange"
+  #   alpha <- 0.10
+  #   alt.order <- NA
+  #   dict <- NA
+  #   # one factors
+  #   modeldata <- mtcars
+  #   modeldata$cyl <- as.factor(mtcars$cyl)
+  #   model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
+  #   type <- "PercentChange"
+  #   alpha <- 0.10
+  #   alt.order <- NA
+  #   dict <- NA
+  #   # one factors
+  #   modeldata <- mtcars
+  #   modeldata$cyl <- as.factor(mtcars$cyl)
+  #   model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
+  #   type <- "ranges"
+  #   alpha <- 0.10
+  #   alt.order <- NA
+  #   dict <- NA
+  # }
   assertthat::assert_that(is.data.frame(modeldata),
                           msg = "The data must be contained in a data.frame")
   assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),

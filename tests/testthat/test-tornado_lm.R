@@ -74,3 +74,9 @@ test_that("linear model tornado works", {
   g <- g + ggtitle("Test:  Linear model percentiles with one factor")
   plot(g)
 })
+
+
+test_that("Eorrs in tornado.lm", {
+  gtest <- lm(mpg ~ cyl*wt*hp, data = mtcars)
+  expect_error(tornado(gtest, type = "blah", alpha = 0.10))
+})
