@@ -4,13 +4,16 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/LICENSE-text.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>/reference/extract.html</loc>
   </url>
   <url>
     <loc>/reference/importance.cv.glmnet.html</loc>
@@ -28,13 +31,28 @@
     <loc>/reference/importance.survreg.html</loc>
   </url>
   <url>
+    <loc>/reference/importance.train.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/plot.importance_plot.html</loc>
   </url>
   <url>
+    <loc>/reference/plot.tornado_plot.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.importance_plot.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.tornado_plot.html</loc>
+  </url>
+  <url>
     <loc>/reference/quantile.ordered.html</loc>
+  </url>
+  <url>
+    <loc>/reference/tornado.coxph.html</loc>
   </url>
   <url>
     <loc>/reference/tornado.cv.glmnet.html</loc>
