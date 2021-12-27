@@ -23,14 +23,13 @@ tornado.lm <- function(model, type="PercentChange", alpha=0.10,
   # model = gtest
   # type = "PercentChange"
   # alpha = 0.10
-  # alt.order = NA
   # dict = NA
   # xlabel = "MPG"
 
   extraArguments <- list(...)
   ret <- .create_plot_data(model = model, modeldata = model$model,
                            type = type, alpha = alpha,
-                           alt.order = NA, dict = dict)
+                           dict = dict)
 
   return(structure(list(data = list(plotdat = ret$plotdat,
                                     pmeans = ret$pmeans,

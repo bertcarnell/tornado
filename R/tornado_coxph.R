@@ -27,7 +27,6 @@ tornado.coxph <- function(model, type="PercentChange", alpha=0.10,
   # modeldata <- survival::bladder
   # type <- "PercentChange"
   # alpha <- 0.10
-  # alt.order <- NA
   # dict <- NA
   # xlabel = "Survival Time"
   # geom_bar_control=list(width = NULL)
@@ -37,7 +36,7 @@ tornado.coxph <- function(model, type="PercentChange", alpha=0.10,
   extraArguments <- list(...)
   ret <- .create_plot_data(model = model, modeldata = modeldata,
                            type = type, alpha = alpha,
-                           alt.order = NA, dict = dict,
+                           dict = dict,
                            predict_type = "risk")
 
   return(structure(list(data = list(plotdat = ret$plotdat,

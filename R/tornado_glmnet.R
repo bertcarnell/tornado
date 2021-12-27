@@ -40,7 +40,6 @@ tornado.cv.glmnet <- function(model,
   # alpha <- 0.10
   # dict <- NA
 
-  alt.order <- NA
   assertthat::assert_that(requireNamespace("glmnet", quietly = TRUE),
                           msg = "The glmnet package is required to use this method")
 
@@ -76,13 +75,8 @@ tornado.cv.glmnet <- function(model,
   # glmnet::predict.cv.glmnet is not exported, just call predict
   pdat <- predict(model, newx, s = s, type = "response")
 
-  if (is.na(alt.order))
-  {
-    bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
-    alt.order <- order(bar_width, decreasing = FALSE)
-  } else {
-    assertthat::assert_that(length(alt.order) == lmeans)
-  }
+  bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
+  alt.order <- order(bar_width, decreasing = FALSE)
 
   plotdat <- data.frame(variable = rep(dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)], times = 2),
                         value = c(pdat) - c(pmeans),

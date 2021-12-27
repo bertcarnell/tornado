@@ -6,7 +6,6 @@
 #' @param modeldata the data that the model was fit with
 #' @param type PercentChange, percentiles, or ranges
 #' @param alpha the level of change
-#' @param alt.order an alternate order for the plot
 #' @param dict a dictionary to translate variables for the plot
 #' @param predict_type The \code{type} argument passed to \code{predict}
 #'
@@ -16,7 +15,7 @@
 #' @importFrom stats terms
 #' @noRd
 .create_plot_data <- function(model, modeldata, type="PercentChange", alpha=0.10,
-                              alt.order=NA, dict=NA, predict_type = "response")
+                              dict=NA, predict_type = "response")
 {
   # if (FALSE)
   # {
@@ -25,7 +24,6 @@
   #   modeldata <- mtcars
   #   type <- "PercentChange"
   #   alpha <- 0.10
-  #   alt.order <- NA
   #   dict <- NA
   #   # some factors
   #   modeldata <- mtcars
@@ -34,7 +32,6 @@
   #   model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
   #   type <- "PercentChange"
   #   alpha <- 0.10
-  #   alt.order <- NA
   #   dict <- NA
   #   # one factors
   #   modeldata <- mtcars
@@ -42,7 +39,6 @@
   #   model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
   #   type <- "PercentChange"
   #   alpha <- 0.10
-  #   alt.order <- NA
   #   dict <- NA
   #   # one factors
   #   modeldata <- mtcars
@@ -50,7 +46,6 @@
   #   model <- lm(mpg ~ cyl*wt*hp + vs, data = modeldata)
   #   type <- "ranges"
   #   alpha <- 0.10
-  #   alt.order <- NA
   #   dict <- NA
   # }
   assertthat::assert_that(is.data.frame(modeldata),
@@ -79,13 +74,8 @@
   dat <- .create_data_low_high(means, endpoints)
   pdat <- predict(model, dat, type = predict_type)
 
-  if (is.na(alt.order))
-  {
-    bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
-    alt.order <- order(bar_width, decreasing = FALSE)
-  } else {
-    assertthat::assert_that(length(alt.order) == lmeans)
-  }
+  bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
+  alt.order <- order(bar_width, decreasing = FALSE)
 
   plotdat <- data.frame(variable = rep(dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)], times = 2),
                         value = pdat - pmeans,

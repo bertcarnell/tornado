@@ -14,6 +14,7 @@
 #' print(g)
 print.importance_plot <- function(x, ...)
 {
+  cat(paste("Importance Plot using model of type", x$type, "\n"))
   print(x$data)
 }
 

@@ -60,12 +60,18 @@ plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
   {
     # if geom_bar_control contains fill, then delete it
     ind <- which(names(geom_bar_control) == "fill")
+    original_geom_length <- length(geom_bar_control)
+    original_fill <- geom_bar_control$fill
     if (length(ind) >= 1)
     {
       geom_bar_control <- geom_bar_control[-ind]
-      # if fill was the only one, then it was probably the default, otherwise, warn
-      if (length(ind) != 1)
+      # if fill was the default and the only entry skip, otherwise, warn
+      if (length(ind) == 1 && original_geom_length == 1 && original_fill == "#69BE28")
+      {
+        # do nothing
+      } else {
         warning("geom_bar_control fill argument is not used with importance_plot with type lm or glm")
+      }
     }
 
     ggp <- ggplot(x$data, aes_string(x = "variable", y = "value", fill = "posit")) + #,

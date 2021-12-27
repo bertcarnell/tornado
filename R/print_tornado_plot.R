@@ -13,6 +13,7 @@
 #' print(tp)
 print.tornado_plot <- function(x, ...)
 {
+  cat(paste("Tornado Plot using model of type", x$type, "\n"))
   print(x$data)
 }
 

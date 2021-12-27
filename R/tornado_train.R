@@ -36,7 +36,6 @@ tornado.train <- function(model,
   # alpha <- 0.10
   # dict <- NA
   # xlabel <- "MPG"
-  # alt.order <- NA
   # class_number <- NA
   # geom_bar_control=list(width = NULL)
   # geom_point_control=list(fill = "black")
@@ -49,7 +48,6 @@ tornado.train <- function(model,
   # alpha <- 0.10
   # dict <- NA
   # xlabel <- "MPG"
-  # alt.order <- NA
   # class_number <- NA
   # geom_bar_control=list(width = NULL)
   # geom_point_control=list(fill = "black")
@@ -63,7 +61,6 @@ tornado.train <- function(model,
   # alpha <- 0.10
   # dict <- NA
   # xlabel <- "Probability of Class 1"
-  # alt.order <- NA
   # class_number <- 1
   # geom_bar_control=list(width = 0.1)
   # geom_point_control=list(fill = "orange")
@@ -118,14 +115,8 @@ tornado.train <- function(model,
     pdat <- unlist(pdat[[class_number]])
   }
 
-  alt.order <- NA
-  if (all(is.na(alt.order)))
-  {
-    bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
-    alt.order <- order(bar_width, decreasing = FALSE)
-  } else {
-    assertthat::assert_that(length(alt.order) == lmeans)
-  }
+  bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
+  alt.order <- order(bar_width, decreasing = FALSE)
 
   plotdat <- data.frame(variable = rep(dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)], times = 2),
                         value = c(pdat) - c(pmeans),

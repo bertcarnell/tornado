@@ -7,6 +7,11 @@ test_that("plotting works for base packages", {
   expect_equal(imp$type, "lm")
   plot(imp)
   plot(imp, nvar = 3)
+  g <- plot(imp, plot = FALSE)
+  # test there is a warning for plotting with fill
+  expect_warning(g <- plot(imp, plot = FALSE, geom_bar_control = list(col = "black", fill = "red")))
+  expect_silent(g <- plot(imp, plot = FALSE))
+  expect_warning(g <- plot(imp, plot = FALSE, geom_bar_control = list(fill = "red")))
 
   gtest <- glm(mpg ~ cyl*wt*hp + gear + carb, data=mtcars, family=gaussian)
   gtestreduced <- glm(mpg ~ 1, data=mtcars, family=gaussian)
@@ -14,6 +19,11 @@ test_that("plotting works for base packages", {
   expect_equal(imp$type, "glm")
   plot(imp)
   plot(imp, nvar = 3)
+  # test there is an error if the type is changed
+  imp2 <- imp
+  imp2$type <- "blah"
+  expect_error(g <- plot(imp2, plot = FALSE))
+
 
   gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
                              data = survival::ovarian,
@@ -41,6 +51,8 @@ test_that("plotting works for glmnet", {
   plot(imp)
 
   plot(imp, nvar = 3)
+
+  g <- plot(imp, plot = FALSE)
 })
 
 test_that("plotting works for caret::train", {
@@ -53,4 +65,6 @@ test_that("plotting works for caret::train", {
   plot(imp)
 
   plot(imp, nvar = 3)
+
+  g <- plot(imp, plot = FALSE)
 })

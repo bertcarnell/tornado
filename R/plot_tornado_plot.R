@@ -46,9 +46,8 @@ plot.tornado_plot <- function(x, plot=TRUE, nvar=NA, xlabel="Model Response",
   if (!("fill" %in% names(geom_point_control)))
   {
     geom_point_control$fill <- "black"
-    warning("geom_bar_control fill argument was added")
+    warning("geom_point_control fill argument was added")
   }
-
 
   if (is.data.frame(x$data$factordat))
   {
