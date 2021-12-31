@@ -13,7 +13,9 @@ tornado(model, type, alpha, dict, ...)
 
 \item{alpha}{the level of change}
 
-\item{dict}{a dictionary to translate variables for the plot}
+\item{dict}{a dictionary to translate variables for the plot.  The dictionary
+must be a list or data.frame with elements \code{old} and \code{new}.  The
+\code{old} element must contain each variable in the model.}
 
 \item{...}{further arguments, not used}
 }
@@ -37,5 +39,5 @@ factor is varied through all of its levels.  The base factor level is chosen
 as the input variable for the center of the tornado.
 }
 \seealso{
-\code{\link{tornado.lm}} \code{\link{tornado.glm}} \code{\link{tornado.cv.glmnet}} \code{\link{tornado.survreg}} \code{\link{tornado.coxph}} \code{\link{tornado.train}}
+\code{\link{tornado.lm}}, \code{\link{tornado.glm}}, \code{\link{tornado.cv.glmnet}}, \code{\link{tornado.survreg}}, \code{\link{tornado.coxph}}, \code{\link{tornado.train}}
 }

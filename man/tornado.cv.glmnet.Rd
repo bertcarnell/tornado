@@ -22,7 +22,9 @@
 
 \item{alpha}{the level of change}
 
-\item{dict}{a dictionary to translate variables for the plot}
+\item{dict}{a dictionary to translate variables for the plot.  The dictionary
+must be a list or data.frame with elements \code{old} and \code{new}.  The
+\code{old} element must contain each variable in the model.}
 
 \item{modeldata}{the raw data used to fit the glmnet model}
 
@@ -54,8 +56,9 @@ as the input variable for the center of the tornado.
 \examples{
 if (requireNamespace("glmnet", quietly = TRUE))
 {
-  mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
-  mm <- model.matrix(mf, mf)
+  form <- formula(mpg ~ cyl*wt*hp)
+  mf <- model.frame(form, data = mtcars)
+  mm <- model.matrix(form, data = mf)
   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
   torn <- tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
                   type = "PercentChange", alpha = 0.10)

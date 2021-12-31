@@ -17,8 +17,8 @@ test_that("importance lm works", {
 
   gtest <- lm(mpg ~ cyl*wt*hp + gear + carb, data = mtcars)
   gtestreduced <- lm(mpg ~ 1, data = mtcars)
-  dict <- list(Orig.Node.Name = c("cyl", "wt", "hp", "gear", "carb"),
-               Description.for.Presentation = c("Cylinders", "Weight", "Horsepower", "Num Gears", "Carbeurated"))
+  dict <- list(old = c("cyl", "wt", "hp", "gear", "carb"),
+               new = c("Cylinders", "Weight", "Horsepower", "Num Gears", "Carbeurated"))
   imp <- importance(gtest, gtestreduced, dict = dict)
   expect_equal(class(imp), "importance_plot")
   plot(imp)

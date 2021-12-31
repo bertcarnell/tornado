@@ -14,7 +14,9 @@ Suggests:
     covr,
     caret,
     glmnet,
-    randomForest
+    randomForest,
+    knitr,
+    rmarkdown
 RoxygenNote: 7.1.1
 Imports: 
     survival,
@@ -23,3 +25,4 @@ Imports:
     scales,
     grid,
     gridExtra
+VignetteBuilder: knitr

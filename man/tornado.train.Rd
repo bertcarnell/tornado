@@ -20,7 +20,9 @@
 
 \item{alpha}{the level of change}
 
-\item{dict}{a dictionary to translate variables for the plot}
+\item{dict}{a dictionary to translate variables for the plot.  The dictionary
+must be a list or data.frame with elements \code{old} and \code{new}.  The
+\code{old} element must contain each variable in the model.}
 
 \item{class_number}{for classification models, which number of the class that
 will be plotted}

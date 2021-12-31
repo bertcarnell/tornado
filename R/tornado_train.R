@@ -65,6 +65,15 @@ tornado.train <- function(model,
   # geom_bar_control=list(width = 0.1)
   # geom_point_control=list(fill = "orange")
 
+  # model <- caret::train(x = subset(iris, select = -Species), y = iris$Species, method = "rf")
+  # type <- "PercentChange"
+  # alpha <- 0.10
+  # dict <- NA
+  # xlabel <- "Probability of Class 1"
+  # class_number <- 1
+  # geom_bar_control=list(width = 0.1)
+  # geom_point_control=list(fill = "orange")
+
   assertthat::assert_that(requireNamespace("caret", quietly = TRUE),
                           msg = "The caret package is required to use this method")
 
@@ -118,19 +127,19 @@ tornado.train <- function(model,
   bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
   alt.order <- order(bar_width, decreasing = FALSE)
 
-  plotdat <- data.frame(variable = rep(dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)], times = 2),
+  plotdat <- data.frame(variable = rep(dict$new[match(names_means, dict$old)], times = 2),
                         value = c(pdat) - c(pmeans),
                         Level = rep(base_Level, each = lmeans),
                         stringsAsFactors = FALSE)
   plotdat$variable <- factor(plotdat$variable,
-                             levels = dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)][alt.order],
+                             levels = dict$new[match(names_means, dict$old)][alt.order],
                              ordered = FALSE)
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
 
   factor_plotdat <- .create_factor_plot_data(training_data, means, pmeans, model, predict_type)
 
-  if (model$modelType != "Regression")
+  if (model$modelType != "Regression" && all(!is.na(factor_plotdat)))
   {
     temp_names <- names(factor_plotdat)
     temp_names[1 + class_number] <- "value"

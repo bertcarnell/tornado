@@ -21,8 +21,8 @@ test_that("linear model tornado works", {
   plot(g)
 
   gtest <- lm(mpg ~ cyl*wt*hp, data = mtcars)
-  dict <- list(Orig.Node.Name = c("cyl", "wt", "hp"),
-               Description.for.Presentation = c("Cylinders", "Weight", "Horsepower"))
+  dict <- list(old = c("cyl", "wt", "hp"),
+               new = c("Cylinders", "Weight", "Horsepower"))
   torn <- tornado(gtest, type = "PercentChange", alpha = 0.10, dict = dict)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")

@@ -13,16 +13,18 @@
 {
   if (length(dict) == 1 && is.na(dict))
   {
-    dict <- data.frame(Orig.Node.Name = used_variables,
-                       Description.for.Presentation = used_variables)
-    if (any(grepl("x_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", dict$Orig.Node.Name)))
+    dict <- data.frame(old = used_variables,
+                       new = used_variables)
+    if (any(grepl("[xX]_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", dict$old)))
     {
-      dict$Description.for.Presentation <- gsub("[xX]_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", "", dict$Description.for.Presentation)
+      dict$new <- gsub("[xX]_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", "", dict$new)
     }
   } else
   {
-    assertthat::assert_that(all(names(dict) == c("Orig.Node.Name", "Description.for.Presentation")))
-    assertthat::assert_that(all(used_variables %in% dict$Orig.Node.Name))
+    assertthat::assert_that(all(names(dict) == c("old", "new")),
+                            msg = "The variable name translation dictionary must be a list or data.frame with components old and new")
+    assertthat::assert_that(all(used_variables %in% dict$old),
+                            msg = "All the variables used in the model must be in dict$old")
   }
   return(dict)
 }

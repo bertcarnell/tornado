@@ -77,17 +77,20 @@
   bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
   alt.order <- order(bar_width, decreasing = FALSE)
 
-  plotdat <- data.frame(variable = rep(dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)], times = 2),
+  plotdat <- data.frame(variable = rep(dict$new[match(names_means, dict$old)], times = 2),
                         value = pdat - pmeans,
                         Level = rep(base_Level, each = lmeans),
                         stringsAsFactors = FALSE)
   plotdat$variable <- factor(plotdat$variable,
-                             levels = dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)][alt.order],
+                             levels = dict$new[match(names_means, dict$old)][alt.order],
                              ordered = FALSE)
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
 
   factor_plotdat <- .create_factor_plot_data(training_data, means, pmeans, model, predict_type)
+
+  if (!all(is.na(factor_plotdat)))
+    factor_plotdat$variable <- dict$new[match(factor_plotdat$variable, dict$old)]
 
   return(list(plotdat = plotdat, pmeans = pmeans, factor_plotdat = factor_plotdat))
 }

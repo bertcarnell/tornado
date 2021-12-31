@@ -17,7 +17,9 @@
 #' @param model a model object
 #' @param type \code{PercentChange}, \code{percentiles}, or \code{ranges}
 #' @param alpha the level of change
-#' @param dict a dictionary to translate variables for the plot
+#' @param dict a dictionary to translate variables for the plot.  The dictionary
+#' must be a list or data.frame with elements \code{old} and \code{new}.  The
+#' \code{old} element must contain each variable in the model.
 #' @param ... further arguments, not used
 #'
 #' @return a \code{tornado_plot} object
@@ -25,7 +27,7 @@
 #' \item{data}{the data required for the plot}
 #' \item{family}{the model family if available}
 #'
-#' @seealso \code{\link{tornado.lm}} \code{\link{tornado.glm}} \code{\link{tornado.cv.glmnet}} \code{\link{tornado.survreg}} \code{\link{tornado.coxph}} \code{\link{tornado.train}}
+#' @seealso \code{\link{tornado.lm}}, \code{\link{tornado.glm}}, \code{\link{tornado.cv.glmnet}}, \code{\link{tornado.survreg}}, \code{\link{tornado.coxph}}, \code{\link{tornado.train}}
 #'
 #' @export
 tornado <- function(model, type, alpha, dict, ...)

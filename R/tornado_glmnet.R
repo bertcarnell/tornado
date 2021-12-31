@@ -19,8 +19,9 @@
 #' @examples
 #' if (requireNamespace("glmnet", quietly = TRUE))
 #' {
-#'   mf <- model.frame(mpg ~ cyl*wt*hp, data=mtcars)
-#'   mm <- model.matrix(mf, mf)
+#'   form <- formula(mpg ~ cyl*wt*hp)
+#'   mf <- model.frame(form, data = mtcars)
+#'   mm <- model.matrix(form, data = mf)
 #'   gtest <- glmnet::cv.glmnet(x = mm, y= mtcars$mpg, family = "gaussian")
 #'   torn <- tornado(gtest, modeldata = mtcars, form = formula(mpg ~ cyl*wt*hp), s = "lambda.1se",
 #'                   type = "PercentChange", alpha = 0.10)
@@ -32,13 +33,13 @@ tornado.cv.glmnet <- function(model,
 {
   # form <- formula(mpg ~ cyl*wt*hp)
   # modeldata <- mtcars
-  # model <- cv.glmnet(x = modelmatrix, y = mtcars$mpg, family = "gaussian")
-  #
-  # modelframe <- model.frame(form, data = mtcars)
-  # modelmatrix <- model.matrix(form, modelframe)
+  # mf <- model.frame(form, data = mtcars)
+  # mm <-  model.matrix(form, data = mf)
+  # model <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
   # type <- "PercentChange"
   # alpha <- 0.10
   # dict <- NA
+  # s <- "lambda.1se"
 
   assertthat::assert_that(requireNamespace("glmnet", quietly = TRUE),
                           msg = "The glmnet package is required to use this method")
@@ -48,9 +49,13 @@ tornado.cv.glmnet <- function(model,
                           msg = "The data must be contained in a data.frame")
   assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
                           msg = "type must be PercentChagne, percentiles, or ranges")
+  assertthat::assert_that(s %in% c("lambda.1se", "lambda.min"),
+                          msg = "The value of the penalty parameter, s, must be lambda.1se or lambda.min")
 
   modelframe <- model.frame(form, data = modeldata)
   used_variables <- rownames(attr(terms(modelframe), "factors"))
+  # the response variable is first
+  #used_variables <- used_variables[-1]
 
   dict <- .create_dict(dict, used_variables)
 
@@ -75,18 +80,32 @@ tornado.cv.glmnet <- function(model,
   # glmnet::predict.cv.glmnet is not exported, just call predict
   pdat <- predict(model, newx, s = s, type = "response")
 
-  bar_width <- abs(apply(matrix(c(pdat), nrow = 2, byrow = TRUE), 2, diff))
-  alt.order <- order(bar_width, decreasing = FALSE)
-
-  plotdat <- data.frame(variable = rep(dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)], times = 2),
+  plotdat <- data.frame(variable = rep(dict$new[match(names_means, dict$old)], times = 2),
                         value = c(pdat) - c(pmeans),
                         Level = rep(base_Level, each = lmeans),
                         stringsAsFactors = FALSE)
+
+  # need to remove the response variable from the output plot
+  response_variable <- used_variables[1]
+  ind_response <- which(plotdat$variable == response_variable)
+  assertthat::assert_that(length(ind_response) > 0,
+                          msg = "Unexpected error in response variable selection")
+  plotdat <- plotdat[-ind_response,]
+
+  ind_response_mean <- which(names_means == response_variable)
+  assertthat::assert_that(length(ind_response_mean) > 0,
+                          msg = "Unexpected error in response variable selection")
+  names_means <- names_means[-ind_response_mean]
+
+  bar_width <- abs(apply(matrix(plotdat$value, nrow = 2, byrow = TRUE), 2, diff))
+  alt.order <- order(bar_width, decreasing = FALSE)
+
   plotdat$variable <- factor(plotdat$variable,
-                             levels = dict$Description.for.Presentation[match(names_means, dict$Orig.Node.Name)][alt.order],
+                             levels = dict$new[match(names_means, dict$old)][alt.order],
                              ordered = FALSE)
   plotdat$Level <- factor(plotdat$Level, levels = base_Level, ordered = FALSE,
                           labels = Level)
+
 
   return(structure(list(data = list(plotdat = plotdat,
                                     pmeans = pmeans,

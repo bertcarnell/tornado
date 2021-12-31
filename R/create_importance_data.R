@@ -19,24 +19,10 @@
   #var_final <- names(coef(model_final))[-1]
   var_final <- names(model_final$model)[-1]
 
-  if (length(dict) == 1 && is.na(dict))
-  {
-    dict <- data.frame(Orig.Node.Name = var_final,
-                       Description.for.Presentation = var_final,
-                       stringsAsFactors = FALSE)
-    if (any(grepl("x_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", dict$Orig.Node.Name)))
-    {
-      dict$Description.for.Presentation <- gsub("[xX]_[0-9][0-9]_[0-9][0-9]_[0-9][0-9]_", "", dict$Description.for.Presentation)
-    }
-  } else
-  {
-    assertthat::assert_that(all(names(dict) == c("Orig.Node.Name",
-                                                 "Description.for.Presentation")))
-    assertthat::assert_that(all(var_final %in% dict$Orig.Node.Name))
-  }
+  dict <- .create_dict(dict, var_final)
 
   tab_summary <- data.frame(vars = var_final,
-                            desc = dict$Description.for.Presentation[match(var_final, dict$Orig.Node.Name)],
+                            desc = dict$new[match(var_final, dict$old)],
                             stringsAsFactors = FALSE)
 
   if (isDeviance)
