@@ -22,7 +22,8 @@ tornado
 Installation
 ------------
 
-You can also install the development version of `lhs` from github with:
+You can also install the development version of `tornado` from github
+with:
 
 ``` r
 if (!require(devtools)) install.packages("devtools")
@@ -37,7 +38,7 @@ Quick Start - Torndao Plots
 ``` r
 lm1 <- lm(mpg ~ cyl*wt*hp, data = mtcars)
 torn1 <- tornado(lm1, type = "PercentChange", alpha = 0.10)
-plot(torn1, xlabel = "MPG")
+plot(torn1, xlabel = "MPG", geom_bar_control = list(width = 0.5))
 ```
 
 ![](man/figures/random-1.png)
@@ -96,18 +97,18 @@ plot(torn4, xlabel = "Risk", geom_bar_control = list(width = 0.5))
 The `plot` method can also return a ggplot object
 
 ``` r
-  mydat <- mtcars
-  mydat$am <- factor(mydat$am)
-  mydat$vs <- factor(mydat$vs)
-  mydat$cyl <- factor(mydat$cyl)
-  mydat$gear <- factor(mydat$gear)
-  mydat$carb <- factor(mydat$carb)
+mydat <- mtcars
+mydat$am <- factor(mydat$am)
+mydat$vs <- factor(mydat$vs)
+mydat$cyl <- factor(mydat$cyl)
+mydat$gear <- factor(mydat$gear)
+mydat$carb <- factor(mydat$carb)
 
-  gtest <- caret::train(x = subset(mydat, select = -vs), y = mydat$vs, method = "rf")
-  torn <- tornado(gtest, type = "percentiles", alpha = 0.10, class_number = 1)
-  g <- plot(torn, plot = FALSE, xlabel = "Probability of Class V-shaped Engine")
-  g <- g + ggtitle("Classifier caret::train randomforest, 90-110% of the mean in each variable")
-  plot(g)
+gtest <- caret::train(x = subset(mydat, select = -vs), y = mydat$vs, method = "rf")
+torn <- tornado(gtest, type = "percentiles", alpha = 0.10, class_number = 1)
+g <- plot(torn, plot = FALSE, xlabel = "Probability of Class V-shaped Engine", geom_bar_control = list(width = 0.5))
+g <- g + ggtitle("Classifier caret::train randomforest, 90-110% of the mean in each variable")
+plot(g)
 ```
 
 ![](man/figures/train_section-1.png)
