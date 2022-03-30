@@ -1,6 +1,6 @@
 Package: tornado
 Title: Plots for Model Sensitivity and Variable Importance
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     person(given = "Rob",
            family = "Carnell",
