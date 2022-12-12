@@ -72,6 +72,7 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
+          sudo apt-get install libcurl4-openssl-dev libicu-dev lexlive-latex-base libicu66
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
