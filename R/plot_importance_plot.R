@@ -21,6 +21,7 @@
 #' @importFrom scales percent
 #' @importFrom grDevices dev.cur dev.off
 #' @importFrom assertthat assert_that
+#' @importFrom rlang .data
 #'
 #' @examples
 #' gtest <- lm(mpg ~ cyl + wt + hp + gear + carb, data = mtcars)
@@ -74,7 +75,7 @@ plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
       }
     }
 
-    ggp <- ggplot(x$data, aes_string(x = "variable", y = "value", fill = "posit")) + #,
+    ggp <- ggplot(x$data, aes(x = .data$variable, y = .data$value, fill = .data$posit)) + #,
       #alpha = "posit")) +
       do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
       coord_flip() +
@@ -106,7 +107,7 @@ plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
 
     # create a dummy legend
     ggp2 <- ggplot2::ggplot(dat3,
-                            aes_string(x = "cats", y = "heights", fill = "cats")) +
+                            aes(x = .data$cats, y = .data$heights, fill = .data$cats)) +
       do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
       scale_fill_manual(values = c(col_imp_cumulative, col_imp_alone)) +
       theme(legend.title = element_blank(), legend.position = "bottom")
@@ -144,7 +145,7 @@ plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
 
   } else if (x$type == "cv.glmnet")
   {
-    ggp <- ggplot(x$data, aes_string(x = "variable", y = "value")) +
+    ggp <- ggplot(x$data, aes(x = .data$variable, y = .data$value)) +
       do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
       coord_flip() +
       theme_bw() +
@@ -156,7 +157,7 @@ plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
 
   } else if (x$type == "survreg")
   {
-    ggp <- ggplot(x$data, aes_string(x = "variable", y = "value")) +
+    ggp <- ggplot(x$data, aes(x = .data$variable, y = .data$value)) +
       do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
       coord_flip() +
       theme_bw() +
@@ -168,7 +169,7 @@ plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
 
   } else if (x$type == "train")
   {
-    ggp <- ggplot(x$data, aes_string(x = "names", y = "Overall")) +
+    ggp <- ggplot(x$data, aes(x = .data$names, y = .data$Overall)) +
       do.call(geom_bar, args = c(list(stat = "identity"), geom_bar_control)) +
       coord_flip() +
       xlab("") +

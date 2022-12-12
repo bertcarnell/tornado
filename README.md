@@ -1,4 +1,5 @@
 <div>
+
 <table>
 <tr>
 <td>
@@ -6,38 +7,37 @@
 </td>
 </tr>
 </table>
+
 </div>
 
-|                                                                               <sub>Actions</sub>                                                                               |                                                                  <sub>Code Coverage</sub>                                                                  |                                          <sub>Website</sub>                                          |
-|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
-| [![R-CMD-CHECK](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml) | [![Coverage status](https://codecov.io/gh/bertcarnell/tornado/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/tornado?branch=master) | [![](https://img.shields.io/badge/pkgdown-tornado-blue.svg)](https://bertcarnell.github.io/tornado/) |
+|                                                                               <sub>Actions</sub>                                                                               |                                                                  <sub>Code Coverage</sub>                                                                  |                                          <sub>Website</sub>                                          |                                     <sub>Downloads</sub>                                     |                                              <sub>CRAN</sub>                                               |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| [![R-CMD-CHECK](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml) | [![Coverage status](https://codecov.io/gh/bertcarnell/tornado/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/tornado?branch=master) | [![](https://img.shields.io/badge/pkgdown-tornado-blue.svg)](https://bertcarnell.github.io/tornado/) | [![](https://cranlogs.r-pkg.org/badges/tornado)](https://cran.r-project.org/package=tornado) | [![CRAN status](https://www.r-pkg.org/badges/version/tornado)](https://cran.r-project.org/package=tornado) |
 
-tornado
-=======
+# tornado
 
 `tornado` plots for model sensitivity analysis.
 
-`tornado` [website](https://bertcarnell.github.io/tornado/)
+[website](https://bertcarnell.github.io/tornado/)
 
-Installation
-------------
+## Installation
 
-You can also install the development version of `lhs` from github with:
+You can also install the development version of `tornado` from github
+with:
 
 ``` r
 if (!require(devtools)) install.packages("devtools")
 devtools::install_github("bertcarnell/tornado")
 ```
 
-Quick Start - Torndao Plots
----------------------------
+## Quick Start - Torndao Plots
 
 ### Linear Models
 
 ``` r
 lm1 <- lm(mpg ~ cyl*wt*hp, data = mtcars)
 torn1 <- tornado(lm1, type = "PercentChange", alpha = 0.10)
-plot(torn1, xlabel = "MPG")
+plot(torn1, xlabel = "MPG", geom_bar_control = list(width = 0.5))
 ```
 
 ![](man/figures/random-1.png)
@@ -96,18 +96,18 @@ plot(torn4, xlabel = "Risk", geom_bar_control = list(width = 0.5))
 The `plot` method can also return a ggplot object
 
 ``` r
-  mydat <- mtcars
-  mydat$am <- factor(mydat$am)
-  mydat$vs <- factor(mydat$vs)
-  mydat$cyl <- factor(mydat$cyl)
-  mydat$gear <- factor(mydat$gear)
-  mydat$carb <- factor(mydat$carb)
+mydat <- mtcars
+mydat$am <- factor(mydat$am)
+mydat$vs <- factor(mydat$vs)
+mydat$cyl <- factor(mydat$cyl)
+mydat$gear <- factor(mydat$gear)
+mydat$carb <- factor(mydat$carb)
 
-  gtest <- caret::train(x = subset(mydat, select = -vs), y = mydat$vs, method = "rf")
-  torn <- tornado(gtest, type = "percentiles", alpha = 0.10, class_number = 1)
-  g <- plot(torn, plot = FALSE, xlabel = "Probability of Class V-shaped Engine")
-  g <- g + ggtitle("Classifier caret::train randomforest, 90-110% of the mean in each variable")
-  plot(g)
+gtest <- caret::train(x = subset(mydat, select = -vs), y = mydat$vs, method = "rf")
+torn <- tornado(gtest, type = "percentiles", alpha = 0.10, class_number = 1)
+g <- plot(torn, plot = FALSE, xlabel = "Probability of Class V-shaped Engine", geom_bar_control = list(width = 0.5))
+g <- g + ggtitle("Classifier caret::train randomforest, 90-110% of the mean in each variable")
+plot(g)
 ```
 
 ![](man/figures/train_section-1.png)

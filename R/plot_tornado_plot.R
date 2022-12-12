@@ -16,6 +16,7 @@
 #'
 #' @importFrom scales percent
 #' @import ggplot2
+#' @importFrom rlang .data
 #'
 #' @return the plot
 #' @export
@@ -57,7 +58,7 @@ plot.tornado_plot <- function(x, plot=TRUE, nvar=NA, xlabel="Model Response",
     pretty_break <- pretty(x$data$plotdat$value, n = 5)
   }
 
-  ggp <- ggplot(x$data$plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
+  ggp <- ggplot(x$data$plotdat, aes(x = .data$variable, y = .data$value, fill = .data$Level)) +
     do.call(geom_bar, args = c(list(position = "identity", stat = "identity"), geom_bar_control)) +
     coord_flip() +
     ylab(xlabel) +
@@ -67,7 +68,7 @@ plot.tornado_plot <- function(x, plot=TRUE, nvar=NA, xlabel="Model Response",
 
   if (is.data.frame(x$data$factordat))
   {
-    ggp <- ggp + do.call(geom_point, args = c(list(mapping = aes_string(x = "variable", y = "value"),
+    ggp <- ggp + do.call(geom_point, args = c(list(mapping = aes(x = .data$variable, y = .data$value),
                                                    data = x$data$factordat),
                                               geom_point_control))
   }

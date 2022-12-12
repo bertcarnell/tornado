@@ -28,14 +28,16 @@ knitr::opts_chunk$set(fig.path = "man/figures/")
 ```{r badges, echo=FALSE, results="asis"}
 cat(paste0("|<sub>", 
            paste0(
-             c("Actions", "Code Coverage", "Website"), 
+             c("Actions", "Code Coverage", "Website", "Downloads", "CRAN"), 
              collapse="</sub>|<sub>"), 
            "</sub>|\n"))
-cat(paste0("|", paste0(rep(":---:", 3), collapse="|"), "|\n"))
+cat(paste0("|", paste0(rep(":---:", 5), collapse="|"), "|\n"))
 cat(paste0("|", 
            paste0(c("[![R-CMD-CHECK](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/bertcarnell/tornado/actions/workflows/r-cmd-check.yml)",
                     "[![Coverage status](https://codecov.io/gh/bertcarnell/tornado/branch/master/graph/badge.svg)](https://codecov.io/github/bertcarnell/tornado?branch=master)",
-                    "[![](https://img.shields.io/badge/pkgdown-tornado-blue.svg)](https://bertcarnell.github.io/tornado/)"),
+                    "[![](https://img.shields.io/badge/pkgdown-tornado-blue.svg)](https://bertcarnell.github.io/tornado/)",
+                    "[![](https://cranlogs.r-pkg.org/badges/tornado)](https://cran.r-project.org/package=tornado)",
+                    "[![CRAN status](https://www.r-pkg.org/badges/version/tornado)](https://cran.r-project.org/package=tornado)"),
                   collapse="|"), 
            "|"))
 ```
@@ -44,7 +46,7 @@ cat(paste0("|",
 
 `tornado` plots for model sensitivity analysis.
 
-`tornado` [website](https://bertcarnell.github.io/tornado/)
+[website](https://bertcarnell.github.io/tornado/)
 
 ## Installation
 

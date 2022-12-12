@@ -11,20 +11,20 @@ License: GPL-3
 Encoding: UTF-8
 Suggests: 
     testthat,
-    covr,
     caret,
     glmnet,
     randomForest,
     knitr,
     rmarkdown
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.2
 Imports: 
     survival,
     assertthat,
     ggplot2,
     scales,
     grid,
-    gridExtra
+    gridExtra,
+    rlang
 VignetteBuilder: knitr
 URL: https://github.com/bertcarnell/tornado
 BugReports: https://github.com/bertcarnell/tornado/issues
