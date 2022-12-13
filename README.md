@@ -1,5 +1,3 @@
-<div>
-
 <table>
 <tr>
 <td>
@@ -7,8 +5,6 @@
 </td>
 </tr>
 </table>
-
-</div>
 
 |                                                                               <sub>Actions</sub>                                                                               |                                                                  <sub>Code Coverage</sub>                                                                  |                                          <sub>Website</sub>                                          |                                     <sub>Downloads</sub>                                     |                                              <sub>CRAN</sub>                                               |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
