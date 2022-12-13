@@ -25,7 +25,13 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: rmarkdown knitr caret randomForest
+          extra-packages: |
+            rmarkdown
+            knitr
+            caret
+            randomForest
+            any::XML
+          pak-version: devel
 
       - name: Render README
         run: |

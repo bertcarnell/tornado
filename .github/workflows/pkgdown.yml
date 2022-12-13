@@ -9,7 +9,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -23,7 +23,12 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: rmarkdown, knitr, pkgdown
+          extra-packages: |
+            rmarkdown
+            knitr
+            pkgdown
+            any::XML
+          pak-version: devel
 
       - name: build site
         shell: bash
