@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tornado</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -35,7 +35,13 @@
       <a href="../articles/tornadoVignette.html">Tornado and Importance Plots</a>
     </li>
   </ul></li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/bertcarnell/tornado/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -45,7 +51,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a variable importance plot for a survreg model</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/bertcarnell/tornado/blob/HEAD/R/importance_survreg.R" class="external-link"><code>R/importance_survreg.R</code></a></small>
     <div class="hidden name"><code>importance.survreg.Rd</code></div>
     </div>
 
@@ -54,30 +60,43 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for survreg</span>
-<span class="fu"><a href="importance.html">importance</a></span><span class="op">(</span><span class="va">model_final</span>, <span class="va">model_data</span>, dict <span class="op">=</span> <span class="cn">NA</span>, nperm <span class="op">=</span> <span class="fl">500</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for survreg</span></span>
+<span><span class="fu"><a href="importance.html">importance</a></span><span class="op">(</span><span class="va">model_final</span>, <span class="va">model_data</span>, dict <span class="op">=</span> <span class="cn">NA</span>, nperm <span class="op">=</span> <span class="fl">500</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model_final</dt>
 <dd><p>a model object</p></dd>
+
+
 <dt>model_data</dt>
 <dd><p>the data used to fit the model</p></dd>
+
+
 <dt>dict</dt>
 <dd><p>a plotting dictionary for models terms</p></dd>
+
+
 <dt>nperm</dt>
 <dd><p>the number of permutations used to calculate the importance</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments passed to other methods</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an object of type <code>importance_plot</code></p>
+    
+
+<p>an object of type <code>importance_plot</code></p>
 <dl><dt>type</dt>
 <dd><p>the type of importance plot</p></dd>
+
 <dt>data</dt>
 <dd><p>the importance data required for the plot</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -86,11 +105,11 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model_final</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survreg.html" class="external-link">survreg</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span><span class="op">*</span><span class="va">rx</span> <span class="op">+</span> <span class="va">age</span>,</span>
-<span class="r-in">                       data <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/ovarian.html" class="external-link">ovarian</a></span>,</span>
-<span class="r-in">                       dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="importance.html">importance</a></span><span class="op">(</span><span class="va">model_final</span>, <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/ovarian.html" class="external-link">ovarian</a></span>, nperm <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model_final</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survreg.html" class="external-link">survreg</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span><span class="op">*</span><span class="va">rx</span> <span class="op">+</span> <span class="va">age</span>,</span></span>
+<span class="r-in"><span>                       data <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/ovarian.html" class="external-link">ovarian</a></span>,</span></span>
+<span class="r-in"><span>                       dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="importance.html">importance</a></span><span class="op">(</span><span class="va">model_final</span>, <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/ovarian.html" class="external-link">ovarian</a></span>, nperm <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="importance.survreg-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -106,7 +125,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

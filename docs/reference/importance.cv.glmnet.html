@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tornado</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -35,7 +35,13 @@
       <a href="../articles/tornadoVignette.html">Tornado and Importance Plots</a>
     </li>
   </ul></li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/bertcarnell/tornado/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -45,7 +51,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Variable Importance for a GLMNET model</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/bertcarnell/tornado/blob/HEAD/R/importance_glmnet.R" class="external-link"><code>R/importance_glmnet.R</code></a></small>
     <div class="hidden name"><code>importance.cv.glmnet.Rd</code></div>
     </div>
 
@@ -54,32 +60,47 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for cv.glmnet</span>
-<span class="fu"><a href="importance.html">importance</a></span><span class="op">(</span><span class="va">model_final</span>, <span class="va">model_data</span>, <span class="va">form</span>, dict <span class="op">=</span> <span class="cn">NA</span>, nperm <span class="op">=</span> <span class="fl">500</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for cv.glmnet</span></span>
+<span><span class="fu"><a href="importance.html">importance</a></span><span class="op">(</span><span class="va">model_final</span>, <span class="va">model_data</span>, <span class="va">form</span>, dict <span class="op">=</span> <span class="cn">NA</span>, nperm <span class="op">=</span> <span class="fl">500</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model_final</dt>
 <dd><p>a model object</p></dd>
+
+
 <dt>model_data</dt>
 <dd><p>the data used to fit the model</p></dd>
+
+
 <dt>form</dt>
 <dd><p>the model formula</p></dd>
+
+
 <dt>dict</dt>
 <dd><p>a variable dictionary for plotting</p></dd>
+
+
 <dt>nperm</dt>
 <dd><p>the number of permutations used to calculate the importance</p></dd>
+
+
 <dt>...</dt>
 <dd><p>arguments passed to other methods</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an object of type <code>importance_plot</code></p>
+    
+
+<p>an object of type <code>importance_plot</code></p>
 <dl><dt>type</dt>
 <dd><p>the type of importance plot</p></dd>
+
 <dt>data</dt>
 <dd><p>the importance data required for the plot</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -88,15 +109,15 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmnet"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">{</span></span>
-<span class="r-in">  <span class="va">form</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">*</span><span class="va">wt</span><span class="op">*</span><span class="va">hp</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">mf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.frame.html" class="external-link">model.frame</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">mm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="va">mf</span>, <span class="va">mf</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">gtest</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mm</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, family <span class="op">=</span> <span class="st">"gaussian"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="importance.html">importance</a></span><span class="op">(</span><span class="va">gtest</span>, <span class="va">mtcars</span>, <span class="va">form</span>, nperm <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmnet"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">form</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">*</span><span class="va">wt</span><span class="op">*</span><span class="va">hp</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">mf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.frame.html" class="external-link">model.frame</a></span><span class="op">(</span><span class="va">form</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">mm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="va">mf</span>, <span class="va">mf</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">gtest</span> <span class="op">&lt;-</span> <span class="fu">glmnet</span><span class="fu">::</span><span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mm</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, family <span class="op">=</span> <span class="st">"gaussian"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="importance.html">importance</a></span><span class="op">(</span><span class="va">gtest</span>, <span class="va">mtcars</span>, <span class="va">form</span>, nperm <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">imp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="importance.cv.glmnet-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -112,7 +133,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -27,7 +27,7 @@ as the input variable for the center of the tornado."><meta property="og:image" 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tornado</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -36,7 +36,7 @@ as the input variable for the center of the tornado."><meta property="og:image" 
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -45,7 +45,13 @@ as the input variable for the center of the tornado."><meta property="og:image" 
       <a href="../articles/tornadoVignette.html">Tornado and Importance Plots</a>
     </li>
   </ul></li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/bertcarnell/tornado/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -55,7 +61,7 @@ as the input variable for the center of the tornado."><meta property="og:image" 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cox Proportional Hazards Tornado Diagram</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/bertcarnell/tornado/blob/HEAD/R/tornado_coxph.R" class="external-link"><code>R/tornado_coxph.R</code></a></small>
     <div class="hidden name"><code>tornado.coxph.Rd</code></div>
     </div>
 
@@ -74,45 +80,61 @@ as the input variable for the center of the tornado.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for coxph</span>
-<span class="fu"><a href="tornado.html">tornado</a></span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>, dict <span class="op">=</span> <span class="cn">NA</span>, <span class="va">modeldata</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for coxph</span></span>
+<span><span class="fu"><a href="tornado.html">tornado</a></span><span class="op">(</span><span class="va">model</span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>, dict <span class="op">=</span> <span class="cn">NA</span>, <span class="va">modeldata</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
 <dd><p>a model object</p></dd>
+
+
 <dt>type</dt>
 <dd><p><code>PercentChange</code>, <code>percentiles</code>, or <code>ranges</code></p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>the level of change</p></dd>
+
+
 <dt>dict</dt>
 <dd><p>a dictionary to translate variables for the plot.  The dictionary
 must be a list or data.frame with elements <code>old</code> and <code>new</code>.  The
 <code>old</code> element must contain each variable in the model.</p></dd>
+
+
 <dt>modeldata</dt>
 <dd><p>the data used to fit the model</p></dd>
+
+
 <dt>...</dt>
 <dd><p>further arguments, not used</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a <code>tornado_plot</code> object</p>
+    
+
+<p>a <code>tornado_plot</code> object</p>
 <dl><dt>type</dt>
 <dd><p>the type of tornado plot</p></dd>
+
 <dt>data</dt>
 <dd><p>the data required for the plot</p></dd>
+
 <dt>family</dt>
 <dd><p>the model family if available</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">gtest</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">stop</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="va">rx</span> <span class="op">+</span> <span class="va">size</span> <span class="op">+</span> <span class="va">number</span>,</span>
-<span class="r-in">                           <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html" class="external-link">bladder</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">torn</span> <span class="op">&lt;-</span> <span class="fu"><a href="tornado.html">tornado</a></span><span class="op">(</span><span class="va">gtest</span>, modeldata <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html" class="external-link">bladder</a></span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>,</span>
-<span class="r-in">             alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">torn</span>, xlabel <span class="op">=</span> <span class="st">"Risk"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gtest</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">stop</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="va">rx</span> <span class="op">+</span> <span class="va">size</span> <span class="op">+</span> <span class="va">number</span>,</span></span>
+<span class="r-in"><span>                           <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html" class="external-link">bladder</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">torn</span> <span class="op">&lt;-</span> <span class="fu"><a href="tornado.html">tornado</a></span><span class="op">(</span><span class="va">gtest</span>, modeldata <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html" class="external-link">bladder</a></span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>,</span></span>
+<span class="r-in"><span>             alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">torn</span>, xlabel <span class="op">=</span> <span class="st">"Risk"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="tornado.coxph-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -128,7 +150,7 @@ must be a list or data.frame with elements <code>old</code> and <code>new</code>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
