@@ -14,10 +14,21 @@
 #' @noRd
 .create_tab_summary <- function(model_final, model_null, dict=NA, isDeviance=FALSE)
 {
+  # model_final <- glm(vs ~ disp, data = mtcars, family = binomial(link = "logit"), weights=mtcars$gear)
+  # model_null <- glm(vs ~ 1, data = mtcars, family = binomial(link = "logit"), weights=mtcars$gear)
+  # model_final <- glm(vs ~ disp, data = mtcars, family = binomial(link = "logit"))
+  # model_null <- glm(vs ~ 1, data = mtcars, family = binomial(link = "logit"))
+  # dict = NA
+  # isDeviance = TRUE
+
   # need a consistent way to get the variable names out of the model object
   # for continuous variables, names(coef()) works fine
   #var_final <- names(coef(model_final))[-1]
   var_final <- names(model_final$model)[-1]
+  if (var_final[length(var_final)] == "(weights)")
+  {
+    var_final <- var_final[-length(var_final)]
+  }
 
   dict <- .create_dict(dict, var_final)
 
@@ -98,3 +109,4 @@
 
   return(dat2)
 }
+

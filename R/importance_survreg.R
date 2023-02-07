@@ -27,6 +27,9 @@ importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500, ..
   # model_data <- survival::ovarian
   # nperm <- 100
   # dict = NA
+  #
+  # w <- sample(1:7, size = nrow(survival::ovarian), replace = TRUE)
+  # model_final <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age, survival::ovarian, dist = "weibull", weights = w)
 
   otherVariables <- list(...)
   vars <- rownames(attr(formula(model_final), "factors"))[-1]
@@ -43,8 +46,16 @@ importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500, ..
     for (i in 1:nperm)
     {
       model_data_new[, v] <- model_data_new[sample(1:n, n, replace = FALSE), v]
-      model_new <- survival::survreg(formula(model_final), model_data_new,
-                          dist = model_final$dist)
+      if (is.null(model_final$weights))
+      {
+        model_new <- survival::survreg(formula(model_final), model_data_new,
+                                       dist = model_final$dist)
+      } else
+      {
+        model_new <- survival::survreg(formula(model_final), model_data_new,
+                                       dist = model_final$dist,
+                                       weights = model_final$weights)
+      }
       temp[i] <- model_new$loglik[2]
     }
     importances[j] <- mean(temp)
