@@ -76,7 +76,16 @@ test_that("linear model tornado works", {
 })
 
 
-test_that("Eorrs in tornado.lm", {
+test_that("Errors in tornado.lm", {
   gtest <- lm(mpg ~ cyl*wt*hp, data = mtcars)
   expect_error(tornado(gtest, type = "blah", alpha = 0.10))
+})
+
+test_that("linear model tornado works with weights", {
+  gtest <- lm(mpg ~ cyl*wt*hp, data = mtcars, weights = rep(1:2, nrow(mtcars) / 2))
+  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
+  expect_equal(class(torn), "tornado_plot")
+  g <- plot(torn, plot = FALSE, xlabel = "MPG")
+  g <- g + ggtitle("Test:  Linear model PercentChange weighted")
+  plot(g)
 })

@@ -73,3 +73,19 @@ test_that("plotting binomial glm works", {
   g <- g + ggtitle("Test: Binomial GLM ranges")
   plot(g)
 })
+
+test_that("glm tornado works with weighted models", {
+  gtest <- glm(mpg ~ cyl*wt*hp, data = mtcars, family = gaussian, weights = rep(1:2, nrow(mtcars) / 2))
+  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
+  expect_equal(class(torn), "tornado_plot")
+  g <- plot(torn, plot = FALSE, xlabel = "MPG")
+  g <- g + ggtitle("Test: Gaussian GLM PercentChange with Weights")
+  plot(g)
+
+  gtest <- glm(vs ~ wt + disp + cyl, data = mtcars, family = binomial(link = "logit"), weights = rep(1:2, nrow(mtcars) / 2))
+  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
+  expect_equal(class(torn), "tornado_plot")
+  g <- plot(torn, plot = FALSE, xlabel = "VS")
+  g <- g + ggtitle("Test: Binomial GLM PercentChange with weights")
+  plot(g)
+})
