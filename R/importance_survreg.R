@@ -36,6 +36,10 @@ importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500, ..
   n <- nrow(model_data)
   baseLikelihood <- model_final$loglik[2]
 
+  if (!is.null(model_final$weights)) {
+    w <- model_final$weights
+  }
+
   # randomly permute each variable
   importances <- numeric(length(vars))
   for (j in seq_along(vars))
@@ -52,9 +56,12 @@ importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500, ..
                                        dist = model_final$dist)
       } else
       {
+        # Note that if we included "weights = model_final$weights" then the context
+        #   does not travel into the function.  We need to re-assign that vector
+        #   to w before passing in
         model_new <- survival::survreg(formula(model_final), model_data_new,
                                        dist = model_final$dist,
-                                       weights = model_final$weights)
+                                       weights = w)
       }
       temp[i] <- model_new$loglik[2]
     }

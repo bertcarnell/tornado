@@ -1,25 +1,25 @@
 context("test-tornado_glm")
 
 test_that("plotting gaussian glm works", {
-  gtest <- glm(mpg ~ cyl*wt*hp, data = mtcars, family = gaussian)
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
+  torn <- tornado(base_glm_model, type = "PercentChange", alpha = 0.10)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
   g <- g + ggtitle("Test: Gaussian GLM PercentChange")
   plot(g)
 
-  torn <- tornado(gtest, type = "percentiles", alpha = 0.05)
+  torn <- tornado(base_glm_model, type = "percentiles", alpha = 0.05)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
   g <- g + ggtitle("Test: Gaussian GLM percentiles")
   plot(g)
 
-  torn <- tornado(gtest, type = "ranges")
+  torn <- tornado(base_glm_model, type = "ranges")
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
   g <- g + ggtitle("Test: Gaussian GLM ranges")
   plot(g)
 
+  # factor variables
   mydat <- mtcars
   mydat$cyl <- factor(mydat$cyl)
   mydat$vs <- factor(mydat$vs)
@@ -54,20 +54,19 @@ test_that("plotting gaussian glm works", {
 })
 
 test_that("plotting binomial glm works", {
-  gtest <- glm(vs ~ wt + disp + cyl, data = mtcars, family = binomial(link = "logit"))
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
+  torn <- tornado(base_glm_binomial_model, type = "PercentChange", alpha = 0.10)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "VS")
   g <- g + ggtitle("Test: Binomial GLM PercentChange")
   plot(g)
 
-  g <- tornado(gtest, type = "percentiles", alpha = 0.05)
+  g <- tornado(base_glm_binomial_model, type = "percentiles", alpha = 0.05)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
   g <- g + ggtitle("Test: Binomial GLM percentiles")
   plot(g)
 
-  g <- tornado(gtest, type = "ranges")
+  g <- tornado(base_glm_binomial_model, type = "ranges")
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
   g <- g + ggtitle("Test: Binomial GLM ranges")
@@ -75,15 +74,13 @@ test_that("plotting binomial glm works", {
 })
 
 test_that("glm tornado works with weighted models", {
-  gtest <- glm(mpg ~ cyl*wt*hp, data = mtcars, family = gaussian, weights = rep(1:2, nrow(mtcars) / 2))
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
+  torn <- tornado(weigthed_glm_model, type = "PercentChange", alpha = 0.10)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
   g <- g + ggtitle("Test: Gaussian GLM PercentChange with Weights")
   plot(g)
 
-  gtest <- glm(vs ~ wt + disp + cyl, data = mtcars, family = binomial(link = "logit"), weights = rep(1:2, nrow(mtcars) / 2))
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
+  torn <- tornado(weighted_glm_binomial_model, type = "PercentChange", alpha = 0.10)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "VS")
   g <- g + ggtitle("Test: Binomial GLM PercentChange with weights")
