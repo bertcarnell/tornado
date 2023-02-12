@@ -30,10 +30,7 @@ test_that("linear model tornado works", {
   plot(g)
 
   # test a model with two factors
-  mydat <- mtcars
-  mydat$cyl <- factor(mydat$cyl)
-  mydat$vs <- factor(mydat$vs)
-  gtest <- lm(mpg ~ cyl + wt + hp + vs, data = mydat)
+  gtest <- lm(mpg ~ cyl + wt + hp + vs, data = my_mtcars)
   torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
@@ -53,9 +50,7 @@ test_that("linear model tornado works", {
   plot(g)
 
   # test a variable with one factor
-  mydat <- mtcars
-  mydat$cyl <- factor(mydat$cyl)
-  gtest <- lm(mpg ~ cyl + wt + hp, data = mydat)
+  gtest <- lm(mpg ~ cyl + wt + hp, data = my_mtcars)
   torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")

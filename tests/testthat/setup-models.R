@@ -1,3 +1,5 @@
+# Copyright 2023 Robert Carnell
+
 # Common models between importance and tornado tests
 
 survreg_model <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
@@ -31,3 +33,5 @@ if (requireNamespace("glmnet")) {
   glmnet_model_weighted <- glmnet::cv.glmnet(x = glmnet_mm, y = mtcars$mpg,
                                              family = "gaussian", weights = rep(1:2, nrow(mtcars) / 2))
 }
+
+n_permutation_tests <- 10

@@ -28,7 +28,7 @@ test_that("plotting works for base packages", {
   gtest <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
                              data = survival::ovarian,
                              dist = "weibull")
-  imp <- importance(gtest, survival::ovarian, nperm = 500)
+  imp <- importance(gtest, survival::ovarian, nperm = n_permutation_tests)
   expect_equal(imp$type, "survreg")
   plot(imp)
 
@@ -46,7 +46,7 @@ test_that("plotting works for glmnet", {
   mf <- model.frame(form, data = mtcars)
   mm <- model.matrix(mf, mf)
   gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
-  imp <- importance(gtest, mtcars, form, nperm = 100)
+  imp <- importance(gtest, mtcars, form, nperm = n_permutation_tests)
   expect_equal(imp$type, "cv.glmnet")
   plot(imp)
 
