@@ -23,7 +23,7 @@ weighted_glm_binomial_model <- glm(vs ~ wt + disp + cyl, data = mtcars,
                                    family = binomial(link = "logit"),
                                    weights = rep(1:2, nrow(mtcars) / 2))
 
-if (requireNamespace("glmnet")) {
+if (requireNamespace("glmnet", quietly = TRUE)) {
   glmnet_form <- formula(mpg ~ cyl*wt*hp)
   glmnet_mf <- model.frame(glmnet_form, data = mtcars)
   glmnet_mm <- model.matrix(glmnet_mf, glmnet_mf)
