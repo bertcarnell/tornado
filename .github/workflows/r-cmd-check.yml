@@ -72,7 +72,12 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
+          sudo apt update --fix-missing
           sudo apt-get install libcurl4-openssl-dev libicu-dev texlive-latex-base libicu66
+
+#wget http://security.ubuntu.com/ubuntu/pool/main/i/icu/libicu66_66.1-2ubuntu2.1_i386.deb
+#sudo dpkg -i libicu66_66.1-2ubuntu2.1_i386.deb
+
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
