@@ -9,7 +9,9 @@ on:
       - 'README.md'
       - 'etc/**'
       - 'pkgdown/**'
-      - '.github/workflows/**'
+      - '.github/workflows/build_readme.yml'
+      - '.github/workflows/pkgdown.yml'
+      - '.github/workflows/r-cmd-check-no-suggests.yml'
     branches:
       - master
   pull_request:
