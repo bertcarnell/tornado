@@ -9,6 +9,7 @@ on:
       - 'README.md'
       - 'etc/**'
       - 'pkgdown/**'
+      - '.github/workflows/**'
     branches:
       - master
   pull_request:
@@ -74,6 +75,7 @@ jobs:
           sudo -s eval "$sysreqs"
           wget http://security.ubuntu.com/ubuntu/pool/main/i/icu/libicu66_66.1-2ubuntu2.1_amd64.deb
           sudo dpkg -i libicu66_66.1-2ubuntu2.1_amd64.deb
+          rm libicu66_66.1-2ubuntu2.1_amd64.deb
           sudo apt-get install libcurl4-openssl-dev libicu-dev texlive-latex-base
 
       - name: Install dependencies
