@@ -29,7 +29,7 @@ Create a variable importance plot for a survreg model
 model_final <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
                        data = survival::ovarian,
                        dist = "weibull")
-imp <- importance(model_final, survival::ovarian, nperm = 500)
+imp <- importance(model_final, survival::ovarian, nperm = 50)
 plot(imp)
 }
 \seealso{
