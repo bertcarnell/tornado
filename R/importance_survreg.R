@@ -19,7 +19,7 @@
 #' model_final <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps*rx + age,
 #'                        data = survival::ovarian,
 #'                        dist = "weibull")
-#' imp <- importance(model_final, survival::ovarian, nperm = 500)
+#' imp <- importance(model_final, survival::ovarian, nperm = 50)
 #' plot(imp)
 importance.survreg <- function(model_final, model_data, dict=NA, nperm = 500, ...)
 {

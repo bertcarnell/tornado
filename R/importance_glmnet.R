@@ -23,7 +23,7 @@
 #'   mf <- model.frame(form, data = mtcars)
 #'   mm <- model.matrix(mf, mf)
 #'   gtest <- glmnet::cv.glmnet(x = mm, y = mtcars$mpg, family = "gaussian")
-#'   imp <- importance(gtest, mtcars, form, nperm = 100)
+#'   imp <- importance(gtest, mtcars, form, nperm = 50)
 #'   plot(imp)
 #' }
 importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm = 500,
