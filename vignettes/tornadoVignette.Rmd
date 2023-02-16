@@ -14,10 +14,10 @@ knitr::opts_chunk$set(
   fig.width = 7, 
   fig.height = 5
 )
-has_survival <- requireNamespace(survival, quietly = TRUE)
-has_caret <- requireNamespace(caret, quietly = TRUE) & 
-  requireNamespace(randomForest, quietly = TRUE)
-has_glmnet <- requireNamespace(glmnet, quietly = TRUE)
+has_survival <- requireNamespace("survival", quietly = TRUE)
+has_caret <- requireNamespace("caret", quietly = TRUE) & 
+  requireNamespace("randomForest", quietly = TRUE)
+has_glmnet <- requireNamespace("glmnet", quietly = TRUE)
 require(tornado)
 require(ggplot2)
 ```
