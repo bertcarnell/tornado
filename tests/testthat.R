@@ -1,4 +1,6 @@
-library(testthat)
-library(tornado)
+if (require(testthat))
+{
+  library(tornado)
 
-test_check("tornado")
+  test_check("tornado")
+}
