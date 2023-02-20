@@ -56,6 +56,7 @@ jobs:
         run: |
           remotes::install_deps(dependencies = c("Depends", "Imports", "LinkingTo"))
           remotes::install_cran("rcmdcheck")
+          remotes::install_cran("knitr") # we still need this even though we are trying to ignore vignettes
         shell: Rscript {0}
 
       - name: Check Standard
