@@ -60,5 +60,5 @@ jobs:
         shell: Rscript {0}
 
       - name: Check Standard
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--no-build-vignettes", "--ignore-vignettes", "--no-vignettes"), error_on = "warning", check_dir = "check")
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--no-build-vignettes", "--ignore-vignettes", "--no-vignettes"), build_args = c("--no-manual", "--no-build-vignettes"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
