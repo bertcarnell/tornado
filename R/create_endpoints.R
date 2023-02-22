@@ -15,8 +15,8 @@
 {
   which_factor <- which(sapply(training_data, is.factor))
   lmeans <- length(means)
-  assertthat::assert_that(type %in% c("PercentChange", "percentiles", "ranges"),
-                          msg = "Type must be one of PercentChange, percentiles, ranges")
+  assertthat::assert_that(type %in% c("PercentChange", "percentiles", "ranges", "StdDev"),
+                          msg = "Type must be one of PercentChange, percentiles, ranges, StdDev")
 
   # if (type == "PercentChange" && length(which_factor) > 0)
   # {
@@ -46,7 +46,7 @@
     } else
     {
       endpoints <- data.frame(
-        apply(training_data, 2, quantile, probs = c(alpha, 1 - alpha))
+        apply(training_data, 2, stats::quantile, probs = c(alpha, 1 - alpha))
       )
       names(endpoints) <- names(means)
     }
@@ -88,6 +88,27 @@
       names(endpoints) <- names(means)
     }
     Level <- c("Lower","Upper")
+  } else if (type == "StdDev" && alpha > 0)
+  {
+    sdf <- function(z)
+    {
+      c(mean(z) - alpha*stats::sd(z), mean(z) + alpha*stats::sd(z))
+    }
+    if (length(which_factor) > 0)
+    {
+      endpoints <- as.data.frame(
+        apply(training_data[,-which_factor], 2, sdf)
+      )
+      names(endpoints) <- names(means)[-which_factor]
+      endpoints2 <- data.frame(lapply(means[,which_factor], function(z) rep(z, 2)))
+      names(endpoints2) <- names(means)[which_factor]
+      endpoints <- cbind(endpoints, endpoints2)
+    } else
+    {
+      endpoints <- as.data.frame(apply(training_data, 2, sdf))
+      names(endpoints) <- names(means)
+    }
+    Level <- c(paste0("mu - ", alpha, " sigma"), paste0("mu + ", alpha, " sigma"))
   } else
   {
     stop("command not recognized")

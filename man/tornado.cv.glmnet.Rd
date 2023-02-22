@@ -18,9 +18,9 @@
 \arguments{
 \item{model}{a model object}
 
-\item{type}{\code{PercentChange}, \code{percentiles}, or \code{ranges}}
+\item{type}{\code{PercentChange}, \code{percentiles}, \code{ranges}, or \code{StdDev}}
 
-\item{alpha}{the level of change}
+\item{alpha}{the level of change, the percentile level, or the number of standard deviations}
 
 \item{dict}{a dictionary to translate variables for the plot.  The dictionary
 must be a list or data.frame with elements \code{old} and \code{new}.  The

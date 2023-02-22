@@ -50,8 +50,8 @@
   # }
   assertthat::assert_that(is.data.frame(modeldata),
                           msg = "The data must be contained in a data.frame")
-  assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
-                          msg = "type must be PercentChagne, percentiles, or ranges")
+  assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges", "StdDev"),
+                          msg = "type must be PercentChagne, percentiles,  ranges, StdDev")
 
   used_variables <- rownames(attr(stats::terms(model), "factors"))[-1]
 

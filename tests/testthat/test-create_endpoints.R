@@ -144,3 +144,49 @@ test_that("ranges - All factors", {
   expect_true(is.data.frame(ret$endpoints))
   expect_type(ret$endpoints$cyl, "logical")
 })
+
+################################################################################
+
+test_that("StdDev - No factors", {
+  used_variables <- rownames(attr(stats::terms(model_nofactors), "factors"))[-1]
+  training_data <- subset(mtcars, select = used_variables)
+  means <- .create_means(training_data)
+  ret <- .create_endpoints(training_data, means, type = "StdDev", alpha = 2)
+
+  expect_equal(dim(ret$endpoints), c(2,3))
+  expect_true(is.data.frame(ret$endpoints))
+  expect_type(ret$endpoints$cyl, "double")
+})
+
+test_that("StdDev - Some factors", {
+  # one factor
+  used_variables <- rownames(attr(stats::terms(model_onefactor), "factors"))[-1]
+  training_data <- subset(my_mtcars, select = used_variables)
+  means <- .create_means(training_data)
+  ret <- .create_endpoints(training_data, means, type = "StdDev", alpha = 2)
+
+  expect_equal(dim(ret$endpoints), c(2,3))
+  expect_true(is.data.frame(ret$endpoints))
+  expect_true(is.factor(ret$endpoints$cyl))
+
+  # two factors
+  used_variables <- rownames(attr(stats::terms(model_twofactors), "factors"))[-1]
+  training_data <- subset(my_mtcars, select = used_variables)
+  means <- .create_means(training_data)
+  ret <- .create_endpoints(training_data, means, type = "StdDev", alpha = 2)
+
+  expect_equal(dim(ret$endpoints), c(2,4))
+  expect_true(is.data.frame(ret$endpoints))
+  expect_true(is.factor(ret$endpoints$cyl))
+})
+
+test_that("StdDev - All factors", {
+  used_variables <- rownames(attr(stats::terms(model_allfactors), "factors"))[-1]
+  training_data <- subset(my_mtcars, select = used_variables)
+  means <- .create_means(training_data)
+
+  ret <- .create_endpoints(training_data, means, type = "StdDev", alpha = 2)
+  expect_equal(dim(ret$endpoints), c(2,2))
+  expect_true(is.data.frame(ret$endpoints))
+  expect_type(ret$endpoints$cyl, "logical")
+})

@@ -1,79 +1,50 @@
 context("test-tornado_lm")
 
 test_that("linear model tornado works", {
-  gtest <- lm(mpg ~ cyl*wt*hp, data = mtcars)
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model PercentChange")
-  plot(g)
+  itypes <- c("PercentChange", "percentiles", "ranges", "StdDev")
+  ialpha <- c(0.10, 0.05, NA, 2)
 
-  torn <- tornado(gtest, type = "percentiles", alpha = 0.05)
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model percentiles")
-  plot(g)
+  for (i in 1:4)
+  {
+    torn <- tornado(model_nofactors, type = itypes[i], alpha = ialpha[i])
+    expect_equal(class(torn), "tornado_plot")
+    g <- plot(torn, plot = FALSE, xlabel = "MPG")
+    g <- g + ggtitle(paste("Test:  Linear model ", itypes[i]))
+    plot(g)
+  }
 
-  g <- tornado(gtest, type = "ranges")
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model ranges")
-  plot(g)
-
-  gtest <- lm(mpg ~ cyl*wt*hp, data = mtcars)
   dict <- list(old = c("cyl", "wt", "hp"),
                new = c("Cylinders", "Weight", "Horsepower"))
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10, dict = dict)
+  torn <- tornado(model_nofactors, type = "PercentChange", alpha = 0.10, dict = dict)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
   g <- g + ggtitle("Test:  Linear model PercentChange with dictionary")
   plot(g)
 
   # test a model with two factors
-  gtest <- lm(mpg ~ cyl + wt + hp + vs, data = my_mtcars)
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model PercentChange with 2 factors")
-  plot(g)
-
-  torn <- tornado(gtest, type = "ranges", alpha = NA)
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model ranges with dictionary")
-  plot(g)
-
-  torn <- tornado(gtest, type = "percentiles", alpha = 0.1)
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model percentiles with dictionary")
-  plot(g)
+  for (i in 1:4)
+  {
+    torn <- tornado(model_twofactors, type = itypes[i], alpha = ialpha[i])
+    expect_equal(class(torn), "tornado_plot")
+    g <- plot(torn, plot = FALSE, xlabel = "MPG")
+    g <- g + ggtitle(paste("Test:  Linear model ", itypes[i], " with 2 factors"))
+    plot(g)
+  }
 
   # test a variable with one factor
-  gtest <- lm(mpg ~ cyl + wt + hp, data = my_mtcars)
-  torn <- tornado(gtest, type = "PercentChange", alpha = 0.10)
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model PercentChange with one factor")
-  plot(g)
-
-  torn <- tornado(gtest, type = "ranges", alpha = NA)
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model ranges with one factor")
-  plot(g)
-
-  torn <- tornado(gtest, type = "percentiles", alpha = 0.1)
-  expect_equal(class(torn), "tornado_plot")
-  g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Linear model percentiles with one factor")
-  plot(g)
+  for (i in 1:4)
+  {
+    torn <- tornado(model_onefactor, type = itypes[i], alpha = ialpha[i])
+    expect_equal(class(torn), "tornado_plot")
+    g <- plot(torn, plot = FALSE, xlabel = "MPG")
+    g <- g + ggtitle(paste("Test:  Linear model ", itypes[i], " with one factor"))
+    plot(g)
+  }
 })
 
 
 test_that("Errors in tornado.lm", {
-  gtest <- lm(mpg ~ cyl*wt*hp, data = mtcars)
-  expect_error(tornado(gtest, type = "blah", alpha = 0.10))
+  expect_error(tornado(model_nofactors, type = "blah", alpha = 0.10))
 })
 
 test_that("linear model tornado works with weights", {

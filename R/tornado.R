@@ -15,8 +15,8 @@
 #' as the input variable for the center of the tornado.
 #'
 #' @param model a model object
-#' @param type \code{PercentChange}, \code{percentiles}, or \code{ranges}
-#' @param alpha the level of change
+#' @param type \code{PercentChange}, \code{percentiles}, \code{ranges}, or \code{StdDev}
+#' @param alpha the level of change, the percentile level, or the number of standard deviations
 #' @param dict a dictionary to translate variables for the plot.  The dictionary
 #' must be a list or data.frame with elements \code{old} and \code{new}.  The
 #' \code{old} element must contain each variable in the model.
