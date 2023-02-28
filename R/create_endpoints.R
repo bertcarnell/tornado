@@ -108,7 +108,8 @@
       endpoints <- as.data.frame(apply(training_data, 2, sdf))
       names(endpoints) <- names(means)
     }
-    Level <- c(paste0("mu - ", alpha, " sigma"), paste0("mu + ", alpha, " sigma"))
+    Level <- c(paste0("\U003BC - ", alpha, "\u03C3"),
+               paste0("\U003BC + ", alpha, "\u03C3"))
   } else
   {
     stop("command not recognized")

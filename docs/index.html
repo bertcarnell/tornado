@@ -82,18 +82,20 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
+<div>
 <table class="table"><tr>
 <td>
 <img align="left" width="200" height="200" src="logo.png">
 </td>
 </tr></table>
-<table class="table">
+</div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+<col width="27%">
+<col width="24%">
+<col width="16%">
+<col width="14%">
+<col width="16%">
 </colgroup>
 <thead><tr class="header">
 <th align="center"><sub>Actions</sub></th>
@@ -121,7 +123,7 @@
 <p>You can also install the development version of <code>tornado</code> from github with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"bertcarnell/tornado"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bertcarnell/tornado"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quick-start---torndao-plots">Quick Start - Torndao Plots<a class="anchor" aria-label="anchor" href="#quick-start---torndao-plots"></a>
@@ -133,7 +135,7 @@
 <code class="sourceCode R"><span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">*</span><span class="va">wt</span><span class="op">*</span><span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="va">torn1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">lm1</span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>, alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">torn1</span>, xlabel <span class="op">=</span> <span class="st">"MPG"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/random-1.png"></p>
+<p><img src="reference/figures/random-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="generalized-linear-models">Generalized Linear Models<a class="anchor" aria-label="anchor" href="#generalized-linear-models"></a>
@@ -142,8 +144,8 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">glm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">disp</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">torn2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">glm2</span>, type <span class="op">=</span> <span class="st">"ranges"</span>, alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">torn2</span>, xlabel <span class="op">=</span> <span class="st">"V or Straight Engine"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/glm_section-1.png"></p>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">torn2</span>, xlabel <span class="op">=</span> <span class="st">"Probability of Straight Engine"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/glm_section-1.png"><!-- --></p>
 <p>Plots can include factors and percentiles of the data as well.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="va">mtcars</span></span>
@@ -155,24 +157,26 @@
 <span>     geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>     sensitivity_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#E41A1C"</span>, <span class="st">"#377EB8"</span><span class="op">)</span>,</span>
 <span>     geom_point_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"red"</span>, col <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/glm_factor_section-1.png"></p>
+<p><img src="reference/figures/glm_factor_section-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="censored-data">Censored Data<a class="anchor" aria-label="anchor" href="#censored-data"></a>
 </h3>
+<p>Accelerated Failure Model</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">survreg3</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survreg.html" class="external-link">survreg</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">resid.ds</span>, </span>
 <span>                              <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/ovarian.html" class="external-link">ovarian</a></span>, dist <span class="op">=</span> <span class="st">'weibull'</span>, scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">torn3</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">survreg3</span>, modeldata <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/ovarian.html" class="external-link">ovarian</a></span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>, alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">torn3</span>, xlabel <span class="op">=</span> <span class="st">"Survival Time"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/censored_section-1.png"></p>
+<p><img src="reference/figures/censored_section-1.png"><!-- --></p>
+<p>Cox Proportional Hazard Model with 2 Standard Deviation bars</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coxph4</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">stop</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="va">rx</span> <span class="op">+</span> <span class="va">size</span> <span class="op">+</span> <span class="va">number</span>,</span>
 <span>                          <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html" class="external-link">bladder</a></span><span class="op">)</span></span>
-<span><span class="va">torn4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">coxph4</span>, modeldata <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html" class="external-link">bladder</a></span>, type <span class="op">=</span> <span class="st">"PercentChange"</span>,</span>
-<span>                 alpha <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span></span>
+<span><span class="va">torn4</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tornado.html">tornado</a></span><span class="op">(</span><span class="va">coxph4</span>, modeldata <span class="op">=</span> <span class="fu">survival</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/survival/man/bladder.html" class="external-link">bladder</a></span>, type <span class="op">=</span> <span class="st">"StdDev"</span>,</span>
+<span>                 alpha <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">torn4</span>, xlabel <span class="op">=</span> <span class="st">"Risk"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/censored_section-2.png"></p>
+<p><img src="reference/figures/censored_coxph_setion-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="machine-learning-models-from-carettrain">Machine Learning Models from caret::train<a class="anchor" aria-label="anchor" href="#machine-learning-models-from-carettrain"></a>
@@ -180,8 +184,8 @@
 <p>The <code>plot</code> method can also return a ggplot object</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydat</span> <span class="op">&lt;-</span> <span class="va">mtcars</span></span>
-<span><span class="va">mydat</span><span class="op">$</span><span class="va">am</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">am</span><span class="op">)</span></span>
-<span><span class="va">mydat</span><span class="op">$</span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">vs</span><span class="op">)</span></span>
+<span><span class="va">mydat</span><span class="op">$</span><span class="va">am</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">am</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"M"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mydat</span><span class="op">$</span><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">vs</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">mydat</span><span class="op">$</span><span class="va">cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span></span>
 <span><span class="va">mydat</span><span class="op">$</span><span class="va">gear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">gear</span><span class="op">)</span></span>
 <span><span class="va">mydat</span><span class="op">$</span><span class="va">carb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mydat</span><span class="op">$</span><span class="va">carb</span><span class="op">)</span></span>
@@ -191,7 +195,7 @@
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">torn</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, xlabel <span class="op">=</span> <span class="st">"Probability of Class V-shaped Engine"</span>, geom_bar_control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Classifier caret::train randomforest, 90-110% of the mean in each variable"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/train_section-1.png"></p>
+<p><img src="reference/figures/train_section-1.png"><!-- --></p>
 </div>
 </div>
 </div>
@@ -243,7 +247,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

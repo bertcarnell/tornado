@@ -2,7 +2,7 @@
 title: "tornado"
 output: 
   md_document:
-    variant: markdown_github
+    variant: gfm
   
 ---
 
@@ -74,7 +74,7 @@ Plots can also be created for the range of the input data
 ```{r glm_section, echo=TRUE}
 glm2 <- glm(vs ~ wt + disp + cyl, data = mtcars, family = binomial(link = "logit"))
 torn2 <- tornado(glm2, type = "ranges", alpha = 0.10)
-plot(torn2, xlabel = "V or Straight Engine", geom_bar_control = list(width = 0.5))
+plot(torn2, xlabel = "Probability of Straight Engine", geom_bar_control = list(width = 0.5))
 ```
 
 Plots can include factors and percentiles of the data as well.
@@ -93,16 +93,22 @@ plot(torn2, xlabel = "MPG",
 
 ### Censored Data
 
+Accelerated Failure Model
+
 ```{r censored_section, echo=TRUE}
 survreg3 <- survival::survreg(survival::Surv(futime, fustat) ~ ecog.ps + rx + age + resid.ds, 
                               survival::ovarian, dist = 'weibull', scale = 1)
 torn3 <- tornado(survreg3, modeldata = survival::ovarian, type = "PercentChange", alpha = 0.10)
 plot(torn3, xlabel = "Survival Time", geom_bar_control = list(width = 0.5))
+```
 
+Cox Proportional Hazard Model with 2 Standard Deviation bars
+
+```{r censored_coxph_setion, echo=TRUE}
 coxph4 <- survival::coxph(survival::Surv(stop, event) ~ rx + size + number,
                           survival::bladder)
-torn4 <- tornado(coxph4, modeldata = survival::bladder, type = "PercentChange",
-                 alpha = 0.10)
+torn4 <- tornado(coxph4, modeldata = survival::bladder, type = "StdDev",
+                 alpha = 2)
 plot(torn4, xlabel = "Risk", geom_bar_control = list(width = 0.5))
 ```
 
@@ -112,8 +118,8 @@ The `plot` method can also return a ggplot object
 
 ```{r train_section, echo = TRUE}
 mydat <- mtcars
-mydat$am <- factor(mydat$am)
-mydat$vs <- factor(mydat$vs)
+mydat$am <- factor(mydat$am, labels = c("A", "M"))
+mydat$vs <- factor(mydat$vs, labels = c("V", "S"))
 mydat$cyl <- factor(mydat$cyl)
 mydat$gear <- factor(mydat$gear)
 mydat$carb <- factor(mydat$carb)
