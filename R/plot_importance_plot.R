@@ -120,7 +120,10 @@ plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
       grDevices::dev.off()
 
     # extract the legend
-    legend_grob <- ggp2_grob$grobs[[which(ggp2_grob$layout$name == "guide-box")]]
+    legend_grob <- ggp2_grob$grobs[grepl("guide-box", ggp2_grob$layout$name)]
+    select <- which(!vapply(legend_grob, inherits, logical(1), "zeroGrob"))[1]
+    legend_grob <- legend_grob[[select]]
+
     # blank grob
     r <- grid::rectGrob(gp = grid::gpar(fill = NA, col = NA))
     # height of legend
