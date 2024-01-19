@@ -108,8 +108,12 @@
       endpoints <- as.data.frame(apply(training_data, 2, sdf))
       names(endpoints) <- names(means)
     }
-    Level <- c(paste0("\U003BC - ", alpha, "\u03C3"),
-               paste0("\U003BC + ", alpha, "\u03C3"))
+    # grid graphics will not the multi-byte character encodings correctly
+    #   on the examples when the pdf is created for R CMD check
+    #Level <- c(paste0("\U003BC - ", alpha, "\u03C3"),
+    #           paste0("\U003BC + ", alpha, "\u03C3"))
+    Level <- c(paste0("mean - ", alpha, "*std"),
+               paste0("mean + ", alpha, "*std"))
   } else
   {
     stop("command not recognized")
