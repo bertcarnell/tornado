@@ -26,5 +26,5 @@ Imports:
     gridExtra,
     rlang
 VignetteBuilder: knitr
-URL: https://github.com/bertcarnell/tornado
+URL: https://bertcarnell.github.io/tornado/, https://github.com/bertcarnell/tornado
 BugReports: https://github.com/bertcarnell/tornado/issues
