@@ -18,7 +18,7 @@ plotdat <- data.frame(
   Level = rep(c("low", "high"), each = 10)
 )
 
-g1 <- ggplot(plotdat, aes_string(x = "variable", y = "value", fill = "Level")) +
+g1 <- ggplot(plotdat, aes(x = variable, y = value, fill = Level)) +
   geom_bar(position = "identity", stat = "identity") +
   coord_flip() +
   ylab("") +
@@ -49,7 +49,7 @@ plot(g2)
 sticker(g1, package="tornado", s_x=1, s_y=1, s_width=1.5, s_height=1.3,
         p_x=1, p_y=0.35, p_color="black", p_size=18, p_family = "sans",
         h_fill = hex_back, h_color = hex_border,
-        filename=file.path("logo.png"))
+        filename=file.path("man", "figures", "logo.png"))
 
 # sticker(g1, package="tornado", s_x=1, s_y=1, s_width=1.5, s_height=1.3,
 #         p_x=1, p_y=0.35, p_color="black", p_size=10, p_family = "sans",
@@ -58,5 +58,5 @@ sticker(g1, package="tornado", s_x=1, s_y=1, s_width=1.5, s_height=1.3,
 
 ### Build the favicon for pkgdown
 
-pkgdown::build_favicons()
+pkgdown::build_favicons(overwrite = TRUE)
 

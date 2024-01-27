@@ -1,6 +1,10 @@
+# version 0.1.4 (2024-01-18)
+
+- Update to package website.  Thanks to @olivroy for the pull request.
+
 # version 0.1.3 (2024-01-18)
 
-- Updates to work with ggplot2 3.5.0 (#8)
+- Updates to work with ggplot2 3.5.0 (#8) Thanks to @teunbrand for the pull request.
 - Added plots which display sensitivity in standard deviations
 
 # version 0.1.2 (2023-02-11)

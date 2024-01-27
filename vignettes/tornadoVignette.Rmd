@@ -2,7 +2,7 @@
 title: "Tornado and Importance Plots"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{tornadoVignette}
+  %\VignetteIndexEntry{Tornado and Importance Plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,10 +14,6 @@ knitr::opts_chunk$set(
   fig.width = 7, 
   fig.height = 5
 )
-has_survival <- requireNamespace("survival", quietly = TRUE)
-has_caret <- requireNamespace("caret", quietly = TRUE) & 
-  requireNamespace("randomForest", quietly = TRUE)
-has_glmnet <- requireNamespace("glmnet", quietly = TRUE)
 require(tornado)
 require(ggplot2)
 ```
@@ -50,21 +46,21 @@ factor is varied through all of its levels.
 - The base factor level is chosen as the input variable for the center of the 
 tornado when factors are present.
 
-An importance plot attempts to dispay the relative impact of each variable
+An importance plot attempts to display the relative impact of each variable
 on the model fit.  Traditionally, for linear models, the concept of importance
 was expressed as the percentage of total response variable variance that is
 explained by each variable, either alone, or in the presence of the other variables
 in the model.  Each model type can have different measures of importance.  In
 this package, the following methods are used:
 
-- Linear Models:  percent of the total variance explained by each variable alone
+- **Linear Models**:  percent of the total variance explained by each variable alone
 and cumulatively with other variables in the model.
-- Generalized Linear Models:  Same as linear models, but using the deviance instead
+- **Generalized Linear Models**:  Same as linear models, but using the deviance instead
 of the variance.
-- Survival Models, LASSO, Ridge Regression:  The decrease in model Mean Squared
-Error as each variable is permuted in the data set.  Permuting a varible in a 
+- **Survival Models**, **LASSO**, **Ridge Regression**:  The decrease in model Mean Squared
+Error as each variable is permuted in the data set.  Permuting a variable in a 
 data set remove the explanatory power of that variable relative to the 
-other vriables in the model still correlated with the response variable.
+other variables in the model still correlated with the response variable.
 - `caret` package models:  The definition of variable importance for each
 model in the `caret` package is taken from the `varImp` method.  See the `caret`
 package for specifics.
@@ -203,7 +199,7 @@ plot(torn1, xlabel = "Risk", geom_bar_control = list(width = 0.4))
 ### Ridge Regression and LASSO
 
 ```{r glmnet1, echo=TRUE}
-if (has_glmnet)
+if (requireNamespace("glmnet", quietly = TRUE))
 {
   form <- formula(mpg ~ cyl*wt*hp)
   mf <- model.frame(form, data=mtcars)
@@ -225,7 +221,8 @@ if (has_glmnet)
 #### Regression
 
 ```{r train_regression, echo = TRUE}
-if (has_caret)
+if (requireNamespace("caret", quietly = TRUE) & 
+  requireNamespace("randomForest", quietly = TRUE))
 {
   gtest <- caret::train(x = subset(mtcars_w_factors, select = -mpg), 
                         y = mtcars_w_factors$mpg, method = "rf")
@@ -233,7 +230,7 @@ if (has_caret)
   plot(torn, xlabel = "MPG")
 } else
 {
-  print("caret is not available for vignette rendering")
+  print("caret or randomForest is not available for vignette rendering")
 }
 ```
 
@@ -242,7 +239,8 @@ if (has_caret)
 The `plot` method can also return a ggplot object
 
 ```{r train_section, echo = TRUE}
-if (has_caret)
+if (requireNamespace("caret", quietly = TRUE) & 
+  requireNamespace("randomForest", quietly = TRUE))
 {
   gtest <- caret::train(x = subset(iris, select = -Species), 
                         y = iris$Species, method = "rf")
@@ -256,7 +254,7 @@ if (has_caret)
   plot(g)
 } else
 {
-  print("caret is not available for vignette rendering")
+  print("caret or randomForest is not available for vignette rendering")
 }
 ```
 
@@ -307,7 +305,8 @@ plot(imp, geom_bar_control = list(width = 0.4, fill = "blue"))
 The number of variables plotted can also be controlled
 
 ```{r train.regression.imp, echo = TRUE}
-if (has_caret)
+if (requireNamespace("caret", quietly = TRUE) & 
+  requireNamespace("randomForest", quietly = TRUE))
 {
   gtest <- caret::train(x = subset(mtcars_w_factors, select = -mpg), 
                         y = mtcars_w_factors$mpg, method = "rf")
@@ -315,7 +314,7 @@ if (has_caret)
   plot(imp, nvar = 7)
 } else
 {
-  print("caret is not available for vignette rendering")
+  print("caret or randomForest is not available for vignette rendering")
 }
 ```
 
@@ -324,7 +323,8 @@ if (has_caret)
 The `plot` method can also return a ggplot object
 
 ```{r train.classification.imp, echo = TRUE}
-if (has_caret)
+if (requireNamespace("caret", quietly = TRUE) & 
+  requireNamespace("randomForest", quietly = TRUE))
 {
   gtest <- caret::train(x = subset(iris, select = -Species), 
                         y = iris$Species, method = "rf")
@@ -334,6 +334,6 @@ if (has_caret)
   plot(g)
 } else
 {
-  print("caret is not available for vignette rendering")
+  print("caret or randomForest is not available for vignette rendering")
 }
 ```

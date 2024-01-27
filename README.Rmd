@@ -6,6 +6,8 @@ output:
   
 ---
 
+<!-- DO NOT EDIT:  README.md is created from README.Rmd -->
+
 <div>
   <table>
     <tr>
@@ -15,6 +17,8 @@ output:
     </tr>
   </table>
 </div>
+<footer>&copy; Copyright 2024 Robert Carnell</footer>
+
 
 ```{r setup, echo=FALSE, include=FALSE}
 require(knitr)
