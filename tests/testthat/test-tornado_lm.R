@@ -80,4 +80,11 @@ test_that("linear model tornado works with weights", {
 
   expect_equal(torn$data$pmeans, predict(model, newdata = data.frame(x = mean(data$x))))
   expect_equal(torn_weighted$data$pmeans, predict(weighted_model, newdata = data.frame(x = weighted.mean(grouped_data$x, grouped_data$count))))
+
+  torn_weighted <- tornado(weighted_model, type = "PercentChange", alpha = 0.10)
+  expect_equal(torn_weighted$data$pmeans, predict(weighted_model, newdata = data.frame(x = weighted.mean(grouped_data$x, grouped_data$count))))
+  torn_weighted <- tornado(weighted_model, type = "ranges")
+  expect_equal(torn_weighted$data$pmeans, predict(weighted_model, newdata = data.frame(x = weighted.mean(grouped_data$x, grouped_data$count))))
+  torn_weighted <- tornado(weighted_model, type = "StdDev", alpha = 2)
+  expect_equal(torn_weighted$data$pmeans, predict(weighted_model, newdata = data.frame(x = weighted.mean(grouped_data$x, grouped_data$count))))
 })
