@@ -24,4 +24,8 @@ test_that("survreg tornado works with weights", {
   g <- plot(torn, plot = FALSE, xlabel = "Survival Time")
   g <- g + ggtitle("Test: survival regression with weights")
   plot(g)
+
+  # weighted is different from unweighted
+  torn_base <- tornado(survreg_model, modeldata = survival::ovarian, type = "PercentChange", alpha = 0.10)
+  expect_true(abs(torn_base$data$pmeans - torn$data$pmeans) > 1E-6)
 })

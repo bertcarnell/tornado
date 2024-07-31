@@ -1,6 +1,6 @@
 Package: tornado
 Title: Plots for Model Sensitivity and Variable Importance
-Version: 0.1.4
+Version: 0.2.0
 Authors@R: 
     person(given = "Rob",
            family = "Carnell",
@@ -16,15 +16,41 @@ Suggests:
     randomForest,
     knitr,
     rmarkdown
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.2
 Imports: 
     survival,
-    assertthat,
     ggplot2,
     scales,
     grid,
     gridExtra,
-    rlang
+    rlang,
+    Hmisc
 VignetteBuilder: knitr
 URL: https://bertcarnell.github.io/tornado/, https://github.com/bertcarnell/tornado
 BugReports: https://github.com/bertcarnell/tornado/issues
+Collate: 
+    'create_data_low_high.R'
+    'create_dict.R'
+    'create_endpoints.R'
+    'create_factor_plot_data.R'
+    'create_importance_data.R'
+    'create_means.R'
+    'create_plot_data.R'
+    'importance.R'
+    'importance_glm.R'
+    'importance_glmnet.R'
+    'importance_lm.R'
+    'importance_survreg.R'
+    'importance_train.R'
+    'plot_importance_plot.R'
+    'plot_tornado_plot.R'
+    'print_importance_plot.R'
+    'print_tornado_plot.R'
+    'quantile_ordered.R'
+    'tornado.R'
+    'tornado_coxph.R'
+    'tornado_glm.R'
+    'tornado_glmnet.R'
+    'tornado_lm.R'
+    'tornado_survreg.R'
+    'tornado_train.R'

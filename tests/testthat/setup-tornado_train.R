@@ -2,6 +2,7 @@
 
 if (requireNamespace("caret", quietly = TRUE)) {
   rf_model_numeric <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf")
+  rf_model_numeric_weights <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf", weights = 1:nrow(mtcars))
 
   if (!exists("my_mtcars"))
   {

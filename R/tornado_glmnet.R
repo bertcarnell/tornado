@@ -41,16 +41,21 @@ tornado.cv.glmnet <- function(model,
   # dict <- NA
   # s <- "lambda.1se"
 
-  assertthat::assert_that(requireNamespace("glmnet", quietly = TRUE),
-                          msg = "The glmnet package is required to use this method")
+  if (!requireNamespace("glmnet", quietly = TRUE)) {
+    stop("The glmnet package is required to use this method")
+  }
 
   extraArguments <- list(...)
-  assertthat::assert_that(is.data.frame(modeldata),
-                          msg = "The data must be contained in a data.frame")
-  assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
-                          msg = "type must be PercentChagne, percentiles, or ranges")
-  assertthat::assert_that(s %in% c("lambda.1se", "lambda.min"),
-                          msg = "The value of the penalty parameter, s, must be lambda.1se or lambda.min")
+
+  if (!is.data.frame(modeldata)) {
+    stop("The data must be contained in a data.frame")
+  }
+  if (!(type %in% .allowed_types)) {
+    stop(paste("type must be in ", paste0(.allowed_types, collapse=",")))
+  }
+  if (!(s %in% c("lambda.1se", "lambda.min"))) {
+    stop("The value of the penalty parameter, s, must be lambda.1se or lambda.min")
+  }
 
   modelframe <- model.frame(form, data = modeldata)
   used_variables <- rownames(attr(terms(modelframe), "factors"))
@@ -88,13 +93,17 @@ tornado.cv.glmnet <- function(model,
   # need to remove the response variable from the output plot
   response_variable <- used_variables[1]
   ind_response <- which(plotdat$variable == response_variable)
-  assertthat::assert_that(length(ind_response) > 0,
-                          msg = "Unexpected error in response variable selection")
+
+  if (length(ind_response) == 0) {
+    stop("Unexpected error in response variable selection")
+  }
   plotdat <- plotdat[-ind_response,]
 
   ind_response_mean <- which(names_means == response_variable)
-  assertthat::assert_that(length(ind_response_mean) > 0,
-                          msg = "Unexpected error in response variable selection")
+
+  if (length(ind_response_mean) == 0) {
+    stop("Unexpected error in response variable selection")
+  }
   names_means <- names_means[-ind_response_mean]
 
   bar_width <- abs(apply(matrix(plotdat$value, nrow = 2, byrow = TRUE), 2, diff))

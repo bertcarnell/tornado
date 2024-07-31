@@ -20,7 +20,6 @@
 #' @importFrom gridExtra arrangeGrob
 #' @importFrom scales percent
 #' @importFrom grDevices dev.cur dev.off
-#' @importFrom assertthat assert_that
 #' @importFrom rlang .data
 #'
 #' @examples
@@ -40,8 +39,9 @@ plot.importance_plot <- function(x, plot = TRUE, nvar = NA,
                                  geom_bar_control = list(fill = "#69BE28"),
                                  ...)
 {
-  assertthat::assert_that(length(nvar) == 1,
-                         msg = "nvar must be a length 1 integer or NA")
+  if (length(nvar) != 1) {
+    stop("nvar must be a length 1 integer or NA")
+  }
 
   if (x$type %in% c("lm", "glm"))
   {

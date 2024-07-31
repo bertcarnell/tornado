@@ -9,7 +9,6 @@
 #' @return ordered factor levels at the desired quantiles
 #' @export
 #' @method quantile ordered
-#' @importFrom assertthat assert_that
 #' @importFrom stats quantile
 #'
 #' @examples
@@ -17,7 +16,9 @@
 #'          probs <- seq(0, 1, 0.25))
 quantile.ordered <- function(x, probs = seq(0, 1, 0.25), ...)
 {
-  assertthat::assert_that(is.ordered(x), msg = "This method is meant to be called on ordered factors")
+  if (!is.ordered(x)) {
+    stop("This method is meant to be called on ordered factors")
+  }
   tt <- table(x)
   ttcum <- cumsum(tt / sum(tt))
   ret <- character(length(probs))
@@ -31,7 +32,9 @@ quantile.ordered <- function(x, probs = seq(0, 1, 0.25), ...)
         break
       }
     }
-    assertthat::assert_that(ret[i] != "", msg = "did not find quantile in the data")
+    if (ret[i] == "") {
+      stop("did not find quantile in the data in quantile.ordered")
+    }
   }
   return(ordered(ret, levels = levels(x)))
 }

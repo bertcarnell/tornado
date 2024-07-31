@@ -1,3 +1,7 @@
+# version 0.2.0 (2024-07-30)
+
+- bug report from @ghobro (https://github.com/ghobro) for weighted models
+
 # version 0.1.4 (2024-01-18)
 
 - Update to package website.  Thanks to @olivroy for the pull request.

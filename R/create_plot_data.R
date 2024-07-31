@@ -1,4 +1,5 @@
 # Copyright 2019 Robert Carnell
+#' @include create_endpoints.R
 
 #' Internal Method to create Plot Data in tornado plots
 #'
@@ -11,8 +12,7 @@
 #'
 #' @return the data to create the tornado plot
 #'
-#' @importFrom assertthat assert_that
-#' @importFrom stats terms
+#' @importFrom stats terms weights
 #' @noRd
 .create_plot_data <- function(model, modeldata, type="PercentChange", alpha=0.10,
                               dict=NA, predict_type = "response")
@@ -48,21 +48,28 @@
   #   alpha <- 0.10
   #   dict <- NA
   # }
-  assertthat::assert_that(is.data.frame(modeldata),
-                          msg = "The data must be contained in a data.frame")
-  assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges", "StdDev"),
-                          msg = "type must be PercentChagne, percentiles,  ranges, StdDev")
+  if (!is.data.frame(modeldata)) {
+    stop("The data must be contained in a data.frame")
+  }
+  if (!(type %in% .allowed_types)) {
+    stop(paste0("type must be in ", paste(.allowed_types, collapse=",")))
+  }
 
   used_variables <- rownames(attr(stats::terms(model), "factors"))[-1]
 
   dict <- .create_dict(dict, used_variables)
 
   training_data <- subset(modeldata, select = used_variables)
-  means <- .create_means(training_data)
+  if (is.null(stats::weights(model))) {
+    model_weights <- NA
+  } else {
+    model_weights <- stats::weights(model)
+  }
+  means <- .create_means(training_data, model_weights)
   names_means <- names(means)
   lmeans <- length(means)
 
-  ret <- .create_endpoints(training_data, means, type, alpha)
+  ret <- .create_endpoints(training_data, means, type, alpha, model_weights)
   endpoints <- ret$endpoints
   Level <- ret$Level
   base_Level <- c("A","B")

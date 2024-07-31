@@ -92,3 +92,19 @@ test_that("tornado caret::train works with classification", {
   g <- g + ggtitle("Test:  classifier caret::train randomforest ranges with factors - points")
   plot(g)
 })
+
+test_that("tornado caret::train works with weights", {
+  testthat::skip_if_not_installed("caret")
+  testthat::skip_if_not_installed("MASS")
+  testthat::skip_if_not_installed("randomForest")
+
+  # cyl and vs are numeric
+  #   cyl and vs are not plotted on the tornado and not shown as factors
+  torn <- tornado(rf_model_numeric, type = "PercentChange", alpha = 0.10)
+  torn_weights <- tornado(rf_model_numeric_weights, type = "PercentChange", alpha = 0.10)
+  expect_true(abs(torn$data$pmeans - torn_weights$data$pmeans) > 1E-6)
+
+  g <- plot(torn_weights, plot = FALSE, xlabel = "MPG")
+  g <- g + ggtitle("Test: caret::train randomforest and weights")
+  plot(g)
+})

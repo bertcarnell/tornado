@@ -14,8 +14,6 @@
 #'
 #' @method tornado train
 #'
-#' @importFrom assertthat assert_that
-#'
 #' @seealso \code{\link{tornado}}
 #'
 #' @examples
@@ -40,10 +38,25 @@ tornado.train <- function(model,
   # geom_bar_control=list(width = NULL)
   # geom_point_control=list(fill = "black")
 
+  ### Regression Weights
+  # model <- caret::train(x = subset(mtcars, select = -mpg), y = mtcars$mpg, method = "rf", weights = 1:nrow(mtcars))
+
   # mydat <- mtcars
   # mydat$cyl <- factor(mydat$cyl)
   # mydat$vs <- factor(mydat$vs)
   # model <- caret::train(x = subset(mydat, select = -mpg), y = mydat$mpg, method = "rf")
+  # type <- "PercentChange"
+  # alpha <- 0.10
+  # dict <- NA
+  # xlabel <- "MPG"
+  # class_number <- NA
+  # geom_bar_control=list(width = NULL)
+  # geom_point_control=list(fill = "black")
+
+  # mydat <- mtcars
+  # mydat$cyl <- factor(mydat$cyl)
+  # mydat$vs <- factor(mydat$vs)
+  # model <- caret::train(x = subset(mydat, select = -mpg), y = mydat$mpg, method = "rf", weights = 1:nrow(mtcars))
   # type <- "PercentChange"
   # alpha <- 0.10
   # dict <- NA
@@ -74,13 +87,15 @@ tornado.train <- function(model,
   # geom_bar_control=list(width = 0.1)
   # geom_point_control=list(fill = "orange")
 
-  assertthat::assert_that(requireNamespace("caret", quietly = TRUE),
-                          msg = "The caret package is required to use this method")
+  if(!requireNamespace("caret", quietly = TRUE)) {
+    stop("The caret package is required to use this method")
+  }
 
   extraArguments <- list(...) # not used
 
-  assertthat::assert_that(type %in% c("PercentChange","percentiles","ranges"),
-                          msg = "type must be PercentChagne, percentiles, or ranges")
+  if (!(type %in% .allowed_types)) {
+    stop(paste0("type must be in ", paste(.allowed_types, collapse=",")))
+  }
 
   if (model$modelType == "Regression")
   {
@@ -92,20 +107,22 @@ tornado.train <- function(model,
       class_number <- 1
   }
 
-  # assertthat::assert_that(model$modelType == "Regression",
-  #                         msg = "Only Regression predictions are currently implemented")
-
-  used_variables <- names(model$trainingData)[!grepl("[.]outcome", names(model$trainingData))]
+  used_variables <- names(model$trainingData)[!(grepl("[.]outcome", names(model$trainingData)) | grepl("[.]weights", names(model$trainingData)))]
 
   dict <- .create_dict(dict, used_variables)
 
   training_data <- subset(model$trainingData, select = used_variables)
-  means <- .create_means(training_data)
+  if (is.null(model$trainingData$.weights)) {
+    model_weights <- NA
+  } else {
+    model_weights <- model$trainingData$.weights
+  }
+  means <- .create_means(training_data, model_weights)
   names_means <- names(means)
   lmeans <- length(means)
 
   # factors are held at their base value at this step
-  ret <- .create_endpoints(training_data, means, type, alpha)
+  ret <- .create_endpoints(training_data, means, type, alpha, model_weights)
   endpoints <- ret$endpoints
   Level <- ret$Level
   base_Level <- c("A","B")
@@ -119,7 +136,7 @@ tornado.train <- function(model,
 
   if (model$modelType != "Regression")
   {
-    # if the model is a classificaiton model, get the base probabilities
+    # if the model is a classification model, get the base probabilities
     pmeans <- unlist(pmeans[class_number])
     pdat <- unlist(pdat[[class_number]])
   }

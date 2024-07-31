@@ -33,13 +33,13 @@ test_that("plotting gaussian glm works", {
   torn <- tornado(gtest, type = "ranges", alpha = NA)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Gaussian GLM ranges with dictionary")
+  g <- g + ggtitle("Test:  Gaussian GLM ranges")
   plot(g)
 
   torn <- tornado(gtest, type = "percentiles", alpha = 0.1)
   expect_equal(class(torn), "tornado_plot")
   g <- plot(torn, plot = FALSE, xlabel = "MPG")
-  g <- g + ggtitle("Test:  Gaussian GLM percentiles with dictionary")
+  g <- g + ggtitle("Test:  Gaussian GLM percentiles")
   plot(g)
 
   # regression test.  This used to fail without "fill" in the geom_point_control

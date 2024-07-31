@@ -8,7 +8,6 @@
 #' @param isDeviance TRUE for glms and other deviance residual based models
 #'
 #' @importFrom stats add1 anova formula
-#' @importFrom assertthat assert_that
 #'
 #' @return a data.frame
 #' @noRd
@@ -66,8 +65,9 @@
     add1_contr <- model_add1$`Sum of Sq`[-1] / sum(model_anova$`Sum Sq`)
   }
 
-  assertthat::assert_that(all(var_final == rownames(model_add1)[-1]),
-                          msg = "Unexpected Internal error")
+  if (!all(var_final == rownames(model_add1)[-1])) {
+    stop("Unexpected Internal error")
+  }
   dev_add1 <- data.frame(vars = var_final, add1 = add1_contr,
                          stringsAsFactors = FALSE)
 

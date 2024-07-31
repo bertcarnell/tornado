@@ -7,7 +7,6 @@
 #'
 #' @return the dictionary data.frame
 #'
-#' @importFrom assertthat assert_that
 #' @noRd
 .create_dict <- function(dict, used_variables)
 {
@@ -21,10 +20,12 @@
     }
   } else
   {
-    assertthat::assert_that(all(names(dict) == c("old", "new")),
-                            msg = "The variable name translation dictionary must be a list or data.frame with components old and new")
-    assertthat::assert_that(all(used_variables %in% dict$old),
-                            msg = "All the variables used in the model must be in dict$old")
+    if (!all(names(dict) == c("old", "new"))) {
+      stop("The variable name translation dictionary must be a list or data.frame with components old and new")
+    }
+    if (!all(used_variables %in% dict$old)) {
+      stop("All the variables used in the model must be in dict$old")
+    }
   }
   return(dict)
 }

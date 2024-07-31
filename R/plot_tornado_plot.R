@@ -31,8 +31,9 @@ plot.tornado_plot <- function(x, plot=TRUE, nvar=NA, xlabel="Model Response",
                               geom_point_control=list(fill = "black", col = "black"),
                               ...)
 {
-  assertthat::assert_that(is.list(geom_bar_control) & is.list(geom_point_control),
-                          msg = "The geom_bar_control and geom_point_control parameters must be a list")
+  if (!(is.list(geom_bar_control) & is.list(geom_point_control))) {
+    stop("The geom_bar_control and geom_point_control parameters must be a list")
+  }
 
   # if geom_bar_control contains fill, then delete it and warn
   ind <- which(names(geom_bar_control) == "fill")

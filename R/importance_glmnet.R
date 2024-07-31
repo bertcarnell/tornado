@@ -14,7 +14,6 @@
 #' @seealso \code{\link{importance}}
 #'
 #' @importFrom stats model.matrix model.frame
-#' @importFrom assertthat assert_that
 #'
 #' @examples
 #' if (requireNamespace("glmnet", quietly = TRUE))
@@ -38,8 +37,9 @@ importance.cv.glmnet <- function(model_final, model_data, form, dict = NA, nperm
   # nperm <- 100
   # geom_bar_control <- list(fill = "green")
 
-  assertthat::assert_that(requireNamespace("glmnet", quietly = TRUE),
-                          msg = "The glmnet package is required to use this method")
+  if (!requireNamespace("glmnet", quietly = TRUE)) {
+    stop("The glmnet package is required to use this method")
+  }
 
   otherVariables <- list(...)
   modelframe <- stats::model.frame(form, data = model_data)
