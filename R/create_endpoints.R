@@ -11,7 +11,7 @@
 #' @param wt model weights
 #'
 #' @importFrom stats quantile
-#' @importFrom Hmisc wtd.quantile
+#' @importFrom Hmisc wtd.quantile wtd.var
 #'
 #' @return a list of the endpoints and levels
 #' @noRd
