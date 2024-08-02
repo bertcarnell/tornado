@@ -51,12 +51,21 @@ plot.tornado_plot <- function(x, plot=TRUE, nvar=NA, xlabel="Model Response",
     warning("geom_point_control fill argument was added")
   }
 
+  is_percentage <- FALSE
   if (is.data.frame(x$data$factordat))
   {
-    pretty_break <- pretty(c(x$data$plotdat$value, x$data$factordat$value), n = 5)
+    pretty_break <- pretty(c(x$data$plotdat$value + c(x$data$pmeans), x$data$factordat$value + c(x$data$pmeans)), n = 5) - c(x$data$pmeans)
+    if (all(c(x$data$plotdat$value + c(x$data$pmeans), x$data$factordat$value + c(x$data$pmeans)) >= 0) &&
+        all(c(x$data$plotdat$value + c(x$data$pmeans), x$data$factordat$value + c(x$data$pmeans)) <= 1)) {
+      is_percentage <- TRUE
+    }
   } else
   {
-    pretty_break <- pretty(x$data$plotdat$value, n = 5)
+    pretty_break <- pretty(x$data$plotdat$value + c(x$data$pmeans), n = 5) - c(x$data$pmeans)
+    if (all(c(x$data$plotdat$value + c(x$data$pmeans)) >= 0) &&
+        all(c(x$data$plotdat$value + c(x$data$pmeans)) <= 1)) {
+      is_percentage <- TRUE
+    }
   }
 
   ggp <- ggplot(x$data$plotdat, aes(x = .data$variable, y = .data$value, fill = .data$Level)) +
@@ -65,7 +74,8 @@ plot.tornado_plot <- function(x, plot=TRUE, nvar=NA, xlabel="Model Response",
     ylab(xlabel) +
     xlab("") +
     scale_fill_manual(values = sensitivity_colors) +
-    theme_bw()
+    theme_bw() +
+    geom_hline(yintercept = 0, lty = 2)
 
   if (is.data.frame(x$data$factordat))
   {
@@ -74,17 +84,18 @@ plot.tornado_plot <- function(x, plot=TRUE, nvar=NA, xlabel="Model Response",
                                               geom_point_control))
   }
 
-  if (x$type %in% c("cv.glmnet", "glm") && x$family %in% c("binomial", "quasibinomial"))
+  if ((x$type %in% c("cv.glmnet", "glm") & x$family %in% c("binomial", "quasibinomial")) | is_percentage)
   {
     ggp <- ggp +
       scale_y_continuous(breaks = pretty_break,
-                         labels = scales::percent(c(pretty_break) + c(x$data$pmeans)),
-                         limits = c(max(min(pretty_break), -x$data$pmeans),
-                                    min(max(pretty_break), 1 - x$data$pmeans)))
+                         labels = scales::percent(c(pretty_break) + c(x$data$pmeans)))#,
+                         #limits = c(max(min(pretty_break), -x$data$pmeans),
+                         #            min(max(pretty_break), 1 - x$data$pmeans)))
   } else
   {
     ggp <- ggp + scale_y_continuous(breaks = pretty_break,
                                     labels = format(pretty_break + c(x$data$pmeans), digits = 4))
+
   }
   if (plot) plot(ggp) else return(ggp)
 }
