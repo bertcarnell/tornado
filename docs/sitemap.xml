@@ -1,84 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/tornadoVignette.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/extract.html</loc>
-  </url>
-  <url>
-    <loc>/reference/importance.cv.glmnet.html</loc>
-  </url>
-  <url>
-    <loc>/reference/importance.glm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/importance.html</loc>
-  </url>
-  <url>
-    <loc>/reference/importance.lm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/importance.survreg.html</loc>
-  </url>
-  <url>
-    <loc>/reference/importance.train.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.importance_plot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.tornado_plot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.importance_plot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.tornado_plot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/quantile.ordered.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tornado.coxph.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tornado.cv.glmnet.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tornado.glm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tornado.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tornado.lm.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tornado.survreg.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tornado.train.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/tornadoVignette.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/extract.html</loc></url>
+<url><loc>/reference/importance.cv.glmnet.html</loc></url>
+<url><loc>/reference/importance.glm.html</loc></url>
+<url><loc>/reference/importance.html</loc></url>
+<url><loc>/reference/importance.lm.html</loc></url>
+<url><loc>/reference/importance.survreg.html</loc></url>
+<url><loc>/reference/importance.train.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/plot.importance_plot.html</loc></url>
+<url><loc>/reference/plot.tornado_plot.html</loc></url>
+<url><loc>/reference/print.importance_plot.html</loc></url>
+<url><loc>/reference/print.tornado_plot.html</loc></url>
+<url><loc>/reference/quantile.ordered.html</loc></url>
+<url><loc>/reference/tornado.coxph.html</loc></url>
+<url><loc>/reference/tornado.cv.glmnet.html</loc></url>
+<url><loc>/reference/tornado.glm.html</loc></url>
+<url><loc>/reference/tornado.html</loc></url>
+<url><loc>/reference/tornado.lm.html</loc></url>
+<url><loc>/reference/tornado.survreg.html</loc></url>
+<url><loc>/reference/tornado.train.html</loc></url>
 </urlset>
+
